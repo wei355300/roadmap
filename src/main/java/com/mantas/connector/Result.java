@@ -1,4 +1,4 @@
-package com.mantas.tapd.connector;
+package com.mantas.connector;
 
 import lombok.Data;
 

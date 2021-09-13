@@ -1,6 +1,6 @@
 package com.mantas.tapd.controller.mock.service;
 
-import com.mantas.tapd.connector.UrlBuiler;
+import com.mantas.tapd.conf.UrlBuilder;
 import com.mantas.tapd.controller.StoryController;
 import com.mantas.tapd.dto.Story;
 import com.mantas.tapd.service.StoryService;
@@ -14,7 +14,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,16 +49,16 @@ public class StoryControllerTester {
     private MockMvc mockMvc;
 
     @Test
-    @PrepareForTest(UrlBuiler.class)
+    @PrepareForTest(UrlBuilder.class)
     public void testListStoriesByIterationId() throws Exception {
 
 //        PowerMockito.mockStatic(UrlBuiler.class);
 
-        PowerMockito.mock(UrlBuiler.class);
+        PowerMockito.mock(UrlBuilder.class);
 
 //        PowerMockito.verifyStatic(UrlBuiler.class);
 
-        when(UrlBuiler.buildViewStoryUrl(Mockito.anyString())).thenReturn("");
+        when(UrlBuilder.buildViewStoryUrl(Mockito.anyString())).thenReturn("");
 
         when(storyService.listByIteration(iterationId)).thenReturn(buildStoryListData());
 

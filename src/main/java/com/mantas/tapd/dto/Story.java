@@ -1,6 +1,6 @@
 package com.mantas.tapd.dto;
 
-import com.mantas.tapd.connector.UrlBuiler;
+import com.mantas.tapd.conf.UrlBuilder;
 import lombok.Data;
 
 @Data
@@ -18,6 +18,6 @@ public class Story {
     private String iterationId;
 
     public String getUrl() {
-        return UrlBuiler.buildViewStoryUrl(id);
+        return UrlBuilder.buildViewStoryUrl(id);
     }
 }

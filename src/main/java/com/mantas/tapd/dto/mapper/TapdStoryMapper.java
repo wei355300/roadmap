@@ -11,8 +11,8 @@ public interface TapdStoryMapper extends StructMapper<TapdStoryItem, Story> {
 
     TapdStoryMapper mapper = Mappers.getMapper(TapdStoryMapper.class);
 
-    @Mapping(source = "iteration_id", target = "iterationId")
-    @Mapping(source = "workspace_id", target = "workspaceId")
+//    @Mapping(source = "iteration_id", target = "iterationId")
+//    @Mapping(source = "workspace_id", target = "workspaceId")
     @Override
     Story mapper(TapdStoryItem tapdStory);
 }

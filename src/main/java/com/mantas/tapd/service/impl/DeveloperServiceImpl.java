@@ -2,7 +2,7 @@ package com.mantas.tapd.service.impl;
 
 import com.mantas.tapd.dto.Role;
 import com.mantas.tapd.service.DeveloperService;
-import com.mantas.tapd.connector.OkHttp;
+import com.mantas.connector.OkHttp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

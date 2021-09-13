@@ -1,28 +1,25 @@
-package com.mantas.tapd.connector;
+package com.mantas.tapd.conf;
 
-import com.mantas.tapd.conf.TapdConf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UrlBuiler {
+public class UrlBuilder {
 
-    // https://www.tapd.cn/{workspaceId}/prong/stories/view/{storyId}
     private static final String story_pattern = "https://www.tapd.cn/%s/prong/stories/view/%s";
 
     private Optional<TapdConf> tapdConf;
 
-    private static UrlBuiler ins;
+    private static UrlBuilder ins;
 
-    public UrlBuiler(@Autowired TapdConf tapdConf) {
+    public UrlBuilder(@Autowired TapdConf tapdConf) {
         this.tapdConf = Optional.of(tapdConf);
         ins = this;
     }
 
     public static String buildViewStoryUrl(String storyId) {
-
         return ins.tapdConf.isPresent() ? (String.format(story_pattern, ins.tapdConf.get().getDefaultWorkspaceId(), storyId)) : "";
     }
 }
