@@ -7,3 +7,4 @@ tapd:
   default_workspace_id: ${tapd.default_workspace_id}
   basic_auth_id: ${tapd.basic_auth_id}
   basic_auth_pwd: ${tapd.basic_auth_pwd}
+  workspaces: ${workspaces}
