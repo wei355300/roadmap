@@ -28,3 +28,4 @@ hs_err_pid*
 !/tapd.iml
 /tapd.iml
 /src/test/resources/secure-test.yml
+!/src/test/resources/application-test.yml
