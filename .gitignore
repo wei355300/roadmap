@@ -23,7 +23,7 @@
 hs_err_pid*
 /src/main/resources/tapd-conf.yml
 /src/test/resources/secure-test.yml
-/src/test/resources/application-test.yml
 /.idea/
 /target/
 /tapd.iml
+!/src/test/resources/application-test.yml
