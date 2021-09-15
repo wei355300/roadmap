@@ -1,10 +1,10 @@
 
 spring:
   config:
-    import: "secure.yml"
+    import: "tapd-conf.yml"
 
 tapd:
-  default_workspace_id: ${tapd.default_workspace_id}
-  basic_auth_id: ${tapd.basic_auth_id}
-  basic_auth_pwd: ${tapd.basic_auth_pwd}
-  workspaces: ${workspaces}
+  default_workspace_id: ${tapd_conf.default_workspace_id}
+  basic_auth_id: ${tapd_conf.basic_auth_id}
+  basic_auth_pwd: ${tapd_conf.basic_auth_pwd}
+  projects: ${tapd_conf.projects}

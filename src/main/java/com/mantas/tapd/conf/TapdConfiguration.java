@@ -6,22 +6,22 @@ import com.mantas.connector.ParamInterceptor;
 import com.mantas.connector.ParamPair;
 import okhttp3.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@org.springframework.context.annotation.Configuration
-public class Configuration {
+@Configuration
+public class TapdConfiguration {
 
-    @ConditionalOnProperty(name = "tapd", matchIfMissing = true)
-    @Bean
-    public TapdConf tapdConf() throws Exception {
-        return new TapdConf();
-    }
+//    @ConditionalOnProperty(name = "tapd", matchIfMissing = true)
+//    @Bean
+//    public TapdConf tapdConf() throws Exception {
+//        return new TapdConf();
+//    }
 
     @Bean
     public OkHttp okHttp(@Autowired TapdConf tapdConf) {

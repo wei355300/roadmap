@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class OkHttpTester {
 
-    @Mock
+    @Autowired
     private TapdConf tapdConf;
 
     @Autowired
@@ -33,9 +33,11 @@ public class OkHttpTester {
     @Test
     public void testGetStories() throws IOException {
 
-        when(tapdConf.getDefaultWorkspaceId()).thenReturn("22259671");
-        when(tapdConf.getBasicAuthId()).thenReturn("btn3ZoxJ");
-        when(tapdConf.getBasicAuthPwd()).thenReturn("8639CB5F-E5ED-0E2A-57FB-53505E79B782");
+//        when(tapdConf.getDefaultWorkspaceId()).thenReturn("22259671");
+//        when(tapdConf.getBasicAuthId()).thenReturn("btn3ZoxJ");
+//        when(tapdConf.getBasicAuthPwd()).thenReturn("8639CB5F-E5ED-0E2A-57FB-53505E79B782");
+
+        System.out.println(tapdConf.toString());
 
         List<ParamPair> params = new ArrayList<>();
         params.add(new ParamPair(TapdURL.TAPD_PARAM_ITERATION_ID, "1122259671001000682"));
