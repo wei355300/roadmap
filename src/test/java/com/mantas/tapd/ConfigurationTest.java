@@ -1,8 +1,8 @@
 package com.mantas.tapd;
 
-import com.mantas.connector.OkHttp;
-import com.mantas.tapd.conf.TapdConf;
-import org.junit.Test;
+import com.mantas.okhttp.OkHttp;
+import com.mantas.tapd.ext.conf.TapdConf;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
