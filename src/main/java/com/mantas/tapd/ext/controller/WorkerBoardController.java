@@ -5,6 +5,7 @@ import com.mantas.tapd.ext.controller.req.GetTraceProjectParam;
 import com.mantas.tapd.ext.controller.req.ParamHelper;
 import com.mantas.tapd.ext.dto.ProjectComp;
 import com.mantas.tapd.ext.dto.Trace;
+import com.mantas.tapd.ext.dto.WorkerTrace;
 import com.mantas.tapd.ext.service.WorkerBoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -46,7 +48,7 @@ public class WorkerBoardController {
      */
     @GetMapping("/traces")
     public R getTraces(@RequestBody @Validated List<GetTraceProjectParam> params) {
-        List<Trace> projects = workerBoardService.getTraces(ParamHelper.toProjects(params));
-        return R.success(projects);
+        Collection<WorkerTrace> traces = workerBoardService.getTraces(ParamHelper.toProjects(params));
+        return R.success(traces);
     }
 }

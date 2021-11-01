@@ -1,12 +1,12 @@
 package com.mantas.tapd.ext.service.impl;
 
 import com.mantas.tapd.ext.dto.*;
+import com.mantas.tapd.ext.dto.mapper.TraceConvert;
 import com.mantas.tapd.ext.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -61,18 +61,55 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
     }
 
     @Override
-    public List<Trace> getTraces(List<ProjectComp> projects) {
+    public Collection<WorkerTrace> getTraces(List<ProjectComp> projects) {
         //todo
-        //获取所有项目中的员工
-        Integer projectId = 0;
-        List<Worker> workers = roleService.getWorkersByRole(projectId);
-        //获取项目迭代中的需求, 任务, 缺陷
-//        storyService.getByIterations(projectId, iterations);
+        Map<String, WorkerTrace> traces = new HashMap<>();
+        projects.forEach( project -> {
+            //获取所有项目中的员工
+            List<Worker> workers = roleService.getWorkersByRole(project.getId());
+            putWorkers(workers, traces);
+            //获取项目迭代中的需求, 任务, 缺陷
+            //需求按处理人分配
+            List<List<Story>> stories = storyService.getByIterations(project.getId(), project.getIterations());
+            assignStory(stories, traces);
+            //任务按开发人员分配
+            //缺陷按开发人员分配
 //        taskService.getByIterations(projectId, iterations);
 //        bugService.getByIterations(projectId, iterations);
-        //按处理人, 开发人都关系, 将任务集合到员工列表中
-        return null;
+            //按处理人, 开发人都关系, 将任务集合到员工列表中
+        });
+
+        return traces.values();
     }
+
+    private void assignStory(List<List<Story>> stories, Map<String, WorkerTrace> traces) {
+        stories.forEach(sl -> {
+            sl.forEach(s -> {
+                for (String developer : s.getDeveloper()) {
+                    WorkerTrace workerTrace = traces.get(developer);
+                    if (Objects.isNull(workerTrace)) {
+                        continue;
+                    }
+                    workerTrace.getTraces().add(TraceConvert.INSTANCE.toTrace(s));
+                }
+            });
+        });
+    }
+
+    private void putWorkers(List<Worker> workers, Map<String, WorkerTrace> traces) {
+        workers.forEach( w -> {
+            traces.put(w.getUser(), new WorkerTrace(w));
+        });
+    }
+
+//    private WorkerTrace getWorkerTrace(Map<String, WorkerTrace> traces, Worker worker) {
+//        WorkerTrace workerTrace = traces.get(worker.getUser());
+//        if (Objects.isNull(workerTrace)) {
+//            workerTrace = new WorkerTrace(worker);
+//            traces.put(worker.getUser(), workerTrace);
+//        }
+//        return workerTrace;
+//    }
 
     /**
      * 获取项目中开启状态的迭代及所有的角色

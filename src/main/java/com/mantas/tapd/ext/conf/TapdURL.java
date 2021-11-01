@@ -19,6 +19,7 @@ public interface TapdURL {
         String END_DATE = "enddate";
         String STATUS = "status";
         String FIELDS = "fields";
+        String LIMIT = "limit";
     }
 
 

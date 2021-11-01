@@ -13,6 +13,9 @@ public class TapdStoryItem {
     private String status;
     private String developer;
     private String priority;
+    private String begin;
+    private String due;
+    private String business_value;
     private String iteration_id;
     private String release_id;
 }

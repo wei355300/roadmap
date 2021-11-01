@@ -12,12 +12,11 @@ public class Story {
     private String workspaceId;
     private String creator;
     private String status;
-    private String developer;
+    private String[] developer;
     private String priority;
+    private String begin;
+    private String due;
+    private int businessValue;
     private String iterationId;
-
-    public String getUrl() {
-        //fixme
-        return "";//UrlBuilder.buildViewStoryUrl(id);
-    }
+    private String releaseId;
 }
