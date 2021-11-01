@@ -11,6 +11,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/tapd/developer")
+@Deprecated
 public class DeveloperController {
 
     @Autowired

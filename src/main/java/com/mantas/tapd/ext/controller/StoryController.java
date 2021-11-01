@@ -15,6 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/tapd/story")
+@Deprecated
 public class StoryController {
 
     @Autowired

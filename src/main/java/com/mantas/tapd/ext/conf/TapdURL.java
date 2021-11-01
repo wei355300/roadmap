@@ -5,6 +5,7 @@ public interface TapdURL {
     interface URL {
         String STORIES = "https://api.tapd.cn/stories";
         String ROLES = "https://api.tapd.cn/roles";
+        String USERS = "https://api.tapd.cn/workspaces/users";
         String RELEASES = "https://api.tapd.cn/releases";
         String ITERATIONS = "https://api.tapd.cn/iterations";
     }
@@ -17,6 +18,7 @@ public interface TapdURL {
         String START_DATE = "startdate";
         String END_DATE = "enddate";
         String STATUS = "status";
+        String FIELDS = "fields";
     }
 
 

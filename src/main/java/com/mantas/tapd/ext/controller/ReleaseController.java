@@ -15,6 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/tapd/release")
+@Deprecated
 public class ReleaseController {
 
     @Autowired

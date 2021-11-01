@@ -3,6 +3,8 @@
 spring:
   config:
     import: "tapd-conf.yml"
+  cache:
+    cache-names: "tapd-roles, tapd-users"
 
 tapd:
   basic_auth_id: ${tapd_conf.basic_auth_id}

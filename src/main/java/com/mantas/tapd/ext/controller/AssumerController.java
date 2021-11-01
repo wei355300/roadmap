@@ -5,5 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/tapd/story")
+@Deprecated
 public class AssumerController {
 }

@@ -12,6 +12,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/tapd/iteration")
+@Deprecated
 public class IterationController {
 
     @Autowired

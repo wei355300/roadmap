@@ -3,6 +3,7 @@ package com.mantas.tapd.ext.service.test;
 import com.mantas.tapd.ext.conf.TapdConf;
 import com.mantas.tapd.ext.dto.Project;
 import com.mantas.tapd.ext.dto.Role;
+import com.mantas.tapd.ext.dto.Worker;
 import com.mantas.tapd.ext.service.ProjectService;
 import com.mantas.tapd.ext.service.RoleService;
 import org.junit.jupiter.api.Test;
@@ -33,5 +34,17 @@ public class RoleServiceTest {
         assertThat(roles).isNotNull();
 
         roles.forEach(r -> System.out.println(r.toString()));
+    }
+
+    @Test
+    public void testGetUsers() throws IOException {
+        System.out.println(tapdConf.toString());
+
+        Integer projectId = tapdConf.getProjects().get(0).getId();
+        List<Worker> workers = roleService.getWorkersByRole(projectId);
+
+        assertThat(workers).isNotNull();
+
+        workers.forEach(r -> System.out.println(r.toString()));
     }
 }
