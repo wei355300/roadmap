@@ -3,32 +3,19 @@ package com.mantas.tapd.ext.service.impl;
 import com.mantas.okhttp.ParamPair;
 import com.mantas.tapd.TapdResult;
 import com.mantas.tapd.TapdStoryResult;
-import com.mantas.tapd.TapdUser;
-import com.mantas.tapd.TapdUserResult;
-import com.mantas.tapd.ext.conf.TapdURL;
+import com.mantas.tapd.TapdURL;
 import com.mantas.tapd.ext.dto.Iteration;
 import com.mantas.tapd.ext.dto.Story;
-import com.mantas.tapd.ext.dto.Worker;
-import com.mantas.tapd.ext.dto.mapper.RoleConvert;
 import com.mantas.tapd.ext.dto.mapper.StoryConvert;
-import com.mantas.tapd.ext.dto.mapper.StructMapper;
-import com.mantas.tapd.ext.dto.mapper.TapdStoryMapper;
-import com.mantas.tapd.ext.dto.tapd.TapdData;
-import com.mantas.tapd.ext.dto.tapd.TapdDataIt;
 import com.mantas.tapd.ext.dto.tapd.TapdStory;
-import com.mantas.tapd.ext.dto.tapd.TapdStoryData;
 import com.mantas.tapd.ext.service.StoryService;
-import com.mantas.okhttp.OkHttp;
 import com.mantas.tapd.ext.service.TapdRequest;
-import com.sun.tools.javac.util.Convert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j

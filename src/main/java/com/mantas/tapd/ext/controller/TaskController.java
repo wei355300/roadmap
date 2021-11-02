@@ -19,9 +19,9 @@ public class TaskController {
     @Autowired
     private StoryService storyService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ResponseBody
-    public R<List<Story>> getTasks() {
-        return R.success(storyService.listByIteration("1122259671001000629"));
-    }
+//    @RequestMapping(value = "/list", method = RequestMethod.GET)
+//    @ResponseBody
+//    public R<List<Story>> getTasks() {
+//        return R.success(storyService.listByIteration("1122259671001000629"));
+//    }
 }

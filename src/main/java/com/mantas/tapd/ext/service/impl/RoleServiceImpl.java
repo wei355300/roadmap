@@ -4,7 +4,7 @@ import com.mantas.okhttp.ParamPair;
 import com.mantas.tapd.TapdResult;
 import com.mantas.tapd.TapdUser;
 import com.mantas.tapd.TapdUserResult;
-import com.mantas.tapd.ext.conf.TapdURL;
+import com.mantas.tapd.TapdURL;
 import com.mantas.tapd.ext.dto.Role;
 import com.mantas.tapd.ext.dto.Worker;
 import com.mantas.tapd.ext.dto.mapper.RoleConvert;

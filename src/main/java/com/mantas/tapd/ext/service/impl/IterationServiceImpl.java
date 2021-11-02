@@ -2,10 +2,9 @@ package com.mantas.tapd.ext.service.impl;
 
 import com.mantas.okhttp.ParamPair;
 import com.mantas.tapd.TapdIteration;
-import com.mantas.tapd.TapdIterationItem;
 import com.mantas.tapd.TapdIterationResult;
 import com.mantas.tapd.TapdResult;
-import com.mantas.tapd.ext.conf.TapdURL;
+import com.mantas.tapd.TapdURL;
 import com.mantas.tapd.ext.dto.Iteration;
 import com.mantas.tapd.ext.dto.mapper.IterationConvert;
 import com.mantas.tapd.ext.service.IterationService;

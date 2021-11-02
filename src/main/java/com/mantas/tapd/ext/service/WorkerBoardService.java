@@ -31,5 +31,7 @@ public interface WorkerBoardService {
      * 获取指定项目里的迭代的所有的人员的所有任务
      * 包括: story, bug, task
      */
-    Collection<WorkerTrace> getTraces(List<ProjectComp> project);
+    Collection<WorkerTrace> getTraces(List<ProjectComp> projects);
+
+    Collection<WorkerTrace> getTraces(ProjectComp project);
 }

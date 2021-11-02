@@ -1,4 +1,4 @@
-package com.mantas.tapd.ext.conf;
+package com.mantas.tapd;
 
 public interface TapdURL {
 
@@ -6,8 +6,9 @@ public interface TapdURL {
         String STORIES = "https://api.tapd.cn/stories";
         String ROLES = "https://api.tapd.cn/roles";
         String USERS = "https://api.tapd.cn/workspaces/users";
-        String RELEASES = "https://api.tapd.cn/releases";
         String ITERATIONS = "https://api.tapd.cn/iterations";
+        String TASKS = "https://api.tapd.cn/tasks";
+        String RELEASES = "https://api.tapd.cn/releases";
     }
 
     interface PARAM {

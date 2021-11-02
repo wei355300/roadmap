@@ -1,6 +1,6 @@
 package com.mantas.tapd.ext.service.impl;
 
-import com.mantas.tapd.ext.conf.TapdURL;
+import com.mantas.tapd.TapdURL;
 import com.mantas.tapd.ext.dto.Release;
 import com.mantas.tapd.ext.dto.mapper.StructMapper;
 import com.mantas.tapd.ext.dto.mapper.TapdReleaseMapper;
