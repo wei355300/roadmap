@@ -64,7 +64,6 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
 
     @Override
     public Collection<Worker> getTraces(List<ProjectComp> projects) {
-//        Collection<WorkerTrace> traces = new ArrayList<>();
         Map<String, Worker> workerTraces = new HashMap<>();
         //通过多线程异步的形式, 缩短获取多项目的时间消耗
         ExecutorService executorService = Executors.newFixedThreadPool(projects.size());
@@ -73,9 +72,8 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
                     log.info("开始跑异步: " + project.getName());
                     return getTraces(workerTraces, project);
                 }, executorService).whenComplete((result, t) -> {
-                    System.out.println("完成: " + project.getName());
+                    log.info("完成: " + project.getName());
                     mergeTrace(workerTraces, result);
-//                    traces.addAll(result);
                 })).toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
         log.info("跑完了");
@@ -110,7 +108,7 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
         List<List<Bug>> bugs = bugService.getByIterations(project.getId(), project.getIterations());
         assignBug(bugs, workerTraces);
         //按处理人, 开发人都关系, 将任务集合到员工列表中
-        return workerTraces.values();//.stream().filter(v->!v.getTraces().isEmpty()).collect(Collectors.toList());
+        return workerTraces.values();
     }
 
     private void assignStory(List<List<Story>> stories, Map<String, Worker> traces) {

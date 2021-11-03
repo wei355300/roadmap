@@ -29,7 +29,6 @@ public class BugServiceImpl implements BugService {
         this.tapdRequest = tapdRequest;
     }
 
-
     @Override
     public List<List<Bug>> getByIterations(Integer projectId, Collection<Iteration> iterations) {
         //需要按照每个迭代获取任务(不支持多迭代一次性获取任务)

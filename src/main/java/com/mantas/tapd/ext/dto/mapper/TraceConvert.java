@@ -16,10 +16,6 @@ public interface TraceConvert {
 
     TraceConvert INSTANCE = Mappers.getMapper(TraceConvert.class);
 
-    //fixme
-    // 设置 type 常量
-    // 设置 link 链接
-    // 设置 done 常量
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "name", target = "name"),
