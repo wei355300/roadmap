@@ -1,10 +1,29 @@
 
+
 spring:
   config:
     import: "tapd-conf.yml"
+  cache:
+    cache-names: "tapd-roles, tapd-users"
+    type: simple
 
 tapd:
-  default_workspace_id: ${tapd_conf.default_workspace_id}
   basic_auth_id: ${tapd_conf.basic_auth_id}
   basic_auth_pwd: ${tapd_conf.basic_auth_pwd}
-  projects: ${tapd_conf.projects}
+  projects:
+    - id: "22259671"
+      name: "小佩SAAS经营系统"
+    - id: "64221331"
+      name: "魔鬼鱼SaaS系统"
+    - id: "55694943"
+      name: "魔鬼鱼宠物活体"
+    - id: "64372788"
+      name: "B2B订货商城"
+    - id: "34114244"
+      name: "Dparse数据"
+    - id: "41045808"
+      name: "八爪鱼"
+
+#  projects: ${tapd_conf.projects}
+server:
+  port: 8080
