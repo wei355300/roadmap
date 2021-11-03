@@ -4,16 +4,12 @@ import com.mantas.base.R;
 import com.mantas.tapd.ext.controller.req.GetTraceProjectParam;
 import com.mantas.tapd.ext.controller.req.ParamHelper;
 import com.mantas.tapd.ext.dto.ProjectComp;
-import com.mantas.tapd.ext.dto.Trace;
-import com.mantas.tapd.ext.dto.WorkerTrace;
+import com.mantas.tapd.ext.dto.Worker;
 import com.mantas.tapd.ext.service.WorkerBoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -44,11 +40,15 @@ public class WorkerBoardController {
     }
 
     /**
+     *
      * 获取 tapd 的所有的处理项目列表
      */
-    @GetMapping("/traces")
+    @PostMapping("/traces")
     public R getTraces(@RequestBody @Validated List<GetTraceProjectParam> params) {
-        Collection<WorkerTrace> traces = workerBoardService.getTraces(ParamHelper.toProjects(params));
+        // restful 风格决定获取数据应当使用 get 请求,
+        // 但get 请求不支持直接传递 json 格式的参数, 所以采用 post 请求上传 body 传递, 以便于参数解析
+        // (方案考虑: 前端使用 stringify 将参数当作  get 请求的参数上传, 后端再通过 json 解析?)
+        Collection<Worker> traces = workerBoardService.getTraces(ParamHelper.toProjects(params));
         return R.success(traces);
     }
 }

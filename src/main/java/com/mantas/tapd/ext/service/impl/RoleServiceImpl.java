@@ -17,6 +17,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,12 +53,26 @@ public class RoleServiceImpl implements RoleService {
      */
     @Cacheable(cacheNames = "tapd-users", key = "'tapd-users-'+#projectId")
     @Override
-    public List<Worker> getWorkersByRole(Integer projectId) {
+    public List<Worker> getUsersByProject(Integer projectId) {
+        log.info("getUsersByProject: {}", projectId);
         List<ParamPair> pairs = tapdRequest.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
         tapdRequest.appendParams(pairs, TapdURL.PARAM.FIELDS, "user,role_id,name,email");
 
         TapdResult<List<TapdUser>> data = tapdRequest.get(TapdURL.URL.USERS, pairs, TapdUserResult.class);
         return convertUser(data);
+    }
+
+    @Override
+    public List<Worker> getUsersByProject(Integer projectId, Collection<Role> roles) {
+        List<Worker> allWorkers = getUsersByProject(projectId);
+        return allWorkers.stream().filter(w->{
+            for (Role r : roles) {
+                if (w.getRoles().contains(r.getId())){
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
     }
 
     /**

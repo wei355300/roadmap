@@ -41,7 +41,7 @@ public class RoleServiceTest {
         System.out.println(tapdConf.toString());
 
         Integer projectId = tapdConf.getProjects().get(0).getId();
-        List<Worker> workers = roleService.getWorkersByRole(projectId);
+        List<Worker> workers = roleService.getUsersByProject(projectId);
 
         assertThat(workers).isNotNull();
 

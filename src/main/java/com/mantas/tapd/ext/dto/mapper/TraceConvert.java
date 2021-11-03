@@ -1,6 +1,7 @@
 package com.mantas.tapd.ext.dto.mapper;
 
 import com.mantas.tapd.TapdUrlBuilder;
+import com.mantas.tapd.ext.dto.Bug;
 import com.mantas.tapd.ext.dto.Story;
 import com.mantas.tapd.ext.dto.Task;
 import com.mantas.tapd.ext.dto.Trace;
@@ -35,6 +36,14 @@ public interface TraceConvert {
             @Mapping(target = "link", source = "task", qualifiedByName = {"TraceFiledTranslator", "toTaskLink"}),
     })
     Trace toTrace(Task task);
+
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "title", target = "name"),
+            @Mapping(constant = "bug", target = "type"),
+            @Mapping(target = "link", source = "bug", qualifiedByName = {"TraceFiledTranslator", "toBugLink"}),
+    })
+    Trace toTrace(Bug bug);
 }
 
 @Named("TraceFiledTranslator")
@@ -48,5 +57,10 @@ class TraceFiledTranslator {
     @Named("toTaskLink")
     public String mapLink(Task task) {
         return TapdUrlBuilder.buildTaskUrl(String.valueOf(task.getProjectId()), task.getId());
+    }
+
+    @Named("toBugLink")
+    public String mapLink(Bug bug) {
+        return TapdUrlBuilder.buildTaskUrl(String.valueOf(bug.getProjectId()), bug.getId());
     }
 }

@@ -1,8 +1,10 @@
 package com.mantas.tapd.ext.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(of = {"id"})
 public class Trace {
 
     private String id;

@@ -8,6 +8,7 @@ public interface TapdURL {
         String USERS = "https://api.tapd.cn/workspaces/users";
         String ITERATIONS = "https://api.tapd.cn/iterations";
         String TASKS = "https://api.tapd.cn/tasks";
+        String BUGS = "https://api.tapd.cn/bugs";
         String RELEASES = "https://api.tapd.cn/releases";
     }
 

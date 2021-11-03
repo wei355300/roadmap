@@ -8,8 +8,6 @@ import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import java.util.Objects;
-
 @Mapper(uses = {StoryFiledTranslator.class})
 public interface StoryConvert {
 
@@ -31,23 +29,11 @@ class StoryFiledTranslator {
 
     @Named("toDeveloper")
     public String[] mapDeveloper(String developer) {
-        if (Objects.isNull(developer)) {
-            return null;
-        }
-        if (developer.endsWith(";")) {
-            developer = developer.substring(0, developer.length() - 1);
-        }
-        return developer.split(";");
+        return MapStructConverter.split(developer);
     }
 
     @Named("toOwner")
     public String[] toOwner(String owner) {
-        if (Objects.isNull(owner)) {
-            return null;
-        }
-        if (owner.endsWith(";")) {
-            owner = owner.substring(0, owner.length() - 1);
-        }
-        return owner.split(";");
+        return MapStructConverter.split(owner);
     }
 }
