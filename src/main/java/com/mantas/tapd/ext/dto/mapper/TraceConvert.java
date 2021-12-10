@@ -57,6 +57,6 @@ class TraceFiledTranslator {
 
     @Named("toBugLink")
     public String mapLink(Bug bug) {
-        return TapdUrlBuilder.buildTaskUrl(String.valueOf(bug.getProjectId()), bug.getId());
+        return TapdUrlBuilder.buildBugUrl(String.valueOf(bug.getProjectId()), bug.getId());
     }
 }

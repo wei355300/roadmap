@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @SpringBootTest
 public class TapdProjectControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+//    @Autowired
+//    private MockMvc mockMvc;
 
     @Test
     public void testTapdProjectList() {
