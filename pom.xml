@@ -12,13 +12,37 @@
     <artifactId>tapd</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>tapd</name>
-    <description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <powermock.version>2.0.7</powermock.version>
+        <maven.dockerfile.version>1.4.13</maven.dockerfile.version>
     </properties>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
@@ -103,20 +127,5 @@
 <!--            <scope>test</scope>-->
 <!--        </dependency>-->
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.4.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

@@ -1,0 +1,17 @@
+tapd:
+  default_workspace_id: "22259671"
+  basic_auth_id: "btn3ZoxJ"
+  basic_auth_pwd: "8639CB5F-E5ED-0E2A-57FB-53505E79B782"
+  projects:
+    - id: "22259671"
+      name: "小佩SAAS经营系统"
+    - id: "64221331"
+      name: "魔鬼鱼SaaS系统"
+    - id: "55694943"
+      name: "魔鬼鱼宠物活体"
+    - id: "64372788"
+      name: "B2B订货商城"
+    - id: "34114244"
+      name: "Dparse数据"
+    - id: "41045808"
+      name: "八爪鱼"
