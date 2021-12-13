@@ -71,14 +71,14 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
         CompletableFuture[] futures = projects.stream()
                 .map(project -> CompletableFuture.supplyAsync(() -> {
                     log.info("开始跑异步: " + project.getName());
-                    return getTraces(workerTraces, project);
+                    return getTracesByProject(workerTraces, project);
                 }, executorService).whenComplete((result, t) -> {
                     log.info("完成: " + project.getName());
                     mergeTrace(workerTraces, result);
                 })).toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
         log.info("跑完了");
-        return workerTraces.values().stream().sorted((a, b ) -> a.getTraces().size() > b.getTraces().size() ? 1 : 0).collect(Collectors.toList());
+        return workerTraces.values().stream().sorted((a, b ) -> a.getTraces().size() > b.getTraces().size() ? -1 : 1).collect(Collectors.toList());
     }
 
     private void mergeTrace(Map<String, Worker> workerTraces, Collection<Worker> traces) {
@@ -93,7 +93,7 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
         });
     }
 
-    private Collection<Worker> getTraces(Map<String, Worker> workerTraces, ProjectComp project) {
+    private Collection<Worker> getTracesByProject(Map<String, Worker> workerTraces, ProjectComp project) {
         //获取所有项目中的员工
         //获取角色中的员工
         List<Worker> workers = roleService.getUsersByProject(project.getId(), project.getRoles());
