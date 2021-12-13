@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -77,7 +78,7 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
                 })).toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
         log.info("跑完了");
-        return workerTraces.values();
+        return workerTraces.values().stream().sorted((a, b ) -> a.getTraces().size() > b.getTraces().size() ? 1 : 0).collect(Collectors.toList());
     }
 
     private void mergeTrace(Map<String, Worker> workerTraces, Collection<Worker> traces) {
