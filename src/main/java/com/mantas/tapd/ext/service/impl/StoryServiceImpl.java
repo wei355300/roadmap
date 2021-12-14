@@ -29,18 +29,6 @@ public class StoryServiceImpl implements StoryService {
         this.tapdRequest = tapdRequest;
     }
 
-//    @Override
-//    public List<Story> listByIteration(String iterationId) {
-//        TapdStoryData data = tapdRequest.get(TapdURL.URL.STORIES, tapdRequest.setParam(TapdURL.PARAM.ITERATION_ID, iterationId), TapdStoryData.class);
-//        return convert(data, TapdStoryMapper.mapper);
-//    }
-//
-//    @Override
-//    public List<Story> listByRelease(String releaseId) {
-//        TapdStoryData data = tapdRequest.get(TapdURL.URL.STORIES, tapdRequest.setParam(TapdURL.PARAM.RELEASE_ID, releaseId), TapdStoryData.class);
-//        return convert(data, TapdStoryMapper.mapper);
-//    }
-
     @Override
     public List<List<Story>> getByIterations(Integer projectId, Collection<Iteration> iterations) {
         //需要按照每个迭代获取需求(不支持多迭代一次性获取需求)
@@ -66,10 +54,4 @@ public class StoryServiceImpl implements StoryService {
         }).collect(Collectors.toList());
     }
 
-//    protected  <K extends TapdDataIt> List convert(TapdData<K> data, StructMapper mapper) {
-//        if (Objects.nonNull(data) && Objects.nonNull(data.getData())) {
-//            return data.getData().stream().map(m -> mapper.mapper(m.getEntity())).collect(Collectors.toList());
-//        }
-//        return Collections.emptyList();
-//    }
 }
