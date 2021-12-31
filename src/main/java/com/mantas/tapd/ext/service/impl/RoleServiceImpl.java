@@ -27,19 +27,15 @@ import java.util.stream.Collectors;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private TapdRequest tapdRequest;
-
     @Autowired
-    public RoleServiceImpl(TapdRequest tapdRequest) {
-        this.tapdRequest = tapdRequest;
-    }
+    private TapdRequest tapdRequest;
 
     /**
      * 按 projectId 缓存数据
      * <p>
      * 缓存清除规则查看: {@link #cacheEvict}
      */
-    @Cacheable(cacheNames = "tapd-roles", key = "'tapd-roles-'+#projectId")
+//    @Cacheable(cacheNames = "tapd-roles", key = "'tapd-roles-'+#projectId")
     @Override
     public List<Role> getRolesByProject(Integer projectId) {
         TapdResult<Map<String, String>> data = tapdRequest.get(TapdURL.URL.ROLES, tapdRequest.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString()), TapdResult.class);
@@ -51,7 +47,7 @@ public class RoleServiceImpl implements RoleService {
      * <p>
      * 缓存清除规则查看: {@link #cacheEvict}
      */
-    @Cacheable(cacheNames = "tapd-users", key = "'tapd-users-'+#projectId")
+//    @Cacheable(cacheNames = "tapd-users", key = "'tapd-users-'+#projectId")
     @Override
     public List<Worker> getUsersByProject(Integer projectId) {
         log.info("getUsersByProject: {}", projectId);
@@ -78,11 +74,11 @@ public class RoleServiceImpl implements RoleService {
     /**
      * 每隔 10 分钟, 清楚缓存
      */
-    @CacheEvict(allEntries = true, value = {"tapd-users", "tapd-roles"})
-    @Scheduled(fixedDelay = 10 * 60 * 1000, initialDelay = 2000)
-    public void cacheEvict() {
-        log.info("evict tapd: users|roles cached");
-    }
+//    @CacheEvict(allEntries = true, value = {"tapd-users", "tapd-roles"})
+//    @Scheduled(fixedDelay = 10 * 60 * 1000, initialDelay = 2000)
+//    public void cacheEvict() {
+//        log.info("evict tapd: users|roles cached");
+//    }
 
     private List<Role> convertRole(TapdResult<Map<String, String>> data) {
         return data.getData().entrySet().stream().map(m -> new Role(m.getKey(), m.getValue())).collect(Collectors.toList());

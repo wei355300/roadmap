@@ -17,27 +17,18 @@ import java.util.stream.Collectors;
 @Service
 public class WorkerBoardServiceImpl implements WorkerBoardService {
 
-    private RoleService roleService;
-    private IterationService iterationService;
-    private ProjectService projectService;
-    private StoryService storyService;
-    private TaskService taskService;
-    private BugService bugService;
-
     @Autowired
-    public WorkerBoardServiceImpl(ProjectService projectService,
-                                  StoryService storyService,
-                                  RoleService roleService,
-                                  IterationService iterationService,
-                                  TaskService taskService,
-                                  BugService bugService) {
-        this.roleService = roleService;
-        this.iterationService = iterationService;
-        this.projectService = projectService;
-        this.storyService = storyService;
-        this.taskService = taskService;
-        this.bugService = bugService;
-    }
+    private RoleService roleService;
+    @Autowired
+    private IterationService iterationService;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private StoryService storyService;
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private BugService bugService;
 
     /**
      * 获取 tapd 上的所有项目的基本信息, 包括:
@@ -48,6 +39,9 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
     public List<ProjectComp> getProjects() {
         List<ProjectComp> comps = new ArrayList<>();
         List<Project> projects = projectService.getProjects();
+        if (Objects.isNull(projects)) {
+            return Collections.EMPTY_LIST;
+        }
         //通过多线程异步的形式, 缩短获取多项目的时间消耗
         ExecutorService executorService = Executors.newFixedThreadPool(projects.size());
         CompletableFuture[] futures = projects.stream()

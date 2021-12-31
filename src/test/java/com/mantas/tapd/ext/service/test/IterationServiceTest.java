@@ -1,8 +1,8 @@
 package com.mantas.tapd.ext.service.test;
 
-import com.mantas.tapd.ext.conf.TapdConf;
 import com.mantas.tapd.ext.dto.Iteration;
 import com.mantas.tapd.ext.service.IterationService;
+import com.mantas.tapd.ext.service.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,17 +16,17 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ActiveProfiles("test")
 @SpringBootTest
 public class IterationServiceTest {
+
     @Autowired
-    private TapdConf tapdConf;
+    private ProjectService projectService;
 
     @Autowired
     private IterationService iterationService;
 
     @Test
     public void testGetStories() throws IOException {
-        System.out.println(tapdConf.toString());
 
-        List<Iteration> iterations = iterationService.getIterationsByProject(tapdConf.getProjects().get(0).getId());
+        List<Iteration> iterations = iterationService.getIterationsByProject(projectService.getProjects().get(0).getId());
 
         assertThat(iterations).isNotNull();
 

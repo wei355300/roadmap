@@ -1,7 +1,6 @@
 package com.mantas.tapd.ext.service.test;
 
 import com.mantas.tapd.ext.conf.TapdConf;
-import com.mantas.tapd.ext.dto.Project;
 import com.mantas.tapd.ext.dto.Role;
 import com.mantas.tapd.ext.dto.Worker;
 import com.mantas.tapd.ext.service.ProjectService;
@@ -25,11 +24,14 @@ public class RoleServiceTest {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private ProjectService projectService;
+
     @Test
     public void testGetStories() throws IOException {
         System.out.println(tapdConf.toString());
 
-        List<Role> roles = roleService.getRolesByProject(tapdConf.getProjects().get(0).getId());
+        List<Role> roles = roleService.getRolesByProject(projectService.getProjects().get(0).getId());
 
         assertThat(roles).isNotNull();
 
@@ -40,7 +42,7 @@ public class RoleServiceTest {
     public void testGetUsers() throws IOException {
         System.out.println(tapdConf.toString());
 
-        Integer projectId = tapdConf.getProjects().get(0).getId();
+        Integer projectId = projectService.getProjects().get(0).getId();
         List<Worker> workers = roleService.getUsersByProject(projectId);
 
         assertThat(workers).isNotNull();

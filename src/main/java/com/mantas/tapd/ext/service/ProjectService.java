@@ -9,5 +9,9 @@ import java.util.List;
  */
 public interface ProjectService {
 
+    boolean addProject(Project project);
+
+    boolean delProject(Project project);
+
     List<Project> getProjects();
 }

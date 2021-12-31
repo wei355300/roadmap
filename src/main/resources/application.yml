@@ -1,28 +1,40 @@
 
 
 spring:
-  config:
-    import: "tapd-conf.yml"
+#  config:
+#    import: "tapd-conf.yml"
   cache:
     cache-names: "tapd-roles, tapd-users"
     type: simple
 
+nacos:
+  config:
+    tapdx:
+      server_addr: "127.0.0.1:8848"
+      namespace: "17013706-c074-4416-af54-b002b34157a2"
+      data_id: "tapdx"
+      group_id: "projects"
+
+
 tapd:
   basic_auth_id: ${tapd_conf.basic_auth_id}
   basic_auth_pwd: ${tapd_conf.basic_auth_pwd}
-  projects:
-    - id: "22259671"
-      name: "小佩SAAS经营系统"
-    - id: "64221331"
-      name: "魔鬼鱼SaaS系统"
-    - id: "55694943"
-      name: "魔鬼鱼宠物活体"
-    - id: "64372788"
-      name: "B2B订货商城"
-    - id: "34114244"
-      name: "Dparse数据"
-    - id: "41045808"
-      name: "八爪鱼"
+#  nacos_projects:
+#    data_id: "tapdx"
+#    group_id: "projects"
+#  projects:
+#    - id: "22259671"
+#      name: "小佩SAAS经营系统"
+#    - id: "64221331"
+#      name: "魔鬼鱼SaaS系统"
+#    - id: "55694943"
+#      name: "魔鬼鱼宠物活体"
+#    - id: "64372788"
+#      name: "B2B订货商城"
+#    - id: "34114244"
+#      name: "Dparse数据"
+#    - id: "41045808"
+#      name: "八爪鱼"
 
 #  projects: ${tapd_conf.projects}
 server:
