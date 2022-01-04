@@ -29,6 +29,9 @@ public class NacosConfigurator {
         ConfigService configService = getConfigService(nacosConf);
 
         String content = configService.getConfig(nacosConf.getDataId(), nacosConf.getGroupId(), 5000);
+
+        log.info("get content {} from nacos server by conf {}", content, nacosConf);
+
         T result = new Gson().fromJson(content, type);
         return result;
     }

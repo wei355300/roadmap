@@ -4,6 +4,7 @@ import com.alibaba.nacos.api.exception.NacosException;
 import com.mantas.nacos.NacosConfigurator;
 import com.mantas.okhttp.BasicInterceptor;
 import com.mantas.okhttp.OkHttp;
+import com.mantas.tapd.ext.service.TapdRequest;
 import okhttp3.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,13 +26,9 @@ public class TapdConfiguration {
         return okHttp;
     }
 
-//    @Bean
-//    public OkHttp okHttp(@Autowired TapdConf tapdConf) {
-//        BasicInterceptor basicInterceptor = new BasicInterceptor(tapdConf.getBasicAuthId(), tapdConf.getBasicAuthPwd());
-//        Set<Interceptor> interceptors = new HashSet<>(1);
-//        interceptors.add(basicInterceptor);
-//        OkHttp okHttp = new OkHttp(interceptors);
-//        return okHttp;
-//    }
+    @Bean
+    public TapdRequest tapdRequest(@Autowired OkHttp okHttp) {
+        return new TapdRequest(okHttp);
+    }
 
 }

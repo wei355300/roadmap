@@ -1,21 +1,18 @@
 package com.mantas.tapd.ext.service;
 
-import com.mantas.okhttp.ParamPair;
 import com.mantas.okhttp.OkHttp;
+import com.mantas.okhttp.ParamPair;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
-@Service
 public class TapdRequest {
 
     private OkHttp okHttp;
 
-    @Autowired
     public TapdRequest(OkHttp okHttp) {
         this.okHttp = okHttp;
     }
@@ -32,7 +29,7 @@ public class TapdRequest {
     }
 
     public <T> T get(String url, List<ParamPair> params, Class<T> ret) {
-       T result = null;
+        T result = null;
 
         try {
             result = okHttp.get(url, params, ret);
