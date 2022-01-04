@@ -1,0 +1,17 @@
+
+
+spring:
+  cache:
+    cache-names: "tapd-roles, tapd-users, tapd-projects"
+    type: simple
+
+nacos:
+  config:
+    tapdx:
+      server_addr: "127.0.0.1:8848"
+      namespace: "17013706-c074-4416-af54-b002b34157a2"
+      data_id: "tapdx"
+      group_id: "projects"
+
+server:
+  port: 8080
