@@ -6,6 +6,7 @@ import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
@@ -20,12 +21,11 @@ import java.util.Properties;
  * 主要负责检查配置及操作配置项(增加配置, 修改配置, 删除配置)
  */
 @Slf4j
-@Service
-public class NacosConfigurator {
+public class NacosConfigurator implements BeanPostProcessor {
 
     private final static Map<String, ConfigService> services = new HashMap<>();
 
-    public <T> T getConfig(NacosConf nacosConf, Type type) throws NacosException {
+    public static <T> T getConfig(NacosConf nacosConf, Type type) throws NacosException {
         ConfigService configService = getConfigService(nacosConf);
 
         String content = configService.getConfig(nacosConf.getDataId(), nacosConf.getGroupId(), 5000);
@@ -36,12 +36,12 @@ public class NacosConfigurator {
         return result;
     }
 
-    public <T> boolean publishConfig(NacosConf nacosConf, T content) throws NacosException {
+    public static <T> boolean publishConfig(NacosConf nacosConf, T content) throws NacosException {
         ConfigService configService = getConfigService(nacosConf);
         return configService.publishConfig(nacosConf.getDataId(), nacosConf.getGroupId(), new Gson().toJson(content));
     }
 
-    private ConfigService getConfigService(NacosConf nacosConf) throws NacosException {
+    private static ConfigService getConfigService(NacosConf nacosConf) throws NacosException {
         ConfigService configService = services.get(nacosConf.getModule());
         if (Objects.isNull(configService)) {
             Properties props = new Properties();

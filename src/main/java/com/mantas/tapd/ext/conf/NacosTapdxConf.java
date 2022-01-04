@@ -2,6 +2,7 @@ package com.mantas.tapd.ext.conf;
 
 import com.mantas.nacos.NacosConf;
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
  * 用于连锁 nacos 配置服务器
  */
 @Data
+@ToString
 @Component
 @ConfigurationProperties(prefix = "nacos.config.tapdx", ignoreUnknownFields = true)
 public class NacosTapdxConf extends NacosConf {
