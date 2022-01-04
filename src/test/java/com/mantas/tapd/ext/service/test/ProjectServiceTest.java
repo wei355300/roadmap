@@ -1,6 +1,5 @@
 package com.mantas.tapd.ext.service.test;
 
-import com.mantas.tapd.ext.conf.TapdConf;
 import com.mantas.tapd.ext.dto.Project;
 import com.mantas.tapd.ext.service.ProjectService;
 import org.junit.jupiter.api.Test;
@@ -16,15 +15,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ActiveProfiles("test")
 @SpringBootTest
 public class ProjectServiceTest {
-    @Autowired
-    private TapdConf tapdConf;
 
     @Autowired
     private ProjectService projectService;
 
     @Test
     public void testGetStories() throws IOException {
-        System.out.println(tapdConf.toString());
 
         List<Project> projects = projectService.getProjects();
 

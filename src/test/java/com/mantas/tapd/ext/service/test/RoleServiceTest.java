@@ -1,6 +1,5 @@
 package com.mantas.tapd.ext.service.test;
 
-import com.mantas.tapd.ext.conf.TapdConf;
 import com.mantas.tapd.ext.dto.Role;
 import com.mantas.tapd.ext.dto.Worker;
 import com.mantas.tapd.ext.service.ProjectService;
@@ -18,8 +17,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ActiveProfiles("test")
 @SpringBootTest
 public class RoleServiceTest {
-    @Autowired
-    private TapdConf tapdConf;
 
     @Autowired
     private RoleService roleService;
@@ -29,7 +26,6 @@ public class RoleServiceTest {
 
     @Test
     public void testGetStories() throws IOException {
-        System.out.println(tapdConf.toString());
 
         List<Role> roles = roleService.getRolesByProject(projectService.getProjects().get(0).getId());
 
@@ -40,7 +36,6 @@ public class RoleServiceTest {
 
     @Test
     public void testGetUsers() throws IOException {
-        System.out.println(tapdConf.toString());
 
         Integer projectId = projectService.getProjects().get(0).getId();
         List<Worker> workers = roleService.getUsersByProject(projectId);
