@@ -55,3 +55,9 @@ nacos:
 
 > curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=tapdx&group=projects&tenant=17013706-c074-4416-af54-b002b34157a2"
 
+curl -X GET "http://192.168.220.13:8848/nacos/v1/cs/configs?dataId=tapdx&group=projects&tenant=17013706-c074-4416-af54-b002b34157a2"
+
+
+curl -X GET "http://172.31.13.180:8848/nacos/v1/cs/configs?dataId=tapdx&group=projects&tenant=17013706-c074-4416-af54-b002b34157a2"
+
+
