@@ -1,9 +1,9 @@
 package com.mantas.tapd.ext.dto.mapper;
 
-import com.mantas.tapd.ext.conf.TapdProject;
 import com.mantas.tapd.ext.controller.req.GetTraceProjectParam;
 import com.mantas.tapd.ext.dto.Project;
 import com.mantas.tapd.ext.dto.ProjectComp;
+import com.mantas.tapd.ext.dto.tapd.TapdProject;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

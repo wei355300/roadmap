@@ -1,13 +1,13 @@
 package com.mantas.tapd.ext.service.impl;
 
 import com.alibaba.nacos.api.exception.NacosException;
-import com.google.common.reflect.TypeToken;
 import com.mantas.nacos.NacosConf;
 import com.mantas.nacos.NacosConfigurator;
-import com.mantas.nacos.NacosTapdxConf;
-import com.mantas.tapd.ext.conf.TapdProject;
+import com.mantas.tapd.ext.conf.NacosTapdxConf;
+import com.mantas.tapd.ext.conf.TapdConf;
 import com.mantas.tapd.ext.dto.Project;
 import com.mantas.tapd.ext.dto.mapper.ProjectConvert;
+import com.mantas.tapd.ext.dto.tapd.TapdProject;
 import com.mantas.tapd.ext.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +59,11 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getProjects() {
         List<TapdProject> projects = null;
         try {
-            projects = nacosConfigurator.getConfig(nacosTapdxConf, new TypeToken<List<TapdProject>>() {
-            }.getType());
+            TapdConf config = nacosConfigurator.getConfig(nacosTapdxConf, TapdConf.class);
+            projects = config.getProjects();
         } catch (NacosException e) {
             e.printStackTrace();
+            log.warn("get projects from nacos error ", e);
         }
         return ProjectConvert.INSTANCE.toProjects(projects);
     }

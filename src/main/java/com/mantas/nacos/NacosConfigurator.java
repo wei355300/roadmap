@@ -25,12 +25,11 @@ public class NacosConfigurator {
 
     private final static Map<String, ConfigService> services = new HashMap<>();
 
-
     public <T> T getConfig(NacosConf nacosConf, Type type) throws NacosException {
         ConfigService configService = getConfigService(nacosConf);
 
         String content = configService.getConfig(nacosConf.getDataId(), nacosConf.getGroupId(), 5000);
-        log.debug("tapdx projects config: {}", content);
+        log.info("tapdx projects config: {}", content);
         T result = new Gson().fromJson(content, type);
         return result;
     }
