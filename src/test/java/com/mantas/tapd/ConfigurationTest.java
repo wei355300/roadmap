@@ -12,14 +12,10 @@ import org.springframework.test.context.ActiveProfiles;
 public class ConfigurationTest {
 
     @Autowired
-    private TapdConf tapdConf;
-
-    @Autowired
     private OkHttp okHttp;
 
     @Test
     public void testConfigurationTapdInit() {
-        System.out.println(tapdConf);
         System.out.println(okHttp);
     }
 }

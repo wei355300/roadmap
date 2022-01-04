@@ -10,7 +10,7 @@ spring:
 nacos:
   config:
     tapdx:
-      server_addr: "172.31.13.180:8848"
+      server_addr: "192.168.220.13:8848"
       namespace: "17013706-c074-4416-af54-b002b34157a2"
       data_id: "tapdx"
       group_id: "projects"
