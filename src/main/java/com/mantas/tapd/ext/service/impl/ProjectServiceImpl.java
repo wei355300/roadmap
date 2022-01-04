@@ -20,10 +20,8 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     private NacosConf nacosTapdxConf;
-    private NacosConfigurator nacosConfigurator;
 
-    public ProjectServiceImpl(@Autowired NacosTapdxConf nacosTapdxConf, @Autowired NacosConfigurator nacosConfigurator) {
-        this.nacosConfigurator = nacosConfigurator;
+    public ProjectServiceImpl(@Autowired NacosTapdxConf nacosTapdxConf) {
         this.nacosTapdxConf = nacosTapdxConf;
     }
 
@@ -33,7 +31,7 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> projects = getProjects();
         projects.add(project);
         try {
-            nacosConfigurator.publishConfig(nacosTapdxConf, projects);
+            NacosConfigurator.publishConfig(nacosTapdxConf, projects);
         } catch (NacosException e) {
             log.warn("update tapd projects configuration error", e);
             ret = false;
@@ -47,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> projects = getProjects();
         projects.removeIf(p -> p.getId().equals(project.getId()));
         try {
-            nacosConfigurator.publishConfig(nacosTapdxConf, projects);
+            NacosConfigurator.publishConfig(nacosTapdxConf, projects);
         } catch (NacosException e) {
             log.warn("update tapd projects configuration error", e);
             ret = false;
@@ -59,7 +57,7 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getProjects() {
         List<TapdProject> projects = null;
         try {
-            TapdConf config = nacosConfigurator.getConfig(nacosTapdxConf, TapdConf.class);
+            TapdConf config = NacosConfigurator.getConfig(nacosTapdxConf, TapdConf.class);
             projects = config.getProjects();
         } catch (NacosException e) {
             e.printStackTrace();
