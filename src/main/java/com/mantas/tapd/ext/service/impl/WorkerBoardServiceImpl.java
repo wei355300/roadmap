@@ -1,11 +1,9 @@
 package com.mantas.tapd.ext.service.impl;
 
-import com.google.common.collect.Comparators;
 import com.mantas.tapd.ext.dto.*;
 import com.mantas.tapd.ext.dto.mapper.TraceConvert;
 import com.mantas.tapd.ext.service.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.compare.ComparableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -75,11 +73,10 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
                 })).toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
         log.info("跑完了");
-        return workerTraces.values().stream().sorted((a, b ) -> {
-            int sort = 0;
-            sort = a.getTraces().size() == b.getTraces().size() ? 0 : a.getTraces().size() > b.getTraces().size() ? -1 : 1;
-            return sort;
-        }).collect(Collectors.toList());
+
+        Comparator<Worker> traceComparator = Comparator.comparingInt(w -> w.getTraces().size());
+
+        return workerTraces.values().stream().sorted(traceComparator.reversed()).collect(Collectors.toList());
     }
 
     private void mergeTrace(Map<String, Worker> workerTraces, Collection<Worker> traces) {
@@ -90,8 +87,7 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
             Worker workerTrace = workerTraces.get(t.getUser());
             if (Objects.isNull(workerTrace)) {
                 workerTraces.put(t.getUser(), t);
-            }
-            else {
+            } else {
                 workerTrace.getTraces().addAll(t.getTraces());
             }
         });
