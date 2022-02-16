@@ -1,9 +1,11 @@
 package com.mantas.tapd.ext.service.impl;
 
+import com.google.common.collect.Comparators;
 import com.mantas.tapd.ext.dto.*;
 import com.mantas.tapd.ext.dto.mapper.TraceConvert;
 import com.mantas.tapd.ext.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.compare.ComparableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -74,15 +76,13 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
         CompletableFuture.allOf(futures).join();
         log.info("跑完了");
         return workerTraces.values().stream().sorted((a, b ) -> {
-            if (Objects.isNull(a.getTraces())) {
+            if (CollectionUtils.isEmpty(a.getTraces())) {
                 return -1;
             }
-            if (Objects.isNull(b.getTraces())) {
+            if (CollectionUtils.isEmpty(b.getTraces())) {
                 return 1;
             }
-            else {
-                return a.getTraces().size() > b.getTraces().size() ? -1 : 1;
-            }
+            return a.getTraces().size() >= b.getTraces().size() ? 1 : -1;
         }).collect(Collectors.toList());
     }
 
