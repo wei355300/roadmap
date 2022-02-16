@@ -6,6 +6,7 @@ import com.mantas.tapd.ext.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -49,7 +50,7 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
                     log.info("开始跑异步: " + project.getName());
                     return getProjectComps(project);
                 }, executorService).whenComplete((result, t) -> {
-                    System.out.println("完成: " + project.getName());
+                    log.info("完成: " + project.getName());
                     comps.add(result);
                 })).toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
@@ -72,10 +73,23 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
                 })).toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
         log.info("跑完了");
-        return workerTraces.values().stream().sorted((a, b ) -> a.getTraces().size() > b.getTraces().size() ? -1 : 1).collect(Collectors.toList());
+        return workerTraces.values().stream().sorted((a, b ) -> {
+            if (Objects.isNull(a.getTraces())) {
+                return -1;
+            }
+            if (Objects.isNull(b.getTraces())) {
+                return 1;
+            }
+            else {
+                return a.getTraces().size() > b.getTraces().size() ? -1 : 1;
+            }
+        }).collect(Collectors.toList());
     }
 
     private void mergeTrace(Map<String, Worker> workerTraces, Collection<Worker> traces) {
+        if (CollectionUtils.isEmpty(traces)) {
+            return;
+        }
         traces.forEach(t -> {
             Worker workerTrace = workerTraces.get(t.getUser());
             if (Objects.isNull(workerTrace)) {

@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/petkit-saas/all-in-one:latest
+FROM registry.cn-hangzhou.aliyuncs.com/petkit-saas/java:latest
 
 MAINTAINER "mantas.cn" <mantas.cn>
 
