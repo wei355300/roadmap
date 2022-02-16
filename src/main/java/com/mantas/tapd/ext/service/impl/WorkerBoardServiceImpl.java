@@ -76,13 +76,9 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
         CompletableFuture.allOf(futures).join();
         log.info("跑完了");
         return workerTraces.values().stream().sorted((a, b ) -> {
-            if (CollectionUtils.isEmpty(a.getTraces())) {
-                return -1;
-            }
-            if (CollectionUtils.isEmpty(b.getTraces())) {
-                return 1;
-            }
-            return a.getTraces().size() >= b.getTraces().size() ? 1 : -1;
+            int sort = 0;
+            sort = a.getTraces().size() == b.getTraces().size() ? 0 : a.getTraces().size() > b.getTraces().size() ? -1 : 1;
+            return sort;
         }).collect(Collectors.toList());
     }
 
