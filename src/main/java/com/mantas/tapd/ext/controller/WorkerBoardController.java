@@ -1,6 +1,6 @@
 package com.mantas.tapd.ext.controller;
 
-import com.mantas.base.R;
+import com.mantas.controller.R;
 import com.mantas.tapd.ext.controller.req.GetTraceProjectParam;
 import com.mantas.tapd.ext.controller.req.ParamHelper;
 import com.mantas.tapd.ext.dto.ProjectComp;

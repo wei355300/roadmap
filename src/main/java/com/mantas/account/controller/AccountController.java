@@ -2,7 +2,7 @@ package com.mantas.account.controller;
 
 import com.mantas.account.mock.CurrentAuthority;
 import com.mantas.account.mock.LoginAccount;
-import com.mantas.base.R;
+import com.mantas.controller.R;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

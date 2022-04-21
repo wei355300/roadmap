@@ -1,4 +1,4 @@
-package com.mantas.base;
+package com.mantas.controller;
 
 public interface RCode {
 

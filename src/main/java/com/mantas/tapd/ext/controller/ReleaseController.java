@@ -1,6 +1,6 @@
 package com.mantas.tapd.ext.controller;
 
-import com.mantas.base.R;
+import com.mantas.controller.R;
 import com.mantas.tapd.ext.dto.Release;
 import com.mantas.tapd.ext.service.ReleaseService;
 import org.springframework.beans.factory.annotation.Autowired;

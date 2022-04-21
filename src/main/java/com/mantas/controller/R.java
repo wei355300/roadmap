@@ -1,4 +1,4 @@
-package com.mantas.base;
+package com.mantas.controller;
 
 import lombok.Data;
 

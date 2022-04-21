@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableCaching
 @SpringBootApplication
-public class TapdApplication {
+public class MantasXApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TapdApplication.class, args);
+        SpringApplication.run(MantasXApplication.class, args);
     }
 
 }

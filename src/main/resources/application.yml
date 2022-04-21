@@ -1,4 +1,9 @@
 
+gitlab:
+  project_id: "92"
+  project_name: "roadmap"
+  url: "https://code.mantas.cn"
+  access_token: "n6tZkTgB6q5Vc3RKyy-S"
 
 spring:
   cache:

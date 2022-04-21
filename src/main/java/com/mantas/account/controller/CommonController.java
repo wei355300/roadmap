@@ -1,6 +1,6 @@
 package com.mantas.account.controller;
 
-import com.mantas.base.R;
+import com.mantas.controller.R;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
