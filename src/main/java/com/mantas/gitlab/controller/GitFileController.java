@@ -33,4 +33,16 @@ public class GitFileController {
         log.info("获取Git文件: {}", fileName);
         return R.success(gitFileService.getContent(fileName));
     }
+
+    /**
+     * @param file 存放在Git上的文件, 为避免文件后缀等影响, 需要将文件名参数在http传输时先base64编码
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/branch")
+    public R<String> getGitFileWithBranch(@RequestParam("file") String file, @RequestParam("branch") String branch) throws Exception {
+        String fileName = URLDecoder.decode(file, "UTF-8");
+        log.info("获取Git文件: {}", fileName);
+        return R.success(gitFileService.getContent(fileName, branch));
+    }
 }
