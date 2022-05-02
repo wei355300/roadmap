@@ -1,9 +1,4 @@
 
-gitlab:
-  project_id: "92"
-  project_name: "roadmap"
-  url: "https://code.mantas.cn"
-  access_token: "n6tZkTgB6q5Vc3RKyy-S"
 
 spring:
   cache:
@@ -17,6 +12,12 @@ nacos:
       namespace: "17013706-c074-4416-af54-b002b34157a2"
       data_id: "tapdx"
       group_id: "projects"
+    roadmap:
+      server_addr: "172.31.13.180:8848"
+      namespace: "17013706-c074-4416-af54-b002b34157a2"
+      data_id: "gitlab"
+      group_id: "roadmap"
+
 
 server:
   port: 8080
