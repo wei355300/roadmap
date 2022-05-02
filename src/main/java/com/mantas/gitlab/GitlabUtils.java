@@ -18,7 +18,6 @@ public class GitlabUtils {
 
     public String getFileContent(String path, String branchName) throws GitLabApiException {
         log.info("get file by path: {}, branch: {}", path, branchName);
-        log.info("properties: {}", properties);
         return gitLabApi.getRepositoryFileApi().getFile(properties.getProjectId(), path, branchName).getContent();
     }
 }
