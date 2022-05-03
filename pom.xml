@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mantas</groupId>
-    <artifactId>tapd</artifactId>
+    <artifactId>roadmap</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>tapd</name>
+    <name>roadmap</name>
     <packaging>jar</packaging>
 
     <properties>

@@ -1,7 +1,6 @@
-<<<<<<< HEAD
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-=======
 # Compiled class file
 *.class
 
@@ -13,7 +12,6 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
->>>>>>> 023226b8b32aff28f31b587a226083dd275bffed
 
 # Package Files #
 *.jar
@@ -24,7 +22,6 @@
 *.tar.gz
 *.rar
 
-<<<<<<< HEAD
 **/target
 
 # dependencies
@@ -65,7 +62,5 @@ screenshot
 .eslintcache
 
 build
-=======
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
->>>>>>> 023226b8b32aff28f31b587a226083dd275bffed

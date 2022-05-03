@@ -4,7 +4,7 @@ MAINTAINER "mantas.cn" <mantas.cn>
 
 ARG BASE_DIR=/proj/server/
 
-ADD target/tapd.jar /proj/server/tapd.jar
+ADD target/roadmap.jar /proj/server/roadmap.jar
 
 #COPY start.sh /
 
@@ -15,6 +15,6 @@ ADD target/tapd.jar /proj/server/tapd.jar
 #RUN chmod a+x /start.sh
 #ENTRYPOINT ["/start.sh"]
 
-ENTRYPOINT ["java", "-jar", "/proj/server/tapd.jar"]
+ENTRYPOINT ["java", "-jar", "/proj/server/roadmap.jar"]
 
 EXPOSE 8080

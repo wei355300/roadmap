@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: tapdx-java
-  name: tapdx-java
+    app: roadmap-java
+  name: roadmap-java
   namespace: default
 spec:
   progressDeadlineSeconds: 100
@@ -11,7 +11,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: tapdx-java
+      app: roadmap-java
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -20,12 +20,12 @@ spec:
   template:
     metadata:
       labels:
-        app: tapdx-java
+        app: roadmap-java
     spec:
       containers:
-        - image: ${TAPDX_JAVA_IMAGE_TAG}
+        - image: ${ROADMAP_JAVA_IMAGE_TAG}
           imagePullPolicy: Always
-          name: tapdx-java
+          name: roadmap-java
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tapdx-java-svc
+  name: roadmap-java-svc
   namespace: default
 spec:
   ports:
@@ -47,7 +47,7 @@ spec:
       protocol: TCP
       targetPort: 8080
   selector:
-    app: tapdx-java
+    app: roadmap-java
   sessionAffinity: None
   type: ClusterIP
 
