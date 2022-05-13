@@ -11,20 +11,16 @@ import com.mantas.tapd.ext.dto.tapd.TapdStory;
 import com.mantas.tapd.ext.service.StoryService;
 import com.mantas.tapd.ext.service.TapdRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
 public class StoryServiceImpl implements StoryService {
 
     private TapdRequest tapdRequest;
 
-    @Autowired
     public StoryServiceImpl(TapdRequest tapdRequest) {
         this.tapdRequest = tapdRequest;
     }
@@ -45,11 +41,12 @@ public class StoryServiceImpl implements StoryService {
 
     /**
      * 按业务价值排序
+     *
      * @param data
      * @return
      */
     private List<Story> convertStory(TapdResult<List<TapdStory>> data) {
-        return data.getData().stream().map(s -> StoryConvert.INSTANCE.toStory(s.getStory())).sorted((s1, s2)->{
+        return data.getData().stream().map(s -> StoryConvert.INSTANCE.toStory(s.getStory())).sorted((s1, s2) -> {
             return s1.getBusinessValue() - s2.getBusinessValue();
         }).collect(Collectors.toList());
     }

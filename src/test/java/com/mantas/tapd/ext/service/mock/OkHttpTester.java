@@ -1,7 +1,7 @@
 package com.mantas.tapd.ext.service.mock;
 
 import com.mantas.okhttp.ParamPair;
-import com.mantas.tapd.ext.conf.TapdConf;
+import com.mantas.tapd.ext.config.TapdConf;
 import com.mantas.tapd.TapdURL;
 import com.mantas.tapd.ext.dto.tapd.TapdStoryData;
 import com.mantas.okhttp.OkHttp;

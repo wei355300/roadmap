@@ -10,8 +10,6 @@ import com.mantas.tapd.ext.dto.mapper.IterationConvert;
 import com.mantas.tapd.ext.service.IterationService;
 import com.mantas.tapd.ext.service.TapdRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Date;
@@ -19,12 +17,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-@Service
 public class IterationServiceImpl implements IterationService {
 
     private TapdRequest tapdRequest;
 
-    @Autowired
     public IterationServiceImpl(TapdRequest tapdRequest) {
         this.tapdRequest = tapdRequest;
     }
@@ -44,7 +40,7 @@ public class IterationServiceImpl implements IterationService {
         return convert(data, IterationConvert.INSTANCE);
     }
 
-    protected  List<Iteration> convert(TapdResult<List<TapdIteration>> data, IterationConvert mapper) {
+    protected List<Iteration> convert(TapdResult<List<TapdIteration>> data, IterationConvert mapper) {
         if (Objects.nonNull(data) && Objects.nonNull(data.getData())) {
             return mapper.toIterations(data.getData());
         }

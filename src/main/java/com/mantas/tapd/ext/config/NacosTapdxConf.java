@@ -1,4 +1,4 @@
-package com.mantas.tapd.ext.conf;
+package com.mantas.tapd.ext.config;
 
 import com.mantas.nacos.NacosConf;
 import lombok.Data;

@@ -3,25 +3,22 @@ package com.mantas.tapd.ext.service.impl;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.mantas.nacos.NacosConf;
 import com.mantas.nacos.NacosConfigurator;
-import com.mantas.tapd.ext.conf.NacosTapdxConf;
-import com.mantas.tapd.ext.conf.TapdConf;
+import com.mantas.tapd.ext.config.NacosTapdxConf;
+import com.mantas.tapd.ext.config.TapdConf;
 import com.mantas.tapd.ext.dto.Project;
 import com.mantas.tapd.ext.dto.mapper.ProjectConvert;
 import com.mantas.tapd.ext.dto.tapd.TapdProject;
 import com.mantas.tapd.ext.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
-@Service
 public class ProjectServiceImpl implements ProjectService {
 
     private NacosConf nacosTapdxConf;
 
-    public ProjectServiceImpl(@Autowired NacosTapdxConf nacosTapdxConf) {
+    public ProjectServiceImpl(NacosTapdxConf nacosTapdxConf) {
         this.nacosTapdxConf = nacosTapdxConf;
     }
 

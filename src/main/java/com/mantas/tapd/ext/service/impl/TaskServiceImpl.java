@@ -11,20 +11,16 @@ import com.mantas.tapd.ext.dto.mapper.TaskConvert;
 import com.mantas.tapd.ext.service.TapdRequest;
 import com.mantas.tapd.ext.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
 public class TaskServiceImpl implements TaskService {
 
     private TapdRequest tapdRequest;
 
-    @Autowired
     public TaskServiceImpl(TapdRequest tapdRequest) {
         this.tapdRequest = tapdRequest;
     }

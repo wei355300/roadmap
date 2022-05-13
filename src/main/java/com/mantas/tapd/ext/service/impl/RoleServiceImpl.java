@@ -23,11 +23,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
     private TapdRequest tapdRequest;
+
+    public RoleServiceImpl(TapdRequest tapdRequest) {
+        this.tapdRequest = tapdRequest;
+    }
 
     /**
      * 按 projectId 缓存数据

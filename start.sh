@@ -2,4 +2,4 @@
 
 mvn clean && mvn package -Dmaven.test.skip=true
 
-docker build -t mantas/tapd:latest .
+docker build -f Dockerfile -t mantas/roadmap-java:latest .

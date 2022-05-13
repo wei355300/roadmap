@@ -1,4 +1,4 @@
-package com.mantas.tapd.ext.conf;
+package com.mantas.tapd.ext.config;
 
 import com.mantas.tapd.ext.dto.tapd.TapdAuth;
 import com.mantas.tapd.ext.dto.tapd.TapdProject;

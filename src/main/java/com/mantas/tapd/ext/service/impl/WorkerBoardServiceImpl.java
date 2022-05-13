@@ -4,8 +4,6 @@ import com.mantas.tapd.ext.dto.*;
 import com.mantas.tapd.ext.dto.mapper.TraceConvert;
 import com.mantas.tapd.ext.service.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -15,21 +13,28 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
 public class WorkerBoardServiceImpl implements WorkerBoardService {
 
-    @Autowired
     private RoleService roleService;
-    @Autowired
     private IterationService iterationService;
-    @Autowired
     private ProjectService projectService;
-    @Autowired
     private StoryService storyService;
-    @Autowired
     private TaskService taskService;
-    @Autowired
     private BugService bugService;
+
+    public WorkerBoardServiceImpl(RoleService roleService,
+                                  IterationService iterationService,
+                                  ProjectService projectService,
+                                  StoryService storyService,
+                                  TaskService taskService,
+                                  BugService bugService) {
+        this.roleService = roleService;
+        this.iterationService = iterationService;
+        this.projectService = projectService;
+        this.storyService = storyService;
+        this.taskService = taskService;
+        this.bugService = bugService;
+    }
 
     /**
      * 获取 tapd 上的所有项目的基本信息, 包括:

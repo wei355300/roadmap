@@ -4,8 +4,8 @@ kind: ConfigMap
 metadata:
   name: roadmap-cm
 data:
-  nacos.server.host: ${NACOS_SERVER_HOST}
-  nacos.server.port: ${NACOS_SERVER_PORT}
+  nacos.server.host: "10.101.131.126"
+  nacos.server.port: "8848"
 ---
 apiVersion: apps/v1
 kind: Deployment

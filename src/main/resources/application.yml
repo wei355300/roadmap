@@ -8,12 +8,12 @@ spring:
 nacos:
   config:
     tapdx:
-      server_addr: "172.31.13.180:8848"
+      server_addr: ${NACOS_SERVER_HOST:172.17.0.5}:${NACOS_SERVER_PORT:8848}
       namespace: "17013706-c074-4416-af54-b002b34157a2"
       data_id: "tapdx"
       group_id: "projects"
     roadmap:
-      server_addr: "172.31.13.180:8848"
+      server_addr: ${NACOS_SERVER_HOST:172.17.0.5}:${NACOS_SERVER_PORT:8848}
       namespace: "17013706-c074-4416-af54-b002b34157a2"
       data_id: "gitlab"
       group_id: "roadmap"
