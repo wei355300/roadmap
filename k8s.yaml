@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: roadmap-cm
+  namespace: default
 data:
   nacos.server.host: ${NACOS_SERVER_HOST}
   nacos.server.port: ${NACOS_SERVER_PORT}
