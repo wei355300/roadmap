@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/petkit-saas/java:latest
+FROM arm64v8/openjdk:11.0.15-jdk-oraclelinux8
 
 MAINTAINER "mantas.cn" <mantas.cn>
 
