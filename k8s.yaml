@@ -32,7 +32,7 @@ spec:
         app: roadmap-java
     spec:
       containers:
-        - image: ${ROADMAP_JAVA_IMAGE_TAG}
+        - image: ${ROADMAP_JAVA_IMAGE_URL}
           imagePullPolicy: IfNotPresent
           name: roadmap-java
           ports:
