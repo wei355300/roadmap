@@ -5,8 +5,8 @@ metadata:
   name: roadmap-cm
   namespace: default
 data:
-  nacos.server.host: ${NACOS_SERVER_HOST}
-  nacos.server.port: ${NACOS_SERVER_PORT}
+  nacos.server.host: "${NACOS_SERVER_HOST}"
+  nacos.server.port: "${NACOS_SERVER_PORT}"
 ---
 apiVersion: apps/v1
 kind: Deployment
