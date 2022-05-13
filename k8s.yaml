@@ -63,7 +63,7 @@ metadata:
     app: roadmap-java-svc
   namespace: default
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: port
       port: 40012
