@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-# tapd-java
+
+# tapd
 
 ## 增加 spring-cloud 支持
 
@@ -61,7 +61,3 @@ curl -X GET "http://192.168.220.13:8848/nacos/v1/cs/configs?dataId=tapdx&group=p
 
 curl -X GET "http://172.31.13.180:8848/nacos/v1/cs/configs?dataId=tapdx&group=projects&tenant=17013706-c074-4416-af54-b002b34157a2"
 
-
-=======
-# roadmap
->>>>>>> 023226b8b32aff28f31b587a226083dd275bffed

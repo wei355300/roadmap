@@ -22,33 +22,33 @@ public class ProjectServiceImpl implements ProjectService {
         this.nacosTapdxConf = nacosTapdxConf;
     }
 
-    @Override
-    public boolean addProject(Project project) {
-        boolean ret = true;
-        List<Project> projects = getProjects();
-        projects.add(project);
-        try {
-            NacosConfigurator.publishConfig(nacosTapdxConf, projects);
-        } catch (NacosException e) {
-            log.warn("update tapd projects configuration error", e);
-            ret = false;
-        }
-        return ret;
-    }
-
-    @Override
-    public boolean delProject(Project project) {
-        boolean ret = true;
-        List<Project> projects = getProjects();
-        projects.removeIf(p -> p.getId().equals(project.getId()));
-        try {
-            NacosConfigurator.publishConfig(nacosTapdxConf, projects);
-        } catch (NacosException e) {
-            log.warn("update tapd projects configuration error", e);
-            ret = false;
-        }
-        return ret;
-    }
+//    @Override
+//    public boolean addProject(Project project) {
+//        boolean ret = true;
+//        List<Project> projects = getProjects();
+//        projects.add(project);
+//        try {
+//            NacosConfigurator.publishConfig(nacosTapdxConf, projects);
+//        } catch (NacosException e) {
+//            log.warn("update tapd projects configuration error", e);
+//            ret = false;
+//        }
+//        return ret;
+//    }
+//
+//    @Override
+//    public boolean delProject(Project project) {
+//        boolean ret = true;
+//        List<Project> projects = getProjects();
+//        projects.removeIf(p -> p.getId().equals(project.getId()));
+//        try {
+//            NacosConfigurator.publishConfig(nacosTapdxConf, projects);
+//        } catch (NacosException e) {
+//            log.warn("update tapd projects configuration error", e);
+//            ret = false;
+//        }
+//        return ret;
+//    }
 
     @Override
     public List<Project> getProjects() {

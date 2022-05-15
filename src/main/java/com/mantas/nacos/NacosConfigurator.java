@@ -27,6 +27,8 @@ public class NacosConfigurator implements BeanPostProcessor {
     public static <T> T getConfig(NacosConf nacosConf, Type type) throws NacosException {
         ConfigService configService = getConfigService(nacosConf);
 
+        // 可以增加配置修改后的listener
+//        String content = configService.getConfigAndSignListener(nacosConf.getDataId(), nacosConf.getGroupId(), 5000, null);
         String content = configService.getConfig(nacosConf.getDataId(), nacosConf.getGroupId(), 5000);
 
         log.info("get content {} from nacos server by conf {}", content, nacosConf);
