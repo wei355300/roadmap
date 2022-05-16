@@ -23,5 +23,6 @@ nacos:
       data_id: ${NACOS_ALILOG_DATA_ID:"alilog"}
       group_id: ${NACOS_ALILOG_GROUP_ID:"roadmap"}
 
+
 server:
   port: 8080
