@@ -8,15 +8,20 @@ spring:
 nacos:
   config:
     tapdx:
-      server_addr: ${NACOS_SERVER_HOST:172.17.0.5}:${NACOS_SERVER_PORT:8848}
-      namespace: "17013706-c074-4416-af54-b002b34157a2"
-      data_id: "tapdx"
-      group_id: "roadmap"
+      server_addr: ${NACOS_SERVER_HOST:127.0.0.1}:${NACOS_SERVER_PORT:8848}
+      namespace: ${NACOS_TAPDX_NAMESPACE:"17013706-c074-4416-af54-b002b34157a2"}
+      data_id: ${NACOS_TAPDX_DATA_ID:"tapdx"}
+      group_id: ${NACOS_TAPDX_GROUP_ID:"roadmap"}
     roadmap:
-      server_addr: ${NACOS_SERVER_HOST:172.17.0.5}:${NACOS_SERVER_PORT:8848}
-      namespace: "17013706-c074-4416-af54-b002b34157a2"
-      data_id: "gitlab"
-      group_id: "roadmap"
+      server_addr: ${NACOS_SERVER_HOST:127.0.0.1}:${NACOS_SERVER_PORT:8848}
+      namespace: ${NACOS_ROADMAP_NAMESPACE:"17013706-c074-4416-af54-b002b34157a2"}
+      data_id: ${NACOS_ROADMAP_DATA_ID:"gitlab"}
+      group_id: ${NACOS_ROADMAP_GROUP_ID:"roadmap"}
+    alilog:
+      server_addr: ${NACOS_SERVER_HOST:127.0.0.1}:${NACOS_SERVER_PORT:8848}
+      namespace: ${NACOS_ALILOG_NAMESPACE:"17013706-c074-4416-af54-b002b34157a2"}
+      data_id: ${NACOS_ALILOG_DATA_ID:"alilog"}
+      group_id: ${NACOS_ALILOG_GROUP_ID:"roadmap"}
 
 
 server:
