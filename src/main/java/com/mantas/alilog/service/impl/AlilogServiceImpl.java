@@ -4,6 +4,7 @@ import com.aliyun.openservices.log.exception.LogException;
 import com.mantas.alilog.config.AlilogConfigProperties.AlilogItemConfigProperties;
 import com.mantas.alilog.dto.LogEntity;
 import com.mantas.alilog.dto.LogQuery;
+import com.mantas.alilog.dto.LogResLine;
 import com.mantas.alilog.service.AlilogService;
 import com.mantas.gitlab.service.GitFileService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +30,7 @@ public class AlilogServiceImpl implements AlilogService {
     }
 
     @Override
-    public void query(String entity, String logStore, String query, int fromTime, int toTime) throws Exception {
-        try {
-            alilogClients.query(entity, logStore, query, fromTime, toTime);
-        } catch (LogException e) {
-            throw new Exception();
-        }
+    public List<LogResLine> query(String entity, String logStore, String query, int fromTime, int toTime) throws Exception {
+        return alilogClients.query(entity, logStore, query, fromTime, toTime);
     }
 }

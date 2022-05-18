@@ -11,6 +11,11 @@ public class JsonUtils {
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
     }
 
+    public static <T> String toJson(T obj) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(obj);
+    }
+
     public static <T> T toObj(String json, Class<T> clazz) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(json, clazz);
