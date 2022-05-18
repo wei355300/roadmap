@@ -9,4 +9,5 @@ public class GitlabConfigProperties {
     private String projectName;
     private String url;
     private String accessToken;
+
 }

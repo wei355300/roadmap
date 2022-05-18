@@ -1,7 +1,8 @@
 package com.mantas.alilog.service.impl;
 
 import com.aliyun.openservices.log.exception.LogException;
-import com.mantas.alilog.config.AlilogItemConfigProperties;
+import com.mantas.alilog.config.AlilogConfigProperties.AlilogItemConfigProperties;
+import com.mantas.alilog.dto.LogEntity;
 import com.mantas.alilog.dto.LogQuery;
 import com.mantas.alilog.service.AlilogService;
 import com.mantas.gitlab.service.GitFileService;
@@ -16,29 +17,23 @@ import java.util.Map;
 public class AlilogServiceImpl implements AlilogService {
 
 
-    private GitFileService gitFileService;
-    private final static Map<String, AlilogClient> clients = new HashMap<>();
+    private AlilogClients alilogClients;
 
-    public AlilogServiceImpl(List<AlilogItemConfigProperties> properties, GitFileService gitFileService) {
-        properties.forEach(prop -> {
-            AlilogClient client = new AlilogClient(prop);
-            clients.put(prop.getEntity(), client);
-        });
-        this.gitFileService = gitFileService;
+    public AlilogServiceImpl(AlilogClients alilogClients) {
+        this.alilogClients = alilogClients;
     }
 
     @Override
-    public void query(String entity, LogQuery query) throws LogException {
-        clients.get(entity).query(query);
+    public Collection<LogEntity> getLogEntities() {
+        return alilogClients.getEntities();
     }
 
     @Override
-    public Collection<String> getLogEntities() {
-        return clients.keySet();
-    }
-
-    @Override
-    public String getQueryOfEntity(String path) throws Exception {
-        return gitFileService.getContent(path);
+    public void query(String entity, String logStore, String query, int fromTime, int toTime) throws Exception {
+        try {
+            alilogClients.query(entity, logStore, query, fromTime, toTime);
+        } catch (LogException e) {
+            throw new Exception();
+        }
     }
 }

@@ -4,11 +4,11 @@ import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mantas.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,7 +24,7 @@ public class NacosConfigurator implements BeanPostProcessor {
 
     private final static Map<String, ConfigService> services = new HashMap<>();
 
-    public static <T> T getConfig(NacosConf nacosConf, Type type) throws NacosException {
+    public static <T> T getConfig(NacosConf nacosConf, Class<T> type) throws NacosException, JsonProcessingException {
         ConfigService configService = getConfigService(nacosConf);
 
         // 可以增加配置修改后的listener
@@ -33,14 +33,14 @@ public class NacosConfigurator implements BeanPostProcessor {
 
         log.info("get content {} from nacos server by conf {}", content, nacosConf);
 
-        T result = new Gson().fromJson(content, type);
+        T result = JsonUtils.toObj(content, type);
         return result;
     }
 
-    public static <T> boolean publishConfig(NacosConf nacosConf, T content) throws NacosException {
-        ConfigService configService = getConfigService(nacosConf);
-        return configService.publishConfig(nacosConf.getDataId(), nacosConf.getGroupId(), new Gson().toJson(content));
-    }
+//    public static <T> boolean publishConfig(NacosConf nacosConf, T content) throws NacosException {
+//        ConfigService configService = getConfigService(nacosConf);
+//        return configService.publishConfig(nacosConf.getDataId(), nacosConf.getGroupId(), new Gson().toJson(content));
+//    }
 
     private static ConfigService getConfigService(NacosConf nacosConf) throws NacosException {
         ConfigService configService = services.get(nacosConf.getModule());

@@ -1,15 +1,12 @@
 package com.mantas.alilog.service;
 
-import com.aliyun.openservices.log.exception.LogException;
-import com.mantas.alilog.dto.LogQuery;
+import com.mantas.alilog.dto.LogEntity;
 
 import java.util.Collection;
 
 public interface AlilogService {
 
-    void query(String entity, LogQuery query) throws LogException;
+    Collection<LogEntity> getLogEntities();
 
-    Collection<String> getLogEntities();
-
-    String getQueryOfEntity(String path) throws Exception;
+    void query(String entity, String logStore, String query, int fromTime, int toTime) throws Exception;
 }

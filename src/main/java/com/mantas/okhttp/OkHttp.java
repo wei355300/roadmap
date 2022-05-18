@@ -1,6 +1,6 @@
 package com.mantas.okhttp;
 
-import com.google.gson.Gson;
+import com.mantas.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.util.CollectionUtils;
@@ -18,7 +18,7 @@ public class OkHttp {
     public OkHttp(Set<Interceptor> interceptors) {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         if (Objects.nonNull(interceptors)) {
-            interceptors.forEach( interceptor -> clientBuilder.addInterceptor(interceptor));
+            interceptors.forEach(interceptor -> clientBuilder.addInterceptor(interceptor));
         }
         client = clientBuilder.build();
     }
@@ -35,12 +35,12 @@ public class OkHttp {
 
     private <T> T req(Request request, Class<T> classOfT) throws IOException {
         String resBody = client.newCall(request).execute().body().string();
-        return new Gson().fromJson(resBody, classOfT);
+        return JsonUtils.toObj(resBody, classOfT);
     }
 
     private HttpUrl buildUrl(String url, List<ParamPair> params) {
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
-        if(!CollectionUtils.isEmpty(params)) {
+        if (!CollectionUtils.isEmpty(params)) {
             params.forEach((p) -> urlBuilder.addQueryParameter(p.getName(), p.getValue()));
         }
         return urlBuilder.build();

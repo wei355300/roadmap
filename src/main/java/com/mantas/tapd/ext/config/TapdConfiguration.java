@@ -1,6 +1,7 @@
 package com.mantas.tapd.ext.config;
 
 import com.alibaba.nacos.api.exception.NacosException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mantas.nacos.NacosConfigurator;
 import com.mantas.okhttp.BasicInterceptor;
 import com.mantas.okhttp.OkHttp;
@@ -20,7 +21,7 @@ import java.util.Set;
 public class TapdConfiguration {
 
     @Bean
-    public OkHttp okHttp(@Autowired NacosTapdxConf nacosTapdxConf) throws NacosException {
+    public OkHttp okHttp(@Autowired NacosTapdxConf nacosTapdxConf) throws NacosException, JsonProcessingException {
         TapdConf tapdConf = NacosConfigurator.getConfig(nacosTapdxConf, TapdConf.class);
         log.info("nacos server config content: {}, {}", tapdConf.getAuth().getBasicAuthId(), tapdConf);
         BasicInterceptor basicInterceptor = new BasicInterceptor(tapdConf.getAuth().getBasicAuthId(), tapdConf.getAuth().getBasicAuthPwd());

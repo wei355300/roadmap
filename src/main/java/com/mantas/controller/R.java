@@ -1,12 +1,20 @@
 package com.mantas.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 @Data
 public class R<T> {
+    @JsonView(ResponseJsonView.Public.class)
     private int code;
+    @JsonView(ResponseJsonView.Public.class)
     private String msg;
+    @JsonView(ResponseJsonView.Public.class)
     private T data;
+
+    private R() {
+        this(RCode.CODE_SUCCESS, RCode.MSG_SUCCESS);
+    }
 
     private R(T data) {
         this(RCode.CODE_SUCCESS, RCode.MSG_SUCCESS, data);
@@ -20,6 +28,10 @@ public class R<T> {
         this.code = code;
         this.msg = msg;
         this.data = data;
+    }
+
+    public static final R success() {
+        return new R();
     }
 
     public static final <T> R success(T data) {

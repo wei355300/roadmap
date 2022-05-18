@@ -1,6 +1,7 @@
 package com.mantas.tapd.ext.service.impl;
 
 import com.alibaba.nacos.api.exception.NacosException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mantas.nacos.NacosConf;
 import com.mantas.nacos.NacosConfigurator;
 import com.mantas.tapd.ext.config.NacosTapdxConf;
@@ -59,6 +60,8 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (NacosException e) {
             e.printStackTrace();
             log.warn("get projects from nacos error ", e);
+        } catch (JsonProcessingException e) {
+            log.warn("parse data error ", e);
         }
         return ProjectConvert.INSTANCE.toProjects(projects);
     }

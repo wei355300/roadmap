@@ -18,35 +18,57 @@ Aliyun log
 
 ## nacos
 
+- nacos存储配置相关信息
+  1. aliyun-sls(日志服务)的连接信息
+    > "accessId": "",  // aliyun账号的accessId    
+      "accessKey": "", // aliyun账号的accessKey    
+      "host": "",      // aliyun-sls的访问地址  
+   
+  1. 内置的查询条件
+    > 查询条件可存放在Git上或数据库等介质中
+
+- nacos配置数据格式  
 ```json
 {
   "entities": [
     {
-      "entity": "B2B订货平台",
-      "desc": "",
+      "entity": "",            
+      "desc": "",                 
       "accessId": "",
       "accessKey": "",
       "host": "",
-      "query": "b2b/query_buyer.json"
+      "git": {                 
+        "projectId": "",
+        "projectName": "",
+        "url": "",
+        "accessToken": "",
+        "file": "b2b/query_b2b_buyer.json"
+      }
     }
   ]
 }
 ```
 
-存放在git的内置查询条件
+> "entity":   标明查询的数据定义, 如: xx数据分析  
+> "desc":     简短的目的描述  
+> "git":      存放在git上的配置  
+> "git.file": 存放在git上的文件路径  
 
+- 存放在git的内置查询条件
 
 ```json
-{
-  "name": "B2B订货行为分析",
-  "projectName": "",
-  "logstoreName": "",
-  "queries": [
+[
     {
-      "name": "搜索热词",
-      "topic": "",
-      "filter": ""
+      "name": "",
+      "projectName": "",
+      "logStoreName": "",
+      "queries": [
+        {
+          "name": "搜索热词",
+          "topic": "",
+          "filter": "list/by/menu  | select replace(split_part(split_part(REQUEST_PARAMS, '\"search\":', 2), ',', 1), '}', '') as search,count(1)  as times where split_part(split_part(REQUEST_PARAMS, '\"search\":', 2), ',', 1) !='null' group by search order by times desc limit 10000"
+        }
+      ]
     }
-  ]
-}
+]
 ```

@@ -6,14 +6,14 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.test.context.ActiveProfiles;
 
-@EnableScheduling
-@EnableCaching
-@SpringBootApplication
-@ActiveProfiles("test")
-public class TapdApplicationTest {
+//@EnableScheduling
+//@EnableCaching
+//@SpringBootApplication
+//@ActiveProfiles("test")
+public class MantasXApplicationTest {
 
     public static void main(String[] args) {
-        SpringApplication.run(TapdApplicationTest.class, args);
+        SpringApplication.run(MantasXApplicationTest.class, args);
     }
 
 }
