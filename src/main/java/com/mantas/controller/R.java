@@ -1,15 +1,11 @@
 package com.mantas.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 @Data
 public class R<T> {
-    @JsonView(ResponseJsonView.Public.class)
     private int code;
-    @JsonView(ResponseJsonView.Public.class)
     private String msg;
-    @JsonView(ResponseJsonView.Public.class)
     private T data;
 
     private R() {

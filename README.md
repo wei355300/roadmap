@@ -1,63 +1,32 @@
 
-# tapd
+工具大杂烩
 
-## 增加 spring-cloud 支持
+# 功能
 
-- 增加 nacos 配置支持
+## tapd-ext
 
-在 nacos server 中增加 tapd 的配置
+对接腾讯的TAPD的开放接口, 集中参看TAPD上的内容: 
 
-```
-namespace: "?"
-data_id: "?"
-group_id: "?"
-```
-配置内容
-```
-{
-  "auth": {
-    "basicAuthId": "${tapd 开放平台的 auth id}",
-    "basicAuthPwd": "${tapd 开放平台的 auth pwd}"
-  },
-  "projects": [
-    {
-      "id": "tapd 开放平台的 项目 ID",
-      "name": "tapd 开放平台的 项目 名称"
-    }
-  ]
-}
-```
-
-在 java 项目的application.yml 中设置 nacos 的配置信息
-```yaml
-nacos:
-  config:
-    tapdx:
-      server_addr: "${nacos_server_addr}"
-      namespace: "{nacos_namespace}"
-      data_id: "{nacos_data_id}"
-      group_id: "{nacos_group_id}"
-```
-
-java项目配置示例
-```yaml
-nacos:
-  config:
-    tapdx:
-      server_addr: "127.0.0.1:8848"
-      namespace: "17013706-c074-4416-af54-xxx"
-      data_id: "tapdx"
-      group_id: "projects"
-```
+- 跨项目的迭代
 
 
-> http://127.0.0.1:8848/nacos/  
-> nacos / Petkit123
+## ali-log查询
 
-> curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=tapdx&group=projects&tenant=17013706-c074-4416-af54-b002b34157a2"
+对接阿里云的SLS(日志服务), 查看整理过的日志数据(日志分析)
 
-curl -X GET "http://192.168.220.13:8848/nacos/v1/cs/configs?dataId=tapdx&group=projects&tenant=17013706-c074-4416-af54-b002b34157a2"
+# 代码层面的限制
 
+## http限制
 
-curl -X GET "http://172.31.13.180:8848/nacos/v1/cs/configs?dataId=tapdx&group=projects&tenant=17013706-c074-4416-af54-b002b34157a2"
+响应仅支持json格式,  
+采用spring默认的jackson类库,  
+通过 `@JsonView`, `@JsonIgnore`, `@JsonProperty` 注解, 格式化响应结果
+
+## 配置现在
+
+- nacos-config
+
+程序启动后, 从 nacos 获取各功能的配置  
+各具体配置可查看对应package下的readme文档
+
 

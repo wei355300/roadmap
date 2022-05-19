@@ -1,7 +1,6 @@
 package com.mantas.alilog.dto;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.mantas.controller.ResponseJsonView;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -9,10 +8,10 @@ import java.util.List;
 @Data
 public class LogStore {
 
-    @JsonView(ResponseJsonView.Public.class)
     private String name;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String project;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String logStore;
-    @JsonView(ResponseJsonView.Public.class)
     private List<LogQuery> logQueries;
 }

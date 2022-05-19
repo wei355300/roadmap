@@ -29,7 +29,7 @@ public class AlilogQueryController {
         this.alilogService = alilogService;
     }
 
-    @JsonView(ResponseJsonView.Public.class)
+//    @JsonView(ResponseJsonView.Public.class)
     @GetMapping("/entities")
     public R listLogEntities() {
         Collection<LogEntity> entities = alilogService.getLogEntities();
@@ -49,7 +49,7 @@ public class AlilogQueryController {
         return R.success(entities);
     }
 
-    @JsonView(ResponseJsonView.Public.class)
+//    @JsonView(ResponseJsonView.Public.class)
     @GetMapping("/query")
     public R getQueryOfEntity(@Valid @RequestBody QueryParams params) throws Exception {
         List<LogResLine> lines =  alilogService.query(params.getEntity(), params.getStore(), params.getQuery(), params.getFromTime(), params.getToTime());
