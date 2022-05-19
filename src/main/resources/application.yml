@@ -1,13 +1,8 @@
 
-
 spring:
   cache:
     cache-names: "tapd-roles, tapd-users"
     type: simple
-  mvc:
-    converters:
-      preferred-json-mapper: gson
-
 
 nacos:
   config:
