@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ReleaseService {
 
-    List<Release> list(String day);
+//    List<Release> list(String day);
 }

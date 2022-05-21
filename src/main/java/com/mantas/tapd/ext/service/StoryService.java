@@ -9,4 +9,6 @@ import java.util.List;
 public interface StoryService {
 
     List<List<Story>> getByIterations(Integer id, Collection<Iteration> iterations);
+
+    List<Story> getByIteration(Integer projectId, String iterationId);
 }

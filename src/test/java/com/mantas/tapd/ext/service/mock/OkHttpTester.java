@@ -1,8 +1,8 @@
 package com.mantas.tapd.ext.service.mock;
 
 import com.mantas.okhttp.ParamPair;
-import com.mantas.tapd.ext.config.TapdConf;
-import com.mantas.tapd.TapdURL;
+import com.mantas.tapd.ext.config.TapdConfigProperties;
+import com.mantas.tapd.origin.TapdURL;
 import com.mantas.tapd.ext.dto.tapd.TapdStoryData;
 import com.mantas.okhttp.OkHttp;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class OkHttpTester {
 
     @Autowired
-    private TapdConf tapdConf;
+    private TapdConfigProperties tapdConf;
 
     @Autowired
     private OkHttp okHttp;

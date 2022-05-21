@@ -1,4 +1,4 @@
-package com.mantas.tapd.ext.service;
+package com.mantas.tapd.origin;
 
 import com.mantas.okhttp.OkHttp;
 import com.mantas.okhttp.ParamPair;
@@ -50,11 +50,4 @@ public class TapdRequest {
         }
         return result;
     }
-
-//    protected  <K extends TapdDataIt> List convert(TapdData<K> data, StructMapper mapper) {
-//        if (Objects.nonNull(data) && Objects.nonNull(data.getData())) {
-//            return data.getData().stream().map(m -> mapper.mapper(m.getEntity())).collect(Collectors.toList());
-//        }
-//        return Collections.emptyList();
-//    }
 }

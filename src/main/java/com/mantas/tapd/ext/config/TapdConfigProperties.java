@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TapdConf {
+public class TapdConfigProperties {
 
     private TapdAuth auth;
     private List<TapdProject> projects;

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mantas.nacos.NacosConf;
 import com.mantas.nacos.NacosConfigurator;
 import com.mantas.tapd.ext.config.NacosTapdxConf;
-import com.mantas.tapd.ext.config.TapdConf;
+import com.mantas.tapd.ext.config.TapdConfigProperties;
 import com.mantas.tapd.ext.dto.Project;
 import com.mantas.tapd.ext.dto.mapper.ProjectConvert;
 import com.mantas.tapd.ext.dto.tapd.TapdProject;
@@ -55,7 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getProjects() {
         List<TapdProject> projects = null;
         try {
-            TapdConf config = NacosConfigurator.getConfig(nacosTapdxConf, TapdConf.class);
+            TapdConfigProperties config = NacosConfigurator.getConfig(nacosTapdxConf, TapdConfigProperties.class);
             projects = config.getProjects();
         } catch (NacosException e) {
             e.printStackTrace();

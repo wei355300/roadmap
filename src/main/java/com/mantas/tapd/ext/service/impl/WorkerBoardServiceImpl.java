@@ -148,7 +148,7 @@ public class WorkerBoardServiceImpl implements WorkerBoardService {
         });
     }
 
-    private void assignToWorker(Map<String, Worker> allWorkers, String[] workers, Trace trace) {
+    private void assignToWorker(Map<String, Worker> allWorkers, List<String> workers, Trace trace) {
         if (Objects.isNull(workers)) {
             return;
         }

@@ -1,34 +1,36 @@
 package com.mantas.tapd.ext.service.impl;
 
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.ReadContext;
+import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.ParamPair;
-import com.mantas.tapd.TapdResult;
-import com.mantas.tapd.TapdUser;
-import com.mantas.tapd.TapdUserResult;
-import com.mantas.tapd.TapdURL;
+import com.mantas.tapd.ext.dto.Story;
+import com.mantas.tapd.origin.TapdClient;
+import com.mantas.tapd.origin.dto.TapdResult;
+import com.mantas.tapd.origin.dto.TapdUser;
+import com.mantas.tapd.origin.dto.TapdUserResult;
+import com.mantas.tapd.origin.TapdURL;
 import com.mantas.tapd.ext.dto.Role;
 import com.mantas.tapd.ext.dto.Worker;
 import com.mantas.tapd.ext.dto.mapper.RoleConvert;
 import com.mantas.tapd.ext.service.RoleService;
-import com.mantas.tapd.ext.service.TapdRequest;
+import com.mantas.tapd.origin.TapdRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class RoleServiceImpl implements RoleService {
 
-    private TapdRequest tapdRequest;
+    private TapdClient tapdClient;
 
-    public RoleServiceImpl(TapdRequest tapdRequest) {
-        this.tapdRequest = tapdRequest;
+    public RoleServiceImpl(TapdClient tapdClient) {
+        this.tapdClient = tapdClient;
     }
 
     /**
@@ -39,8 +41,7 @@ public class RoleServiceImpl implements RoleService {
     @Cacheable(cacheNames = "tapd-roles", key = "'tapd-roles-'+#projectId")
     @Override
     public List<Role> getRolesByProject(Integer projectId) {
-        TapdResult<Map<String, String>> data = tapdRequest.get(TapdURL.URL.ROLES, tapdRequest.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString()), TapdResult.class);
-        return convertRole(data);
+        return requestRoles(projectId);
     }
 
     /**
@@ -52,11 +53,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Worker> getUsersByProject(Integer projectId) {
         log.info("getUsersByProject: {}", projectId);
-        List<ParamPair> pairs = tapdRequest.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
-        tapdRequest.appendParams(pairs, TapdURL.PARAM.FIELDS, "user,role_id,name,email");
-
-        TapdResult<List<TapdUser>> data = tapdRequest.get(TapdURL.URL.USERS, pairs, TapdUserResult.class);
-        return convertUser(data);
+        return requestUsers(projectId);
     }
 
     @Override
@@ -81,11 +78,59 @@ public class RoleServiceImpl implements RoleService {
         log.info("evict tapd: users|roles cached");
     }
 
-    private List<Role> convertRole(TapdResult<Map<String, String>> data) {
-        return data.getData().entrySet().stream().map(m -> new Role(m.getKey(), m.getValue())).collect(Collectors.toList());
+
+    private List<Worker> requestUsers(Integer projectId) {
+        List<ParamPair> pairs = tapdClient.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
+        tapdClient.appendParams(pairs, TapdURL.PARAM.FIELDS, "user,role_id,name,email");
+
+        try {
+            String body = tapdClient.get(TapdURL.URL.USERS, pairs);
+            return body2User(body);
+        } catch (IOException e) {
+            log.warn("requestRoles err: \n {}", e);
+        }
+        return Collections.EMPTY_LIST;
     }
 
-    private List<Worker> convertUser(TapdResult<List<TapdUser>> data) {
-        return data.getData().stream().map(u -> RoleConvert.INSTANCE.toWorker(u.getUserWorkspace())).collect(Collectors.toList());
+    private List<Role> requestRoles(Integer projectId) {
+        List<ParamPair> pairs = tapdClient.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
+        try {
+            String body = tapdClient.get(TapdURL.URL.ROLES, pairs);
+            return body2Role(body);
+        } catch (IOException e) {
+            log.warn("requestRoles err: \n {}", e);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    private List<Role> body2Role(String body) {
+        log.debug("response role body:\n {}", body);
+        Map<String, String> map = JsonPath.read(body, "$.data");
+        List<Role> roles = new ArrayList<>(map.size());
+        map.forEach((k,v )-> roles.add(new Role(k, v)));
+        log.debug("parsed role result: \n {}", roles);
+        return roles;
+    }
+
+    private List<Worker> body2User(String body) {
+        log.debug("response user body:\n {}", body);
+        ReadContext ctx = JsonPath.parse(body);
+        List<Map<String, String>> list = ctx.read("$.data[*].UserWorkspace");
+        List<Worker> users = new ArrayList<>(list.size());
+        for (int i = 0; i < list.size(); i++) {
+            Worker worker = new Worker();
+            Map<String, String> m = list.get(i);
+
+            worker.setUser(m.get("user"));
+            worker.setName(m.get("name"));
+            worker.setEmail(m.get("email"));
+
+            List<String> roleIds = ctx.read("$.data["+i+"].UserWorkspace.role_id");
+            worker.setRoles(roleIds);
+
+            users.add(worker);
+        }
+        log.debug("parsed user result: \n {}", users);
+        return users;
     }
 }

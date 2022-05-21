@@ -1,6 +1,6 @@
 package com.mantas.tapd.ext.dto.mapper;
 
-import com.mantas.tapd.TapdUrlBuilder;
+import com.mantas.tapd.origin.dto.TapdUrlBuilder;
 import com.mantas.tapd.ext.dto.Bug;
 import com.mantas.tapd.ext.dto.Story;
 import com.mantas.tapd.ext.dto.Task;

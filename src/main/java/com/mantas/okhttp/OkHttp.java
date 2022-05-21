@@ -13,6 +13,36 @@ import java.util.Set;
 @Slf4j
 public class OkHttp {
 
+    static class Url {
+        static HttpUrl build(String url, List<ParamPair> params) {
+            HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
+            if (!CollectionUtils.isEmpty(params)) {
+                params.forEach((p) -> urlBuilder.addQueryParameter(p.getName(), p.getValue()));
+            }
+            return urlBuilder.build();
+        }
+    }
+
+    static class Get {
+        static Request build(HttpUrl url) {
+            Request.Builder reqBuilder = new Request.Builder();
+            reqBuilder.url(url);
+            reqBuilder.get();
+            return reqBuilder.build();
+        }
+    }
+
+    static class Post {
+        static Request build(String url, String body) {
+            Request.Builder reqBuilder = new Request.Builder();
+            reqBuilder.url(url);
+            //fixme buildPostReq()
+            RequestBody reqBody = null;
+            reqBuilder.post(reqBody);
+            return reqBuilder.build();
+        }
+    }
+
     private OkHttpClient client;
 
     public OkHttp(Set<Interceptor> interceptors) {
@@ -23,42 +53,27 @@ public class OkHttp {
         client = clientBuilder.build();
     }
 
+    public String get(String url, List<ParamPair> params) throws IOException {
+        Request request = Get.build(Url.build(url, params));
+        return request(request);
+    }
+
     public <T> T get(String url, List<ParamPair> params, Class<T> classOfT) throws IOException {
-        Request request = buildGetReq(buildUrl(url, params));
-        return req(request, classOfT);
+        Request request = Get.build(Url.build(url, params));
+        return request(request, classOfT);
     }
 
     public <T> T post(String url, String body, Class<T> classOfT) throws IOException {
-        Request request = buildPostReq(url, body);
-        return req(request, classOfT);
+        Request request = Post.build(url, body);
+        return request(request, classOfT);
     }
 
-    private <T> T req(Request request, Class<T> classOfT) throws IOException {
-        String resBody = client.newCall(request).execute().body().string();
+    private <T> T request(Request request, Class<T> classOfT) throws IOException {
+        String resBody = request(request);
         return JsonUtils.toObj(resBody, classOfT);
     }
 
-    private HttpUrl buildUrl(String url, List<ParamPair> params) {
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
-        if (!CollectionUtils.isEmpty(params)) {
-            params.forEach((p) -> urlBuilder.addQueryParameter(p.getName(), p.getValue()));
-        }
-        return urlBuilder.build();
-    }
-
-    private Request buildPostReq(String url, String body) {
-        Request.Builder reqBuilder = new Request.Builder();
-        reqBuilder.url(url);
-        //fixme buildPostReq()
-        RequestBody reqBody = null;
-        reqBuilder.post(reqBody);
-        return reqBuilder.build();
-    }
-
-    private Request buildGetReq(HttpUrl url) {
-        Request.Builder reqBuilder = new Request.Builder();
-        reqBuilder.url(url);
-        reqBuilder.get();
-        return reqBuilder.build();
+    private String request(Request request) throws IOException {
+        return client.newCall(request).execute().body().string();
     }
 }

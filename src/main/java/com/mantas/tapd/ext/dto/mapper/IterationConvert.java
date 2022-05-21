@@ -1,7 +1,7 @@
 package com.mantas.tapd.ext.dto.mapper;
 
-import com.mantas.tapd.TapdIteration;
-import com.mantas.tapd.TapdIterationItem;
+import com.mantas.tapd.origin.dto.TapdIteration;
+import com.mantas.tapd.origin.dto.TapdIterationItem;
 import com.mantas.tapd.ext.dto.Iteration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

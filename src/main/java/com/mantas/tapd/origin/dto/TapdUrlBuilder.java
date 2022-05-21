@@ -1,4 +1,4 @@
-package com.mantas.tapd;
+package com.mantas.tapd.origin.dto;
 
 public class TapdUrlBuilder {
 

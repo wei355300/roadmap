@@ -1,6 +1,6 @@
 package com.mantas.tapd.ext.dto.mapper;
 
-import com.mantas.tapd.TapdUserItem;
+import com.mantas.tapd.origin.dto.TapdUserItem;
 import com.mantas.tapd.ext.dto.Worker;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,7 +16,7 @@ public interface RoleConvert {
             @Mapping(source = "user", target = "user"),
             @Mapping(source = "name", target = "name"),
             @Mapping(source = "email", target = "email"),
-            @Mapping(source = "role_id", target = "roles")
+//            @Mapping(source = "role_id", target = "roles")
     })
     Worker toWorker(TapdUserItem user);
 }

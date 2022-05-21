@@ -1,6 +1,6 @@
 package com.mantas.tapd.ext.dto.mapper;
 
-import com.mantas.tapd.TapdBugItem;
+import com.mantas.tapd.origin.dto.TapdBugItem;
 import com.mantas.tapd.ext.dto.Bug;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

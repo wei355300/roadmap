@@ -9,4 +9,6 @@ import java.util.List;
 public interface BugService {
 
     List<List<Bug>> getByIterations(Integer projectId, Collection<Iteration> iterations);
+
+    List<Bug> getByIterations(Integer projectId, String iterationId);
 }

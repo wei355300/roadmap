@@ -7,6 +7,8 @@ import com.mantas.okhttp.BasicInterceptor;
 import com.mantas.okhttp.OkHttp;
 import com.mantas.tapd.ext.service.*;
 import com.mantas.tapd.ext.service.impl.*;
+import com.mantas.tapd.origin.TapdClient;
+import com.mantas.tapd.origin.TapdRequest;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,30 +23,36 @@ import java.util.Set;
 public class TapdConfiguration {
 
     @Bean
-    public OkHttp okHttp(@Autowired NacosTapdxConf nacosTapdxConf) throws NacosException, JsonProcessingException {
-        TapdConf tapdConf = NacosConfigurator.getConfig(nacosTapdxConf, TapdConf.class);
-        log.info("nacos server config content: {}, {}", tapdConf.getAuth().getBasicAuthId(), tapdConf);
-        BasicInterceptor basicInterceptor = new BasicInterceptor(tapdConf.getAuth().getBasicAuthId(), tapdConf.getAuth().getBasicAuthPwd());
+    public TapdRequest tapdRequest(@Autowired NacosTapdxConf nacosTapdxConf) throws JsonProcessingException, NacosException {
+        TapdConfigProperties tapdConfigProperties = NacosConfigurator.getConfig(nacosTapdxConf, TapdConfigProperties.class);
+        log.info("nacos server config content: {}, {}", tapdConfigProperties.getAuth().getBasicAuthId(), tapdConfigProperties);
+        BasicInterceptor basicInterceptor = new BasicInterceptor(tapdConfigProperties.getAuth().getBasicAuthId(), tapdConfigProperties.getAuth().getBasicAuthPwd());
         Set<Interceptor> interceptors = new HashSet<>(1);
         interceptors.add(basicInterceptor);
         OkHttp okHttp = new OkHttp(interceptors);
-        return okHttp;
-    }
-
-    @Bean
-    public TapdRequest tapdRequest(@Autowired OkHttp okHttp) {
         return new TapdRequest(okHttp);
     }
 
+    @Bean
+    public TapdClient tapdClient(@Autowired NacosTapdxConf nacosTapdxConf) throws JsonProcessingException, NacosException {
+        TapdConfigProperties tapdConfigProperties = NacosConfigurator.getConfig(nacosTapdxConf, TapdConfigProperties.class);
+        log.info("nacos server config content: {}, {}", tapdConfigProperties.getAuth().getBasicAuthId(), tapdConfigProperties);
+        BasicInterceptor basicInterceptor = new BasicInterceptor(tapdConfigProperties.getAuth().getBasicAuthId(), tapdConfigProperties.getAuth().getBasicAuthPwd());
+        Set<Interceptor> interceptors = new HashSet<>(1);
+        interceptors.add(basicInterceptor);
+        OkHttp okHttp = new OkHttp(interceptors);
+        return new TapdClient(okHttp);
+    }
+
 
     @Bean
-    public BugService bugService(@Autowired TapdRequest tapdRequest) {
-        return new BugServiceImpl(tapdRequest);
+    public BugService bugService(@Autowired TapdClient tapdClient) {
+        return new BugServiceImpl(tapdClient);
     }
 
     @Bean
-    public IterationService iterationService(@Autowired TapdRequest tapdRequest) {
-        return new IterationServiceImpl(tapdRequest);
+    public IterationService iterationService(@Autowired TapdClient tapdClient) {
+        return new IterationServiceImpl(tapdClient);
     }
 
     @Bean
@@ -53,23 +61,23 @@ public class TapdConfiguration {
     }
 
     @Bean
-    public ReleaseService releaseService(@Autowired OkHttp okHttp) {
-        return new ReleaseServiceImpl(okHttp);
+    public ReleaseService releaseService(@Autowired TapdClient tapdClient) {
+        return new ReleaseServiceImpl(tapdClient);
     }
 
     @Bean
-    public RoleService roleService(@Autowired TapdRequest tapdRequest) {
-        return new RoleServiceImpl(tapdRequest);
+    public RoleService roleService(@Autowired TapdClient tapdClient) {
+        return new RoleServiceImpl(tapdClient);
     }
 
     @Bean
-    public StoryService storyService(@Autowired TapdRequest tapdRequest) {
-        return new StoryServiceImpl(tapdRequest);
+    public StoryService storyService(@Autowired TapdClient tapdClient) {
+        return new StoryServiceImpl(tapdClient);
     }
 
     @Bean
-    public TaskService taskService(@Autowired TapdRequest tapdRequest) {
-        return new TaskServiceImpl(tapdRequest);
+    public TaskService taskService(@Autowired TapdClient tapdClient) {
+        return new TaskServiceImpl(tapdClient);
     }
 
     @Bean

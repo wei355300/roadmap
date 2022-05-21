@@ -1,6 +1,6 @@
 package com.mantas.tapd.ext.dto.tapd;
 
-import com.mantas.tapd.TapdStoryItem;
+import com.mantas.tapd.origin.dto.TapdStoryItem;
 import lombok.Data;
 
 @Data

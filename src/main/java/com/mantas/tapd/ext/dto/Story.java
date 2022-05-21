@@ -1,16 +1,23 @@
 package com.mantas.tapd.ext.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class Story {
 
     private String id;
-    private String[] owner;
+    @JsonDeserialize(converter = TapdOwnerConverterOfJsonDeSerialization.class)
+    private List<String> owner;
     private String name;
     private String description;
     private String status;
-    private String[] developer;
+    @JsonDeserialize(converter = TapdOwnerConverterOfJsonDeSerialization.class)
+    private List<String> developer;
     private String priority;
     private String begin;
     private String due;
@@ -19,3 +26,4 @@ public class Story {
     private String iterationId;
     private String releaseId;
 }
+

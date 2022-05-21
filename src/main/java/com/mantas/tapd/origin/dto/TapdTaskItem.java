@@ -1,9 +1,9 @@
-package com.mantas.tapd;
+package com.mantas.tapd.origin.dto;
 
 import lombok.Data;
 
 @Data
-public class TapdStoryItem {
+public class TapdTaskItem {
     private String id;
     private String name;
     private String description;

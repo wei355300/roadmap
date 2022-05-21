@@ -1,8 +1,12 @@
 
+
 spring:
   cache:
     cache-names: "tapd-roles, tapd-users"
     type: simple
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
 
 nacos:
   config:
