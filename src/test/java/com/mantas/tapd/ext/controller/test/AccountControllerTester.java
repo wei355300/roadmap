@@ -1,4 +1,4 @@
-package com.mantas.tapd.ext.controller.mock;
+package com.mantas.tapd.ext.controller.test;
 
 import com.mantas.account.controller.AccountController;
 import org.junit.jupiter.api.Test;

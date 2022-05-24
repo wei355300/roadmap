@@ -1,5 +1,6 @@
 package com.mantas.tapd.ext.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
@@ -13,8 +14,10 @@ public class Bug {
     private String id;
     private String title;
     @JsonDeserialize(converter = TapdOwnerConverterOfJsonDeSerialization.class)
+    @JsonAlias("de")
     private List<String> developer;
     @JsonDeserialize(converter = TapdOwnerConverterOfJsonDeSerialization.class)
+    @JsonAlias("te")
     private List<String> tester;
     private String description;
     private String priority; //优先级
@@ -22,5 +25,6 @@ public class Bug {
     private String severity; //严重程度
     private String status;
     private int projectId;
+    @JsonAlias("iteration_id")
     private String iterationId;
 }

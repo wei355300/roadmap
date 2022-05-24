@@ -33,7 +33,7 @@ public class BugServiceImpl implements BugService {
     }
 
     @Override
-    public List<Bug> getByIterations(Integer projectId, String iterationId) {
+    public List<Bug> getByIteration(Integer projectId, String iterationId) {
         return request(projectId, iterationId);
     }
 

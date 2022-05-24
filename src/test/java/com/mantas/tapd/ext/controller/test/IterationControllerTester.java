@@ -1,4 +1,4 @@
-package com.mantas.tapd.ext.controller.mock.service;
+package com.mantas.tapd.ext.controller.test;
 
 import com.mantas.tapd.ext.dto.Iteration;
 import com.mantas.tapd.ext.service.IterationService;

@@ -33,6 +33,11 @@ public class TaskServiceImpl implements TaskService {
         return tasks;
     }
 
+    @Override
+    public List<Task> getByIterations(Integer projectId, Iteration iteration) {
+        return request(projectId, iteration);
+    }
+
     private List<Task> request(Integer projectId, Iteration iteration) {
         return request(projectId, iteration.getId());
     }
@@ -54,7 +59,7 @@ public class TaskServiceImpl implements TaskService {
     private List<Task> body2Task(String body) {
         log.debug("response task body:\n {}", body);
         TypeRef<List<Task>> typeRef = new TypeRef<List<Task>>() {};
-        List<Task> tasks = JsonPath.parse(body).read("$.data.*", typeRef);
+        List<Task> tasks = JsonPath.parse(body).read("$.data[*].Task", typeRef);
         log.debug("parsed tasks result: \n {}", tasks);
         return tasks;
     }

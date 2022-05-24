@@ -29,7 +29,7 @@ public class TapdBugController {
 
     @GetMapping("/list")
     public R getBugs(@RequestParam("projectId") Integer projectId, @RequestParam("iterationId") String iterationId) {
-        List<Bug> bugs = bugService.getByIterations(projectId, iterationId);
+        List<Bug> bugs = bugService.getByIteration(projectId, iterationId);
         return R.success(bugs);
     }
 }
