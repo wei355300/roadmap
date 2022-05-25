@@ -33,3 +33,5 @@ server:
 logging:
   level:
     root: info
+    com:
+      mantas: debug
