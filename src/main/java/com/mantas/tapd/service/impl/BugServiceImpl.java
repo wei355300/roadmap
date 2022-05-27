@@ -1,6 +1,5 @@
 package com.mantas.tapd.service.impl;
 
-import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.ParamPair;
 import com.mantas.tapd.dto.Bug;
@@ -43,19 +42,10 @@ public class BugServiceImpl implements BugService {
         tapdClient.appendParams(pairs, TapdURL.PARAM.LIMIT, "200");
 
         try {
-            String body = tapdClient.get(TapdURL.URL.BUGS, pairs);
-            return body2Bug(body);
+            return tapdClient.get(TapdURL.URL.BUGS, pairs, new TypeRef<List<Bug>>() {}, "$.data[*].Bug");
         } catch (IOException e) {
             log.warn("request err: \n {}", e);
         }
         return Collections.EMPTY_LIST;
-    }
-
-    private List<Bug> body2Bug(String body) {
-        log.debug("response bugs body:\n {}", body);
-        TypeRef<List<Bug>> typeRef = new TypeRef<List<Bug>>() {};
-        List<Bug> bugs = JsonPath.parse(body).read("$.data[*].Bug", typeRef);
-        log.debug("parsed bugs result: \n {}", bugs);
-        return bugs;
     }
 }

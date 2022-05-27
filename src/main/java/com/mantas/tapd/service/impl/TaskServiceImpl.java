@@ -1,13 +1,12 @@
 package com.mantas.tapd.service.impl;
 
-import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.ParamPair;
 import com.mantas.tapd.dto.Iteration;
 import com.mantas.tapd.dto.Task;
-import com.mantas.tapd.service.TaskService;
 import com.mantas.tapd.service.TapdClient;
 import com.mantas.tapd.service.TapdURL;
+import com.mantas.tapd.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -47,19 +46,10 @@ public class TaskServiceImpl implements TaskService {
         tapdClient.appendParams(pairs, TapdURL.PARAM.LIMIT, "200");
 
         try {
-            String body = tapdClient.get(TapdURL.URL.TASKS, pairs);
-            return body2Task(body);
+            return tapdClient.get(TapdURL.URL.TASKS, pairs, new TypeRef<List<Task>>() {}, "$.data[*].Task");
         } catch (IOException e) {
             log.warn("request err: \n {}", e);
         }
         return Collections.EMPTY_LIST;
-    }
-
-    private List<Task> body2Task(String body) {
-        log.debug("response task body:\n {}", body);
-        TypeRef<List<Task>> typeRef = new TypeRef<List<Task>>() {};
-        List<Task> tasks = JsonPath.parse(body).read("$.data[*].Task", typeRef);
-        log.debug("parsed tasks result: \n {}", tasks);
-        return tasks;
     }
 }

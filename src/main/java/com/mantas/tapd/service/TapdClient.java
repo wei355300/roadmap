@@ -1,7 +1,10 @@
 package com.mantas.tapd.service;
 
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.OkHttp;
 import com.mantas.okhttp.ParamPair;
+import com.mantas.tapd.dto.Bug;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -32,6 +35,11 @@ public class TapdClient {
         return okHttp.get(url, params);
     }
 
+    public <T> T get(String url, List<ParamPair> params, TypeRef<T> ref, String pattern) throws IOException {
+        String body = get(url, params);
+        return body2Obj(body, ref, pattern);
+    }
+
     public <T> T post(String url, List<ParamPair> params, Class<T> ret) {
 
         T result = null;
@@ -42,5 +50,12 @@ public class TapdClient {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private <T> T body2Obj(String body, TypeRef<T> ref, String pattern) {
+        log.debug("response body:\n {}", body);
+        T obj = JsonPath.parse(body).read(pattern, ref);
+        log.debug("parsed result: \n {}", obj);
+        return obj;
     }
 }

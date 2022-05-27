@@ -1,6 +1,5 @@
 package com.mantas.tapd.service.impl;
 
-import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.ParamPair;
 import com.mantas.tapd.dto.Iteration;
@@ -49,19 +48,10 @@ public class StoryServiceImpl implements StoryService {
         tapdClient.appendParams(pairs, TapdURL.PARAM.LIMIT, "200");
 
         try {
-            String body = tapdClient.get(TapdURL.URL.STORIES, pairs);
-            return body2Story(body);
+            return tapdClient.get(TapdURL.URL.STORIES, pairs, new TypeRef<List<Story>>() {}, "$.data[*].Story");
         } catch (IOException e) {
             log.warn("request err: \n {}", e);
         }
         return Collections.EMPTY_LIST;
-    }
-
-    private List<Story> body2Story(String body) {
-        log.debug("response story body:\n {}", body);
-        TypeRef<List<Story>> typeRef = new TypeRef<List<Story>>() {};
-        List<Story> stories = JsonPath.parse(body).read("$.data[*].Story", typeRef);
-        log.debug("parsed story result: \n {}", stories);
-        return stories;
     }
 }

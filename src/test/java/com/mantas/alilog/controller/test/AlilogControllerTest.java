@@ -56,7 +56,8 @@ public class AlilogControllerTest {
 
         URI path = builder.encode().build().toUri();
 
-        ResultActions resultActions = mockMvc.perform(get(path).content(paramsBody).contentType(MediaType.APPLICATION_JSON));
+//        ResultActions resultActions = mockMvc.perform(get(path).content(paramsBody).contentType(MediaType.APPLICATION_JSON));
+        ResultActions resultActions = mockMvc.perform(get(path).param("params", paramsBody));
         resultActions.andExpect(status().isOk()).andDo(print());
         String body = resultActions.andReturn().getResponse().getContentAsString();
         System.out.println(body);

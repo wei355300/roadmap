@@ -1,6 +1,5 @@
 package com.mantas.tapd.service.impl;
 
-import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.ParamPair;
 import com.mantas.tapd.dto.Iteration;
@@ -38,20 +37,10 @@ public class IterationServiceImpl implements IterationService {
         tapdClient.appendParams(pairs, TapdURL.PARAM.STATUS, "open");
 
         try {
-            String body = tapdClient.get(TapdURL.URL.ITERATIONS, pairs);
-            return body2Iteration(body);
+            return tapdClient.get(TapdURL.URL.ITERATIONS, pairs, new TypeRef<List<Iteration>>() {}, "$.data[*].Iteration");
         } catch (IOException e) {
             log.warn("request err: \n {}", e);
         }
         return Collections.EMPTY_LIST;
-    }
-
-    private List<Iteration> body2Iteration(String body) {
-        log.debug("response iterations body:\n {}", body);
-        TypeRef<List<Iteration>> typeRef = new TypeRef<List<Iteration>>() {
-        };
-        List<Iteration> iterations = JsonPath.parse(body).read("$.data[*].Iteration", typeRef);
-        log.debug("parsed iterations result: \n {}", iterations);
-        return iterations;
     }
 }
