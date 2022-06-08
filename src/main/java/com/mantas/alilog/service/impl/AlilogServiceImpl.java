@@ -1,18 +1,12 @@
 package com.mantas.alilog.service.impl;
 
-import com.aliyun.openservices.log.exception.LogException;
-import com.mantas.alilog.config.AlilogConfigProperties.AlilogItemConfigProperties;
 import com.mantas.alilog.dto.LogEntity;
-import com.mantas.alilog.dto.LogQuery;
 import com.mantas.alilog.dto.LogResLine;
 import com.mantas.alilog.service.AlilogService;
-import com.mantas.gitlab.service.GitFileService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 public class AlilogServiceImpl implements AlilogService {
