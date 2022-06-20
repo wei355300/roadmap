@@ -40,7 +40,7 @@ public class AlilogClients {
                     fromTime,
                     toTime,
                     logQuery.getTopic(),
-                    logQuery.getFilter());
+                    logQuery.getStatement());
 
             return toLogResLines(getLogsResponse.getLogs());
         }

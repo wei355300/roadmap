@@ -65,7 +65,7 @@ public class AlilogConfigPropertiesParser {
 
         @Mapping(source = "name", target = "name")
         @Mapping(source = "topic", target = "topic")
-        @Mapping(source = "filter", target = "filter")
+        @Mapping(source = "filter", target = "statement")
         LogQuery logQuery(GitFileQuery query);
     }
 

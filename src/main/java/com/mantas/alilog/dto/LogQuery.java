@@ -7,5 +7,5 @@ public class LogQuery {
 
     private String name;
     private String topic;
-    private String filter;
+    private String statement;
 }
