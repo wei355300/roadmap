@@ -16,8 +16,8 @@ import java.util.Collection;
 import java.util.List;
 
 @Slf4j
-@RestController
-@RequestMapping("/api/alilog")
+//@RestController
+//@RequestMapping("/api/alilog")
 public class AlilogQueryController {
 
     private AlilogService alilogService;
