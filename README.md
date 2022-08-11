@@ -3,6 +3,24 @@
 
 # 功能
 
+## 鉴权与授权
+
+核心代码: (package) com.mantas.security
+
+1. 账号相关: com.mantas.security.account
+2. 接口调用鉴权: com.mantas.security.token
+
+用法: 
+
+前端在调用接口时, 会携带 token 参数,  
+通过 token 的校验(鉴权), (参考: TokenAuthenticationFilter)   
+如果token合法, 则进行授权 (参考: AuthorityUrlCheckerAuthorizationManager)   
+
+授权通过后, 调用 spring-mvc的controller定义的接口
+
+流程说明: 查看 `com.mantas.security.readme.md` 文档
+
+
 ## tapd
 
 对接腾讯的TAPD的开放接口, 集中查看TAPD上的内容: 
@@ -44,8 +62,15 @@
 
 通过 `@JsonView`, `@JsonIgnore`, `@JsonProperty` 注解, 格式化响应结果
 
+
+### 自定义json解析
+
+jackson的配置查看: GlobalConfiguration::jsonCustomizer()
+
 ## `jsonpath` 的使用
 
 基于tapd开放平台响应数据格式的特殊性,  
 
-使用 `jsonpath` 解析响应结果, 具体可查看 `tapd-package`下的`readme`文档
+jsonpath的配置查看: GlobalConfiguration.java
+
+> 使用 `jsonpath` 解析响应结果, 用法可查看 `tapd-package`下的`readme`文档

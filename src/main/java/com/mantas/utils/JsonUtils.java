@@ -3,12 +3,32 @@ package com.mantas.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.util.Map;
 import java.util.Optional;
 
 public class JsonUtils {
+    /**
+     * fixme
+     * 可以通过Bean的方式, 获取 spring 内置的 ObjectMapper,
+     * @Bean
+     * public OtherBean injectObjectMapper(ObjectMapper objectMapper) {}
+     */
     private static ObjectMapper objectMapper = new ObjectMapper();
+    static {
+        //Jackson 默认不支持 Java8 的 LocalDateTime,
+        //需要在 pom.xml 中添加 jackson-datatype-jsr310 并手动注册 JavaTimeModule
+        //注: spring自身支持, 已通过 autoconfiguration 设置好了
+        objectMapper.registerModule(new JavaTimeModule());
+    }
+
+    private static JsonUtils ins ;
+
+    public JsonUtils(ObjectMapper objectMapper) {
+        ins = this;
+        this.objectMapper = objectMapper;
+    }
 
     public static String prettyJson(String json) throws JsonProcessingException {
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);

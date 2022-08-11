@@ -55,8 +55,9 @@ public class DingtalkAuthenticationProvider implements AuthenticationProvider {
 
     private Account retrieveUser(String authCode, DingtalkAuthenticationToken authentication) throws AuthenticationException {
         try {
-            return dingtalkDetailServices.getUserByAuthCode(authCode);
+            return dingtalkDetailServices.getAccountByAuthCode(authCode);
         } catch (Exception e) {
+            log.warn("can not find account", e);
             throw new BadCredentialsException("Bad credentials");
         }
     }

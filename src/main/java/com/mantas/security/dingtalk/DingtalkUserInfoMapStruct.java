@@ -14,9 +14,9 @@ public interface DingtalkUserInfoMapStruct {
 
     @Mappings({
             @Mapping(source = "avatarUrl", target = "avatarUrl"),
-            @Mapping(constant = "mobile", target = "mobile"),
-            @Mapping(constant = "nick", target = "nick"),
-            @Mapping(constant = "nick", target = "name")
+            @Mapping(source = "mobile", target = "mobile"),
+            @Mapping(source = "nick", target = "nick"),
+            @Mapping(source = "nick", target = "name")
     })
     UserInfo toUser(GetUserResponseBody getUserResponseBody);
 }

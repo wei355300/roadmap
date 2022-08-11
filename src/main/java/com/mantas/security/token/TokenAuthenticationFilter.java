@@ -38,16 +38,12 @@ import java.io.IOException;
  */
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-//    public static final String DEFAULT_FILTER_PROCESSES_URI = "/api/**";
-
     private RequestMatcher requiresAuthenticationRequestMatcher;
 
     public static final String SPRING_SECURITY_TOKEN_KEY = "token";
     private String tokenParameter = SPRING_SECURITY_TOKEN_KEY;
 
     private AuthenticationManager authenticationManager;
-
-//    private String filterProcessesUrl;
 
     /**
      * 提取token,
@@ -65,7 +61,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     public TokenAuthenticationFilter(String filterProcessesUrl, AuthenticationManager authenticationManager) {
         Assert.notNull(authenticationManager, "authenticationManager cannot be null");
         Assert.notNull(filterProcessesUrl, "filterProcessesUrl cannot be null");
-//        this.filterProcessesUrl = filterProcessesUrl;
         this.authenticationManager = authenticationManager;
         this.requiresAuthenticationRequestMatcher = new AntPathRequestMatcher(filterProcessesUrl);
     }

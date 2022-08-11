@@ -47,7 +47,6 @@ public class AuthorityUrlCheckerAuthorizationManager implements AuthorizationMan
         // TokenAuthenticationToken 中存放着账号的所有权限
         TokenAuthenticationToken tokenAuthenticationToken = (TokenAuthenticationToken) authentication.get();
         Account account = tokenAuthenticationToken.getAccount();
-        List<Authority> authorities = account.getAuthorities();
         Authority authority = new Authority(requestAuthorizationContext.getRequest().getRequestURI(), requestAuthorizationContext.getRequest().getMethod());
 
         return new AuthorizationDecision(AuthorityGrantor.hasAuthority(account, authority));

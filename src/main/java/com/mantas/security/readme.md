@@ -33,6 +33,40 @@ http request
 
     鉴权流程结束
 
+流程概要
+
+TokenAuthenticationFilter:
+
+```shell
+TokenAuthenticationFilter
+    |
+TokenAuthenticationManager
+    | 
+TokenAuthenticationProvider
+    |
+    |--> (Failure)AuthenticationFailureHandler
+    |--> (Success)AuthorizeFilter
+
+AuthorizeFilter
+    |
+AuthorityUrlCheckerAuthorizationManager
+```
+
+
+DingtalkAuthenticationFilter:
+登录流程, 从钉钉服务器获取用户信息, 并验证通过后, 
+生成token后, 携带账号信息, 返回至前端 
+```shell
+DingtalkAuthenticationFilter
+    |
+DingtalkAuthenticationManager
+    | 
+DingtalkAuthenticationProvider
+    |
+    |--> (Failure)AuthenticationFailureHandler(Default: HttpStatusEntryPoint(401))
+    |--> (Success)DingtalkAuthenticationSuccessHandler
+```
+
 ## 授权
 
 > 参考 Authorization Architecture:  

@@ -7,12 +7,15 @@ import com.mantas.security.account.dto.AccountMapStruct;
 import com.mantas.security.account.mapper.AccountMapper;
 import com.mantas.security.authority.AuthorityGrantor;
 import com.mantas.security.authority.dto.Authority;
+import com.mantas.security.token.TokenGenerator;
 import com.mantas.user.dto.UserInfo;
 import com.mantas.user.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class AccountService {
     private AccountMapper accountMapper;
@@ -36,6 +39,9 @@ public class AccountService {
 
     public Account getAccountByMobile(String mobile) {
         UserInfo user = userService.getUserByMobile(mobile);
+        if (Objects.isNull(user)) {
+            return null;
+        }
         return getAccountByUserId(user.getId());
     }
 
@@ -45,6 +51,9 @@ public class AccountService {
 
     public Account getAccountByToken(@NotNull String token) {
         Account account = accountMapper.getAccountByToken(token);
+        if (Objects.isNull(account)) {
+            return null;
+        }
         List<Authority> authorities = getAuthoritiesByAccountId(account.getId());
         account.setAuthorities(authorities);
         return account;
@@ -57,13 +66,13 @@ public class AccountService {
     }
 
     private List<Authority> getAuthoritiesByAccountId(Integer id) {
-        List<Authority> authorities = accountMapper.getAuthoritiesByAccountId(id, "http");
+        List<Authority> authorities = accountMapper.getAuthoritiesByAccountId(id);
         return authorities;
     }
 
     private Account addAccount(UserInfo userInfo) {
         Account account = defaultAccount(userInfo);
-        Integer accountId = accountMapper.addAccount(userInfo);
+        Integer accountId = accountMapper.addAccount(account);
         account.setId(accountId);
         return account;
     }
@@ -71,7 +80,7 @@ public class AccountService {
     private Account defaultAccount(UserInfo userInfo) {
         Account account = AccountMapStruct.ins.toAccount(userInfo);
         account.setToken(TokenGenerator.randomToken());
-        account.setExpiration();
+        account.setExpiration(LocalDateTime.now().plusDays(7));
         account.setNonLocked(true);
         account.setStatus(Boolean.TRUE);
         return account;

@@ -13,7 +13,7 @@ public class AccountAdminController {
 
     @GetMapping("/list")
     public R<Account> listAccount() {
-        return null; //todo
+        return null;
     }
 
     /**

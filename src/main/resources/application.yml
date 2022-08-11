@@ -4,9 +4,28 @@ spring:
   cache:
     cache-names: "tapd-roles, tapd-users"
     type: simple
-  jackson:
-    deserialization:
-      fail-on-unknown-properties: false
+# jackson的配置查看: GlobalConfiguration::jsonCustomizer()
+#  jackson:
+#    deserialization:
+#      fail-on-unknown-properties: false
+#    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: "jdbc:mysql://food-dev.mysql.polardb.rds.aliyuncs.com:3306/roadmap"
+    username: "roadmap"
+    password: "roadmap_123"
+    driver-class-name=: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 1
+      max-active: 5
+      min-idle: 1
+      filter:
+        slf4j:
+          enabled: true
+#          statement-create-after-log-enabled: false
+#          statement-log-enabled: false
+#          statement-executable-sql-log-enable: true
+#          statement-log-error-enabled: true
+#          result-set-log-enabled: false
 #  security:
 #    oauth2:
 #      client:
@@ -59,3 +78,6 @@ logging:
     org:
       springframework:
         security: debug
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36}:%L - %msg%n"
+

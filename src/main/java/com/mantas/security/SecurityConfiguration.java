@@ -3,10 +3,10 @@ package com.mantas.security;
 import com.mantas.security.account.mapper.AccountMapper;
 import com.mantas.security.account.service.AccountService;
 import com.mantas.security.authority.AuthorityUrlCheckerAuthorizationManager;
+import com.mantas.security.dingtalk.DingtalkAuthenticationFilter;
 import com.mantas.security.token.TokenAuthenticationFilter;
 import com.mantas.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Slf4j
 @Configuration
-@MapperScan(basePackages = "com.mantas.security.account.mapper")
+//@MapperScan(basePackages = "com.mantas.security.**.mapper")
 public class SecurityConfiguration {
 
     @Bean
@@ -41,6 +41,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            AuthorityUriMatcher authorityUriMatcher,
+                                           DingtalkAuthenticationFilter dingtalkAuthenticationFilter,
                                            TokenAuthenticationFilter tokenAuthenticationFilter,
                                            AuthorityUrlCheckerAuthorizationManager authorityUriPermissionCheckerAuthorizationManage
     ) throws Exception {
@@ -62,9 +63,9 @@ public class SecurityConfiguration {
 //                .antMatchers("/**").permitAll();
 
         log.debug("add DingtalkAuthenticationFilter into  SecurityFilterChain");
-//        http.addFilterBefore(dingtalkAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(dingtalkAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(tokenAuthenticationFilter, DingtalkAuthenticationFilter.class);
 
 //        http.authenticationManager(authenticationManager);
 

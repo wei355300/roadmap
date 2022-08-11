@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface UserInfoMapper {
 
-    @Select("select * from user_info where mobile=#{mobile}}")
+    @Select("select * from user_info where mobile=#{mobile}")
     UserInfo getUserByMobile(@Param("mobile") String mobile);
 
-    @Insert("insert into user_info () values ())")
+    @Insert("insert into user_info (mobile, name, nick, avatar_url) values (#{mobile}, #{name}, #{nick}, #{avatarUrl})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    Integer addUser(@Param("user") UserInfo user);
+    Integer addUser(UserInfo user);
 }

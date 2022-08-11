@@ -30,6 +30,13 @@ import java.util.concurrent.Executor;
 @Slf4j
 public class NacosConfigurator {
 
+    /**
+     * fixme : 使用@Bean注入的方式
+     * json解析可利用spring的ObjectMapper处理
+     * @Bean
+     * public NacosConfigurator nacosConfigurator(ObjectMapper objectMapper) {}
+     */
+
     public class Listener implements com.alibaba.nacos.api.config.listener.Listener {
         @Override
         public Executor getExecutor() {

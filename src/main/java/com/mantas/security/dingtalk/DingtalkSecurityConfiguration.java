@@ -1,5 +1,6 @@
 package com.mantas.security.dingtalk;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mantas.security.account.service.AccountService;
 import com.mantas.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +29,13 @@ public class DingtalkSecurityConfiguration {
 
     @Bean
     public DingtalkAuthenticationFilter dingtalkAuthenticationFilter(HttpSecurity http,
+                                                                     ObjectMapper objectMapper,
                                                                      DingtalkDetailServices dingtalkDetailServices) throws Exception {
         log.debug("build dingtalkAuthenticationFilter");
         DingtalkAuthenticationProvider dingtalkAuthenticationProvider = new DingtalkAuthenticationProvider(dingtalkDetailServices);
         DingtalkAuthenticationManager dingtalkAuthenticationManager = new DingtalkAuthenticationManager(dingtalkAuthenticationProvider);
         DingtalkAuthenticationFilter dingtalkAuthenticationFilter = new DingtalkAuthenticationFilter(DingtalkAuthenticationFilter.DINGTALK_AUTHENTICATION_CALLBACK_URI, dingtalkAuthenticationManager);
-        dingtalkAuthenticationFilter.setAuthenticationSuccessHandler(new DingtalkAuthenticationSuccessHandler());
+        dingtalkAuthenticationFilter.setAuthenticationSuccessHandler(new DingtalkAuthenticationSuccessHandler(objectMapper));
 
         return dingtalkAuthenticationFilter;
     }

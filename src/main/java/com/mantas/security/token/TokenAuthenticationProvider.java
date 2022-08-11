@@ -34,17 +34,21 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 //        String token = determineToken(authentication);
         TokenAuthenticationToken tokenAuthenticationToken = (TokenAuthenticationToken) authentication;
         String token = tokenAuthenticationToken.getToken();
-        Account account = retrieveAccount(token, tokenAuthenticationToken);
-        if (account == null) {
-            log.debug("Failed to find account by token: '" + token + "'");
-            throw new BadCredentialsException("Bad credentials");
-        }
+        Account account;
         try {
+            account = retrieveAccount(token, tokenAuthenticationToken);
+            if (account == null) {
+                log.debug("Failed to find account by token: '" + token + "'");
+                throw new BadCredentialsException("Bad credentials");
+            }
             this.preAuthenticationChecks.check(account);
             additionalAuthenticationChecks(account, tokenAuthenticationToken);
-        }
-        catch (AuthenticationException ex) {
+        } catch (AuthenticationException ex) {
             throw ex;
+        }
+        catch (Exception e) {
+            log.warn("find account error", e);
+            throw new BadCredentialsException("Bad credentials");
         }
 //        this.postAuthenticationChecks.check(user);
         return createSuccessAuthentication(token, authentication, account);
@@ -60,7 +64,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 //            log.debug("Failed to authenticate since no credentials provided");
 //            throw new BadCredentialsException("Bad credentials");
 //        }
-        //todo
+
         //如果账号的token过期时间太短, 需要延迟一定的时间
     }
     private Authentication createSuccessAuthentication(String token, Authentication authentication, Account account) {

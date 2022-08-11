@@ -50,7 +50,7 @@ public class AuthorityGrantor {
         return grantedAuthorities.stream().anyMatch(grantedAuthority -> {
             boolean isMatchUrl = antMatcher.match(grantedAuthority.getAuthority(), authority.getAuthority());
             if (isMatchUrl) {
-                if("ALL".equals(authority.getAction())) {
+                if("ALL".equals(grantedAuthority.getAction())) {
                     return Boolean.TRUE;
                 }
                 if(Objects.equals(grantedAuthority.getAction(), authority.getAction())) {

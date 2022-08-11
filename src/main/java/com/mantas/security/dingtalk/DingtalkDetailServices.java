@@ -32,7 +32,7 @@ public class DingtalkDetailServices {
         client = authClient();
     }
 
-    public Account getUserByAuthCode(String authCode) throws Exception {
+    public Account getAccountByAuthCode(String authCode) throws Exception {
 
         String dingtalkAccessToken = getDingtalkAccessToken(authCode);
         UserInfo user =  getDingtalkUserinfo(dingtalkAccessToken);

@@ -1,4 +1,4 @@
-package com.mantas.security.account.service;
+package com.mantas.security.token;
 
 import java.util.UUID;
 
