@@ -46,6 +46,8 @@ auth:
     client-id: "dinght8oiuzenkv4twpc"
     client-secret: "V0sA_s3zXXJljqMItO9mprkyGYlQ82ONiOtX1RIE5ZdnI5Anw_2U23BWOMNMVcQt"
     grant-type: "authorization_code"
+    corp-id: "ding5658ef4fd884174f35c2f4657eb6378f"
+    authentication-callback-url: "/api/auth/dingtalk/callback"
 
 
 nacos:

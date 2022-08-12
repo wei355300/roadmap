@@ -1,6 +1,7 @@
 package com.mantas.security.dingtalk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mantas.controller.R;
 import com.mantas.security.account.dto.Account;
 import com.mantas.security.token.TokenAuthenticationToken;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class DingtalkAuthenticationSuccessHandler implements AuthenticationSucce
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        //todo 返回200状态码, 并携带账号信息
+        //返回200状态码, 并携带账号信息
         Assert.isInstanceOf(TokenAuthenticationToken.class, authentication, () -> "Only TokenAuthenticationToken is supported");
         TokenAuthenticationToken tokenAuthenticationToken = (TokenAuthenticationToken) authentication;
         Account account = tokenAuthenticationToken.getAccount();
@@ -38,10 +39,6 @@ public class DingtalkAuthenticationSuccessHandler implements AuthenticationSucce
         response.setContentType(MediaType.APPLICATION_JSON);
         response.setStatus(HttpStatus.OK.value());
 
-        objectMapper.writeValue(response.getWriter(), account);
-
-//        OutputStream responseStream = response.getOutputStream();
-//        String responseContent = JsonUtils.toJson(account);
-//        response.getWriter().append(responseContent);
+        objectMapper.writeValue(response.getWriter(), R.success(account));
     }
 }

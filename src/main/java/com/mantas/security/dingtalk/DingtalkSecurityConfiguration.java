@@ -2,7 +2,6 @@ package com.mantas.security.dingtalk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mantas.security.account.service.AccountService;
-import com.mantas.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,7 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Slf4j
 @Configuration
-@ConditionalOnProperty(prefix = "auth.dingtalk", name = "callback-uri", havingValue = "")
+@ConditionalOnProperty(prefix = "auth.dingtalk", name = "client-id", havingValue = "")
 public class DingtalkSecurityConfiguration {
 
     @Bean
@@ -28,15 +27,15 @@ public class DingtalkSecurityConfiguration {
     }
 
     @Bean
-    public DingtalkAuthenticationFilter dingtalkAuthenticationFilter(HttpSecurity http,
-                                                                     ObjectMapper objectMapper,
-                                                                     DingtalkDetailServices dingtalkDetailServices) throws Exception {
-        log.debug("build dingtalkAuthenticationFilter");
+    public DingtalkAuthenticationCallbackFilter dingtalkAuthenticationCallbackFilter(HttpSecurity http,
+                                                                             DingtalkProperties dingtalkProperties,
+                                                                             ObjectMapper objectMapper,
+                                                                             DingtalkDetailServices dingtalkDetailServices) throws Exception {
         DingtalkAuthenticationProvider dingtalkAuthenticationProvider = new DingtalkAuthenticationProvider(dingtalkDetailServices);
         DingtalkAuthenticationManager dingtalkAuthenticationManager = new DingtalkAuthenticationManager(dingtalkAuthenticationProvider);
-        DingtalkAuthenticationFilter dingtalkAuthenticationFilter = new DingtalkAuthenticationFilter(DingtalkAuthenticationFilter.DINGTALK_AUTHENTICATION_CALLBACK_URI, dingtalkAuthenticationManager);
-        dingtalkAuthenticationFilter.setAuthenticationSuccessHandler(new DingtalkAuthenticationSuccessHandler(objectMapper));
+        DingtalkAuthenticationCallbackFilter dingtalkAuthenticationCallbackFilter = new DingtalkAuthenticationCallbackFilter(dingtalkProperties.getAuthenticationCallbackUrl(), dingtalkAuthenticationManager);
+        dingtalkAuthenticationCallbackFilter.setAuthenticationSuccessHandler(new DingtalkAuthenticationSuccessHandler(objectMapper));
 
-        return dingtalkAuthenticationFilter;
+        return dingtalkAuthenticationCallbackFilter;
     }
 }

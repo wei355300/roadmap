@@ -22,8 +22,8 @@ public class UserService {
      * @param user
      * @return
      */
-    public UserInfo addUser(UserInfo user) {
-        Integer userId = userInfoMapper.addUser(user);
+    public UserInfo addOrUpdateUser(UserInfo user) {
+        Integer userId = userInfoMapper.addOrUpdateUser(user);
         user.setId(userId);
         return user;
     }

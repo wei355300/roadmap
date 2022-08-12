@@ -1,21 +1,65 @@
+鉴权&授权
 
-- 鉴权/授权流程
+功能说明:  
 
-[Spring Security Architecture](https://docs.spring.io/spring-security/reference/servlet/architecture.html)
+1. 所有以 "/api/**" 前缀的请求, 都将进入 `TokenAuthenticationFilter` 进行 token 校验
+2. 所有以 "/base/**" 前缀的请求, 默认放行, 可以直接调用 `Controller` 定义的接口
+3. 其它特殊请求地址, 可通过自定义 `Filter` 等方式处理(如: DingtalkAuthenticationCallbackFilter)
 
-http请求到达Spring Security Filter 的路径:
-```shell
+# package: token
+
+token拦截器,   
+拦截所有 `/api/**`  的请求, 提取请求的 `token` 参数, 并验证.   
+验证通过后, 进入 授权流程,   
+验证失败则返回 401 状态码.
+
+> 可自定义 TokenAuthenticationFilter::AuthenticationFailureHandler 调整默认返回 401 状态码的行为
+
+# package: authority
+
+权限校验(授权)相关.
+
+## AuthorityUrlCheckerAuthorizationManager
+
+通过request的url与token对应的账号的已被赋予的权限进行比较,  
+
+> 具体的匹配可参考:  AntPathMatcher 的用法  
+> 账号的权限分配等数据, 查看 package: account 的说明
+
+# package: account
+
+账号相关
+
+
+
+
+# 鉴权/授权流程
+
+参考文档: [Spring Security Architecture](https://docs.spring.io/spring-security/reference/servlet/architecture.html)
+
+http请求到达Spring Security Filter 的流程:
+
+```
 http request  
   |--> FilterChain    
   |--> DelegatingFilterProxy  
   |--> FilterChainProxy  
-  |--> `SecurityFilterChain`
+  |--> SecurityFilterChain
 ```
-> SecurityFilterChain 为 Spring Security 的核心部分
+
+SecurityFilterChain 为 Spring Security 的核心部分
 
 > 参考用法: src/main/java/com/mantas/security/SecurityConfiguration.java
 
-- AuthenticationFilter 与 AuthorizationFilter 的关系
+## AuthenticationFilter 与 AuthorizationFilter 的关系
+
+基于 `HttpSecurity` 的配置,   
+通常情况下, 鉴权通过后(authenticated) 将进入授权流程.  
+
+> 具体可查看 Authentication的isAuthenticated() 的用法
+
+
+
 
 ## 鉴权
 
@@ -56,6 +100,7 @@ AuthorityUrlCheckerAuthorizationManager
 DingtalkAuthenticationFilter:
 登录流程, 从钉钉服务器获取用户信息, 并验证通过后, 
 生成token后, 携带账号信息, 返回至前端 
+
 ```shell
 DingtalkAuthenticationFilter
     |

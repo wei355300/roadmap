@@ -1,6 +1,5 @@
 package com.mantas.security;
 
-import com.mantas.security.dingtalk.DingtalkAuthenticationFilter;
 import lombok.Getter;
 
 @Getter
@@ -21,8 +20,7 @@ public class AuthorityUriMatcher {
      * 从配置中获取请求url的限制规则
      */
     private void init() {
-        permitUris = new String[]{"/api/login",
-                DingtalkAuthenticationFilter.DINGTALK_AUTHENTICATION_CALLBACK_URI};
+        permitUris = new String[]{"/api/login", "/base/**"};
 
         denyUris = new String[] {"/**"};
 

@@ -35,13 +35,25 @@ public class DingtalkDetailServices {
     public Account getAccountByAuthCode(String authCode) throws Exception {
 
         String dingtalkAccessToken = getDingtalkAccessToken(authCode);
-        UserInfo user =  getDingtalkUserinfo(dingtalkAccessToken);
+        UserInfo dingtalkUserinfo =  getDingtalkUserinfo(dingtalkAccessToken);
 
-        Account account = accountService.getAccountByMobile(user.getMobile());
+        Account account = accountService.getAccountByMobile(dingtalkUserinfo.getMobile());
         if (Objects.isNull(account)) {
-            account = accountService.createAccount(user);
+            account = accountService.createAccount(dingtalkUserinfo);
         }
         return account;
+    }
+
+    /**
+     * 获取钉钉登录(扫码登录)所需的原始信息
+     * 用于构造出发到钉钉服务器的请求参数
+     */
+    public DingtalkAuthMetaInfo getAuthMetaInfo() {
+        DingtalkAuthMetaInfo dingtalkAuthMetaInfo = new DingtalkAuthMetaInfo();
+        dingtalkAuthMetaInfo.setRedirectUri(dingtalkProperties.getAuthenticationCallbackUrl());
+        dingtalkAuthMetaInfo.setClientId(dingtalkProperties.getClientId());
+        dingtalkAuthMetaInfo.setCorpId(dingtalkProperties.getCorpId());
+        return dingtalkAuthMetaInfo;
     }
 
     private Client authClient() throws Exception {

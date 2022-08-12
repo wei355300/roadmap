@@ -29,7 +29,7 @@ public class AccountService {
     @Transactional
     public Account createAccount(UserInfo user) {
         // 创建用户信息
-        user = userService.addUser(user);
+        user = userService.addOrUpdateUser(user);
         // 创建账号
         Account account = addAccount(user);
         //分配权限
@@ -72,7 +72,7 @@ public class AccountService {
 
     private Account addAccount(UserInfo userInfo) {
         Account account = defaultAccount(userInfo);
-        Integer accountId = accountMapper.addAccount(account);
+        Integer accountId = accountMapper.addOrUpdateAccount(account);
         account.setId(accountId);
         return account;
     }

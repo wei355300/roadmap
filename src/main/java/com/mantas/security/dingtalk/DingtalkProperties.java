@@ -5,8 +5,9 @@ import lombok.Data;
 @Data
 public class DingtalkProperties {
 
-    private String callbackUri;
     private String clientId;
     private String clientSecret;
     private String grantType;
+    private String corpId;
+    private String authenticationCallbackUrl;
 }

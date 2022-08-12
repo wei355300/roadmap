@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.AuthenticationEntryPointFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.util.Assert;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-public class DingtalkAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class DingtalkAuthenticationCallbackFilter extends AbstractAuthenticationProcessingFilter {
 
-    public static final String DINGTALK_AUTHENTICATION_CALLBACK_URI = "/api/auth/dingtalk/callback";
     public static final String DINGTALK_AUTHENTICATION_CODE = "authCode";
     private String authCodeParameter = DINGTALK_AUTHENTICATION_CODE;
 
@@ -30,12 +28,12 @@ public class DingtalkAuthenticationFilter extends AbstractAuthenticationProcessi
      */
     private AuthenticationFailureHandler authenticationFailureHandler = new AuthenticationEntryPointFailureHandler(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
-    public DingtalkAuthenticationFilter(AuthenticationManager authenticationManager) {
-        super(DINGTALK_AUTHENTICATION_CALLBACK_URI, authenticationManager);
-        setAuthenticationFailureHandler(authenticationFailureHandler);
-    }
+//    public DingtalkAuthenticationCallbackFilter(AuthenticationManager authenticationManager) {
+//        super(DINGTALK_AUTHENTICATION_CALLBACK_URI, authenticationManager);
+//        setAuthenticationFailureHandler(authenticationFailureHandler);
+//    }
 
-    public DingtalkAuthenticationFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager) {
+    public DingtalkAuthenticationCallbackFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager) {
         super(defaultFilterProcessesUrl, authenticationManager);
         setAuthenticationFailureHandler(authenticationFailureHandler);
     }
