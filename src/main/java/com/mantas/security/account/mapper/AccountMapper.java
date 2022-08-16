@@ -39,7 +39,7 @@ public interface AccountMapper {
     void addAuthorities(@Param("accountId") Integer accountId, @Param("authorities") List<Authority> authorities);
 
 
-    @Insert("insert into account (user_id, token, expiration, non_locked, status) values(#{userId}, #{token}, #{expiration}, #{nonLocked}, #{status}) on duplicate key update token=#{token}, expiration=#{expiration}, non_locked=#{non_locked}, status=#{status}")
+    @Insert("insert into account (user_id, token, expiration, non_locked, status) values(#{userId}, #{token}, #{expiration}, #{nonLocked}, #{status}) on duplicate key update token=#{token}, expiration=#{expiration}, non_locked=#{nonLocked}, status=#{status}")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     Integer addOrUpdateAccount(Account account);
 
