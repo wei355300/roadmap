@@ -20,7 +20,7 @@ public class AuthorityUriMatcher {
      * 从配置中获取请求url的限制规则
      */
     private void init() {
-        permitUris = new String[]{"/api/login", "/base/**"};
+        permitUris = new String[]{"/api/login", "/api/base/**"};
 
         denyUris = new String[] {"/**"};
 
