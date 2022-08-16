@@ -37,7 +37,7 @@ public class DingtalkDetailServices {
         String dingtalkAccessToken = getDingtalkAccessToken(authCode);
         UserInfo dingtalkUserinfo =  getDingtalkUserinfo(dingtalkAccessToken);
 
-        Account account = accountService.getAccountByMobile(dingtalkUserinfo.getMobile());
+        Account account = accountService.getAccountWithAuthoritiesByMobile(dingtalkUserinfo.getMobile());
         if (Objects.isNull(account)) {
             account = accountService.createAccount(dingtalkUserinfo);
         }

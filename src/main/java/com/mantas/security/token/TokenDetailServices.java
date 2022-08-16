@@ -15,6 +15,6 @@ public class TokenDetailServices {
 
     public Account getAccountByToken(String token) {
         log.debug("getUserByToken: {}", token);
-        return accountService.getAccountByToken(token);
+        return accountService.getAccountWithAuthoritiesByToken(token);
     }
 }

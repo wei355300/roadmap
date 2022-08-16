@@ -40,14 +40,14 @@ spring:
 #            user-info-uri: https://your-subdomain.oktapreview.com/oauth2/v1/userinfo
 #            user-name-attribute: sub
 #          jwk-set-uri: https://your-subdomain.oktapreview.com/oauth2/v1/keys
-auth:
-  dingtalk:
-    callback-uri: "/api/auth/dingtalk/callback"
-    client-id: "dinght8oiuzenkv4twpc"
-    client-secret: "V0sA_s3zXXJljqMItO9mprkyGYlQ82ONiOtX1RIE5ZdnI5Anw_2U23BWOMNMVcQt"
-    grant-type: "authorization_code"
-    corp-id: "ding5658ef4fd884174f35c2f4657eb6378f"
-    authentication-callback-url: "/api/auth/dingtalk/callback"
+#auth:
+#  dingtalk:
+#    callback-uri: "/api/auth/dingtalk/callback"
+#    client-id: "dinght8oiuzenkv4twpc"
+#    client-secret: "V0sA_s3zXXJljqMItO9mprkyGYlQ82ONiOtX1RIE5ZdnI5Anw_2U23BWOMNMVcQt"
+#    grant-type: "authorization_code"
+#    corp-id: "ding5658ef4fd884174f35c2f4657eb6378f"
+#    authentication-callback-url: "/api/auth/dingtalk/callback"
 
 
 nacos:
@@ -66,6 +66,11 @@ nacos:
       server_addr: ${NACOS_SERVER_HOST:127.0.0.1}:${NACOS_SERVER_PORT:8848}
       namespace: ${NACOS_ALILOG_NAMESPACE:17013706-c074-4416-af54-b002b34157a2}
       data_id: ${NACOS_ALILOG_DATA_ID:alilog}
+      group_id: ${NACOS_ALILOG_GROUP_ID:roadmap}
+    dingtalk:
+      server_addr: ${NACOS_SERVER_HOST:127.0.0.1}:${NACOS_SERVER_PORT:8848}
+      namespace: ${NACOS_ALILOG_NAMESPACE:17013706-c074-4416-af54-b002b34157a2}
+      data_id: ${NACOS_ALILOG_DATA_ID:dingtalk}
       group_id: ${NACOS_ALILOG_GROUP_ID:roadmap}
 
 

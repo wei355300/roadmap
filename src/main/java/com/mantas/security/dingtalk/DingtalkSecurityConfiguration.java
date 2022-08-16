@@ -1,8 +1,12 @@
 package com.mantas.security.dingtalk;
 
+import com.alibaba.nacos.api.exception.NacosException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mantas.nacos.NacosConfigurator;
 import com.mantas.security.account.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -11,13 +15,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Slf4j
 @Configuration
-@ConditionalOnProperty(prefix = "auth.dingtalk", name = "client-id", havingValue = "")
 public class DingtalkSecurityConfiguration {
 
     @Bean
-    @ConfigurationProperties(prefix = "auth.dingtalk")
-    public DingtalkProperties dingtalkProperties() {
-        return new DingtalkProperties();
+    public DingtalkProperties dingtalkProperties(@Autowired NacosDingtalkConf dingtalkConf) throws NacosException, JsonProcessingException {
+        return NacosConfigurator.getConfig(dingtalkConf, DingtalkProperties.class);
     }
 
     @Bean

@@ -40,9 +40,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private RequestMatcher requiresAuthenticationRequestMatcher;
 
-    public static final String SPRING_SECURITY_TOKEN_KEY = "token";
-    private String tokenParameter = SPRING_SECURITY_TOKEN_KEY;
-
     private AuthenticationManager authenticationManager;
 
     /**

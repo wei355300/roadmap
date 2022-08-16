@@ -1,20 +1,30 @@
 package com.mantas.security.account.controller;
 
 import com.mantas.controller.R;
+import com.mantas.security.AuthenticatedHolder;
 import com.mantas.security.account.dto.Account;
+import com.mantas.security.account.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/account")
 public class AccountController {
 
+    private AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
     /**
-     * 更新登录账号的Token效期
-     * @return
+     * 更新登录账号的Token效期, 并重置Token
+     * @return 返回账号信息
      */
-    @GetMapping("/token")
-    public R updateTokenExpiration() {
-        return null;//todo
+    @PostMapping("/token")
+    public R<Account> updateTokenExpiration() {
+        Account account = AuthenticatedHolder.getAccount();
+        account = accountService.updateToken(account);
+        return R.success(account);
     }
 
     /**
@@ -23,7 +33,8 @@ public class AccountController {
      */
     @GetMapping("/info")
     public R<Account> getAccountInfo() {
-        return null;//todo
+        Account account = AuthenticatedHolder.getAccount();
+        return R.success(account);
     }
 
     /**

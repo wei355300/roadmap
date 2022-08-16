@@ -37,19 +37,32 @@ public class AccountService {
         return account;
     }
 
-    public Account getAccountByMobile(String mobile) {
+    @Transactional
+    public Account updateToken(Account account) {
+        String newToken = TokenGenerator.randomToken();
+        LocalDateTime expiration = defaultExpiration();
+        account.setToken(newToken);
+        account.setExpiration(expiration);
+        accountMapper.updateToken(account, newToken, expiration);
+        return account;
+    }
+
+    public Account getAccountWithAuthoritiesByMobile(String mobile) {
         UserInfo user = userService.getUserByMobile(mobile);
         if (Objects.isNull(user)) {
             return null;
         }
-        return getAccountByUserId(user.getId());
+        return getAccountWithAuthoritiesByUserId(user.getId());
     }
 
-    public Account getAccountByUserId(Integer userId) {
-        return accountMapper.getAccountByUserId(userId);
+    public Account getAccountWithAuthoritiesByUserId(Integer userId) {
+        Account account = accountMapper.getAccountByUserId(userId);
+        List<Authority> authorities = getAuthoritiesByAccountId(account.getId());
+        account.setAuthorities(authorities);
+        return account;
     }
 
-    public Account getAccountByToken(@NotNull String token) {
+    public Account getAccountWithAuthoritiesByToken(@NotNull String token) {
         Account account = accountMapper.getAccountByToken(token);
         if (Objects.isNull(account)) {
             return null;
@@ -80,10 +93,14 @@ public class AccountService {
     private Account defaultAccount(UserInfo userInfo) {
         Account account = AccountMapStruct.ins.toAccount(userInfo);
         account.setToken(TokenGenerator.randomToken());
-        account.setExpiration(LocalDateTime.now().plusDays(7));
+        account.setExpiration(defaultExpiration());
         account.setNonLocked(true);
         account.setStatus(Boolean.TRUE);
         return account;
+    }
+
+    private LocalDateTime defaultExpiration() {
+        return LocalDateTime.now().plusDays(7);
     }
 
     /**

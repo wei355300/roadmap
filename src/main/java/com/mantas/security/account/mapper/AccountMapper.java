@@ -4,6 +4,7 @@ import com.mantas.security.account.dto.Account;
 import com.mantas.security.authority.dto.Authority;
 import org.apache.ibatis.annotations.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -41,4 +42,7 @@ public interface AccountMapper {
     @Insert("insert into account (user_id, token, expiration, non_locked, status) values(#{userId}, #{token}, #{expiration}, #{nonLocked}, #{status}) on duplicate key update token=#{token}, expiration=#{expiration}, non_locked=#{non_locked}, status=#{status}")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     Integer addOrUpdateAccount(Account account);
+
+    @Update("update account set token=#{newToken}, expiration=#{expiration} where id=#{account.id}")
+    void updateToken(@Param("account") Account account, @Param("newToken") String newToken, @Param("expiration") LocalDateTime expiration);
 }
