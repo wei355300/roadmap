@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -46,20 +47,18 @@ public class SecurityConfiguration {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http
                 .cors().disable()
-                .csrf().disable()
                 .httpBasic().disable()
                 .formLogin().disable()
                 .anonymous().disable()
                 .rememberMe().disable();
-        http.addFilterBefore(dingtalkAuthenticationCallbackFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterAfter(tokenAuthenticationFilter, DingtalkAuthenticationCallbackFilter.class);
-        http.authorizeHttpRequests().mvcMatchers("/base/auth/dingtalk/metainfo").permitAll();
         http.authorizeHttpRequests(authz -> {
             authz.mvcMatchers(authorityUriMatcher.getPermitUris()).permitAll()
                     .mvcMatchers(authorityUriMatcher.getAuthenticatedUris()).access(authorityUriPermissionCheckerAuthorizationManage)
                     .mvcMatchers(authorityUriMatcher.getDenyUris()).denyAll()
                     .anyRequest().authenticated();
         });
+        http.addFilterBefore(dingtalkAuthenticationCallbackFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(tokenAuthenticationFilter, DingtalkAuthenticationCallbackFilter.class);
 
         return http.build();
     }
