@@ -11,14 +11,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Slf4j
 @Configuration
-//@MapperScan(basePackages = "com.mantas.security.**.mapper")
 public class SecurityConfiguration {
 
     @Bean
@@ -55,12 +53,7 @@ public class SecurityConfiguration {
                 .rememberMe().disable();
         http.addFilterBefore(dingtalkAuthenticationCallbackFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterAfter(tokenAuthenticationFilter, DingtalkAuthenticationCallbackFilter.class);
-//        http.authorizeHttpRequests()
-//                .mvcMatchers(authorityUriMatcher.getPermitUris()).permitAll()
-//                .mvcMatchers(authorityUriMatcher.getAuthenticatedUris()).access(authorityUriPermissionCheckerAuthorizationManage)
-//                .mvcMatchers(authorityUriMatcher.getDenyUris()).denyAll()
-//                .anyRequest().authenticated();
-//        http.authorizeHttpRequests().mvcMatchers("/base/auth/dingtalk/metainfo").permitAll();
+        http.authorizeHttpRequests().mvcMatchers("/base/auth/dingtalk/metainfo").permitAll();
         http.authorizeHttpRequests(authz -> {
             authz.mvcMatchers(authorityUriMatcher.getPermitUris()).permitAll()
                     .mvcMatchers(authorityUriMatcher.getAuthenticatedUris()).access(authorityUriPermissionCheckerAuthorizationManage)
@@ -70,9 +63,4 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web) -> web.ignoring().antMatchers("/api/auth/dingtalk/metainfo");
-//    }
 }
