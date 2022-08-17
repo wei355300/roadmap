@@ -14,6 +14,7 @@ public class Account implements Serializable {
 
     private Integer id;
     private Integer userId;
+    private String name;
     private String token;
     private LocalDateTime expiration;
     private Boolean nonLocked;

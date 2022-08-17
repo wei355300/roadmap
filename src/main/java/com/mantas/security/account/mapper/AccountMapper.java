@@ -38,10 +38,12 @@ public interface AccountMapper {
             "</script>")
     void addAuthorities(@Param("accountId") Integer accountId, @Param("authorities") List<Authority> authorities);
 
-
-    @Insert("insert into account (user_id, token, expiration, non_locked, status) values(#{userId}, #{token}, #{expiration}, #{nonLocked}, #{status}) on duplicate key update token=#{token}, expiration=#{expiration}, non_locked=#{nonLocked}, status=#{status}")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    Integer addOrUpdateAccount(Account account);
+    @Insert("insert into account (user_id, name, token, expiration, non_locked, status) values(#{userId}, #{name}, #{token}, #{expiration}, #{nonLocked}, #{status})")
+    Integer addAccount(Account account);
+
+    @Insert("update account set name=#{name}, token=#{token}, expiration=#{expiration}, non_locked=#{nonLocked}, status=#{status} where user_id=#{userId}")
+    void updateAccount(Account account);
 
     @Update("update account set token=#{newToken}, expiration=#{expiration} where id=#{account.id}")
     void updateToken(@Param("account") Account account, @Param("newToken") String newToken, @Param("expiration") LocalDateTime expiration);

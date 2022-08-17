@@ -4,12 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.test.context.ActiveProfiles;
 
-//@EnableScheduling
-//@EnableCaching
-//@SpringBootApplication
-//@ActiveProfiles("test")
+@EnableScheduling
+@EnableCaching
+@SpringBootApplication
+@EnableWebSecurity
+@ActiveProfiles("test")
 public class MantasXApplicationTest {
 
     public static void main(String[] args) {

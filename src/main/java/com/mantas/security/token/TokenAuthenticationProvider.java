@@ -2,6 +2,7 @@ package com.mantas.security.token;
 
 import com.mantas.security.account.AccountChecker;
 import com.mantas.security.account.dto.Account;
+import com.mantas.security.account.exception.AccountNotExistException;
 import com.mantas.security.authority.AuthorityUrlCheckerAuthorizationManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -31,7 +32,6 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         Assert.isInstanceOf(TokenAuthenticationToken.class, authentication, () -> "Only TokenAuthenticationToken is supported");
-//        String token = determineToken(authentication);
         TokenAuthenticationToken tokenAuthenticationToken = (TokenAuthenticationToken) authentication;
         String token = tokenAuthenticationToken.getToken();
         Account account;
@@ -54,7 +54,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         return createSuccessAuthentication(token, authentication, account);
     }
 
-    private Account retrieveAccount(String token, TokenAuthenticationToken authentication) throws AuthenticationException {
+    private Account retrieveAccount(String token, TokenAuthenticationToken authentication) throws AuthenticationException, AccountNotExistException {
         return tokenDetailServices.getAccountByToken(token);
     }
 

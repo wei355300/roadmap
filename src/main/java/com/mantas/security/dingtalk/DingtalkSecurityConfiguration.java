@@ -19,6 +19,7 @@ public class DingtalkSecurityConfiguration {
 
     @Bean
     public DingtalkProperties dingtalkProperties(@Autowired NacosDingtalkConf dingtalkConf) throws NacosException, JsonProcessingException {
+
         return NacosConfigurator.getConfig(dingtalkConf, DingtalkProperties.class);
     }
 

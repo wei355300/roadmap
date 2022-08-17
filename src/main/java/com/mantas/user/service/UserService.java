@@ -3,6 +3,7 @@ package com.mantas.user.service;
 import com.mantas.user.dto.UserInfo;
 import com.mantas.user.mapper.UserInfoMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -17,14 +18,14 @@ public class UserService {
         return userInfoMapper.getUserByMobile(mobile);
     }
 
-    /**
-     * 新增用户, 并返回用户的最新数据
-     * @param user
-     * @return
-     */
-    public UserInfo addOrUpdateUser(UserInfo user) {
-        Integer userId = userInfoMapper.addOrUpdateUser(user);
-        user.setId(userId);
+    @Transactional
+    public UserInfo addUser(UserInfo user) {
+        userInfoMapper.addUser(user);
         return user;
+    }
+
+    @Transactional
+    public void updateUser(UserInfo user) {
+        userInfoMapper.updateUser(user);
     }
 }

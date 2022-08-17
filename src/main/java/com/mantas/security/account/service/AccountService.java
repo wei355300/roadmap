@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mantas.security.account.dto.Account;
 import com.mantas.security.account.dto.AccountMapStruct;
+import com.mantas.security.account.exception.AccountNotExistException;
+import com.mantas.security.account.exception.AccountUserNotExistException;
 import com.mantas.security.account.mapper.AccountMapper;
 import com.mantas.security.authority.AuthorityGrantor;
 import com.mantas.security.authority.dto.Authority;
@@ -29,7 +31,10 @@ public class AccountService {
     @Transactional
     public Account createAccount(UserInfo user) {
         // 创建用户信息
-        user = userService.addOrUpdateUser(user);
+        if(Objects.isNull(user.getId())) {
+            user = userService.addUser(user);
+        }
+
         // 创建账号
         Account account = addAccount(user);
         //分配权限
@@ -47,25 +52,28 @@ public class AccountService {
         return account;
     }
 
-    public Account getAccountWithAuthoritiesByMobile(String mobile) {
+    public Account getAccountWithAuthoritiesByMobile(String mobile) throws AccountUserNotExistException, AccountNotExistException {
         UserInfo user = userService.getUserByMobile(mobile);
         if (Objects.isNull(user)) {
-            return null;
+            throw new AccountUserNotExistException();
         }
         return getAccountWithAuthoritiesByUserId(user.getId());
     }
 
-    public Account getAccountWithAuthoritiesByUserId(Integer userId) {
+    public Account getAccountWithAuthoritiesByUserId(Integer userId) throws AccountNotExistException {
         Account account = accountMapper.getAccountByUserId(userId);
+        if (Objects.isNull(account)) {
+            throw new AccountNotExistException();
+        }
         List<Authority> authorities = getAuthoritiesByAccountId(account.getId());
         account.setAuthorities(authorities);
         return account;
     }
 
-    public Account getAccountWithAuthoritiesByToken(@NotNull String token) {
+    public Account getAccountWithAuthoritiesByToken(@NotNull String token) throws AccountNotExistException {
         Account account = accountMapper.getAccountByToken(token);
         if (Objects.isNull(account)) {
-            return null;
+            throw new AccountNotExistException();
         }
         List<Authority> authorities = getAuthoritiesByAccountId(account.getId());
         account.setAuthorities(authorities);
@@ -85,8 +93,7 @@ public class AccountService {
 
     private Account addAccount(UserInfo userInfo) {
         Account account = defaultAccount(userInfo);
-        Integer accountId = accountMapper.addOrUpdateAccount(account);
-        account.setId(accountId);
+        accountMapper.addAccount(account);
         return account;
     }
 
@@ -94,6 +101,7 @@ public class AccountService {
         Account account = AccountMapStruct.ins.toAccount(userInfo);
         account.setToken(TokenGenerator.randomToken());
         account.setExpiration(defaultExpiration());
+        account.setName(userInfo.getName());
         account.setNonLocked(true);
         account.setStatus(Boolean.TRUE);
         return account;
