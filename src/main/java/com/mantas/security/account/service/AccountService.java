@@ -48,7 +48,7 @@ public class AccountService {
         LocalDateTime expiration = defaultExpiration();
         account.setToken(newToken);
         account.setExpiration(expiration);
-        accountMapper.updateToken(account, newToken, expiration);
+        accountMapper.updateToken(account.getId(), newToken, expiration);
         return account;
     }
 

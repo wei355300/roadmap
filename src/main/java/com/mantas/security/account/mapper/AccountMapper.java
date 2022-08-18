@@ -45,6 +45,6 @@ public interface AccountMapper {
     @Insert("update account set name=#{name}, token=#{token}, expiration=#{expiration}, non_locked=#{nonLocked}, status=#{status} where user_id=#{userId}")
     void updateAccount(Account account);
 
-    @Update("update account set token=#{newToken}, expiration=#{expiration} where id=#{account.id}")
-    void updateToken(@Param("account") Account account, @Param("newToken") String newToken, @Param("expiration") LocalDateTime expiration);
+    @Update("update account set token=#{newToken}, expiration=#{expiration} where id=#{accountId}")
+    void updateToken(@Param("accountId") Integer accountId, @Param("newToken") String newToken, @Param("expiration") LocalDateTime expiration);
 }
