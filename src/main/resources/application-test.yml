@@ -5,9 +5,9 @@ spring:
     cache-names: "tapd-roles, tapd-users"
     type: simple
   datasource:
-    url: "jdbc:mysql://food-dev.mysql.polardb.rds.aliyuncs.com:3306/roadmap"
-    username: "roadmap"
-    password: "roadmap_123"
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name=: com.mysql.cj.jdbc.Driver
     druid:
       initial-size: 1
@@ -38,7 +38,7 @@ nacos:
       module: "dingtalk"
       server_addr: ${NACOS_SERVER_HOST:127.0.0.1}:${NACOS_SERVER_PORT:8848}
       namespace: ${NACOS_DINGTALK_NAMESPACE:17013706-c074-4416-af54-b002b34157a2}
-      data_id: "dingtalk-demo"
+      data_id: ${NACOS_DINGTALK_DATA_ID:dingtalk-demo}
       group_id: ${NACOS_DINGTALK_GROUP_ID:roadmap}
 
 
