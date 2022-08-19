@@ -97,16 +97,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     private List<Role> body2Role(String body) {
-        log.debug("response role body:\n {}", body);
         Map<String, String> map = JsonPath.read(body, "$.data");
         List<Role> roles = new ArrayList<>(map.size());
         map.forEach((k, v) -> roles.add(new Role(k, v)));
-        log.debug("parsed role result: \n {}", roles);
         return roles;
     }
 
     private List<Worker> body2User(String body) {
-        log.debug("response user body:\n {}", body);
         ReadContext ctx = JsonPath.parse(body);
         List<Map<String, String>> list = ctx.read("$.data[*].UserWorkspace");
         List<Worker> users = new ArrayList<>(list.size());
@@ -123,7 +120,6 @@ public class RoleServiceImpl implements RoleService {
 
             users.add(worker);
         }
-        log.debug("parsed user result: \n {}", users);
         return users;
     }
 }

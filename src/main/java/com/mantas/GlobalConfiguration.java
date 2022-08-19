@@ -20,31 +20,31 @@ import java.util.Set;
 @MapperScan(basePackages = "com.mantas.**.mapper")
 public class GlobalConfiguration {
 
-    /**
-     * set JacksonJsonProvider to default Provider(SPI) for JsonPath
-     */
-    static {
-        com.jayway.jsonpath.Configuration.setDefaults(new com.jayway.jsonpath.Configuration.Defaults() {
-
-            private final JsonProvider jsonProvider = new JacksonJsonProvider();
-            private final MappingProvider mappingProvider = new JacksonMappingProvider();
-
-            @Override
-            public JsonProvider jsonProvider() {
-                return jsonProvider;
-            }
-
-            @Override
-            public MappingProvider mappingProvider() {
-                return mappingProvider;
-            }
-
-            @Override
-            public Set<Option> options() {
-                return EnumSet.noneOf(Option.class);
-            }
-        });
-    }
+//    /**
+//     * set JacksonJsonProvider to default Provider(SPI) for JsonPath
+//     */
+//    static {
+//        com.jayway.jsonpath.Configuration.setDefaults(new com.jayway.jsonpath.Configuration.Defaults() {
+//
+//            private final JsonProvider jsonProvider = new JacksonJsonProvider();
+//            private final MappingProvider mappingProvider = new JacksonMappingProvider();
+//
+//            @Override
+//            public JsonProvider jsonProvider() {
+//                return jsonProvider;
+//            }
+//
+//            @Override
+//            public MappingProvider mappingProvider() {
+//                return mappingProvider;
+//            }
+//
+//            @Override
+//            public Set<Option> options() {
+//                return EnumSet.noneOf(Option.class);
+//            }
+//        });
+//    }
 
     /**
      * spring.jackson.date-format 的配置无法在 LocalDateTime 上生效,
