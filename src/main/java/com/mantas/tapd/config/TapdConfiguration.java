@@ -6,8 +6,6 @@ import com.mantas.nacos.NacosConfigurator;
 import com.mantas.okhttp.BasicInterceptor;
 import com.mantas.okhttp.OkHttp;
 import com.mantas.tapd.service.*;
-import com.mantas.tapd.service.impl.*;
-import com.mantas.tapd.service.TapdClient;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,38 +32,33 @@ public class TapdConfiguration {
 
 
     @Bean
-    public BugService bugService(@Autowired TapdClient tapdClient) {
-        return new BugServiceImpl(tapdClient);
+    public com.mantas.tapd.service.BugService bugService(@Autowired TapdClient tapdClient) {
+        return new BugService(tapdClient);
     }
 
     @Bean
     public IterationService iterationService(@Autowired TapdClient tapdClient) {
-        return new IterationServiceImpl(tapdClient);
+        return new IterationService(tapdClient);
     }
 
     @Bean
     public ProjectService projectService(@Autowired NacosTapdxConf nacosTapdxConf) {
-        return new ProjectServiceImpl(nacosTapdxConf);
-    }
-
-    @Bean
-    public ReleaseService releaseService(@Autowired TapdClient tapdClient) {
-        return new ReleaseServiceImpl(tapdClient);
+        return new ProjectService(nacosTapdxConf);
     }
 
     @Bean
     public RoleService roleService(@Autowired TapdClient tapdClient) {
-        return new RoleServiceImpl(tapdClient);
+        return new RoleService(tapdClient);
     }
 
     @Bean
     public StoryService storyService(@Autowired TapdClient tapdClient) {
-        return new StoryServiceImpl(tapdClient);
+        return new StoryService(tapdClient);
     }
 
     @Bean
     public TaskService taskService(@Autowired TapdClient tapdClient) {
-        return new TaskServiceImpl(tapdClient);
+        return new TaskService(tapdClient);
     }
 
     @Bean
@@ -74,8 +67,8 @@ public class TapdConfiguration {
                                                  @Autowired ProjectService projectService,
                                                  @Autowired StoryService storyService,
                                                  @Autowired TaskService taskService,
-                                                 @Autowired BugService bugService) {
-        return new WorkerBoardServiceImpl(roleService,
+                                                 @Autowired com.mantas.tapd.service.BugService bugService) {
+        return new WorkerBoardService(roleService,
                 iterationService,
                 projectService,
                 storyService,
