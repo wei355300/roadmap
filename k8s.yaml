@@ -67,7 +67,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: roadmap-cm
-                  key: database.passowrd
+                  key: database.password
       restartPolicy: Always
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
