@@ -10,9 +10,9 @@ spring:
 #      fail-on-unknown-properties: false
 #    date-format: yyyy-MM-dd HH:mm:ss
   datasource:
-    url: "jdbc:mysql://food-dev.mysql.polardb.rds.aliyuncs.com:3306/roadmap"
-    username: "roadmap"
-    password: "roadmap_123"
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name=: com.mysql.cj.jdbc.Driver
     druid:
       initial-size: 1

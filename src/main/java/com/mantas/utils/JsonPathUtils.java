@@ -27,17 +27,6 @@ public class JsonPathUtils {
     }
 
     public static <T> T to(String json, String pattern, TypeRef<T> type) {
-//        Configuration conf = Configuration.defaultConfiguration();
         return JsonPath.using(SnakeCaseConfiguration).parse(json).read(pattern, type);
     }
-
-//    public static <T, B> T to(Configuration conf, String json, String pattern, Class clazz) {
-//        TypeRef<T> type = new TypeRef() {
-//            @Override
-//            public Type getType() {
-//                return clazz.getGenericSuperclass();
-//            }
-//        };
-//        return JsonPath.using(conf).parse(json).read(pattern, type);
-//    }
 }
