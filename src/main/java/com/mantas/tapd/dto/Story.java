@@ -22,7 +22,7 @@ public class Story {
     private String begin;
     private String due;
     private int businessValue;
-    private int projectId;
+    private int workspaceId;
     private String iterationId;
     private String releaseId;
 }

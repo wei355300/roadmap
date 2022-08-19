@@ -23,13 +23,6 @@ public class JsonUtils {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
-    private static JsonUtils ins ;
-
-    public JsonUtils(ObjectMapper objectMapper) {
-        ins = this;
-        this.objectMapper = objectMapper;
-    }
-
     public static String prettyJson(String json) throws JsonProcessingException {
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
     }

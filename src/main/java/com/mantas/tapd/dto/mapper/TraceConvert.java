@@ -21,6 +21,7 @@ public interface TraceConvert {
             @Mapping(source = "name", target = "name"),
             @Mapping(source = "businessValue", target = "weight"),
             @Mapping(constant = "story", target = "type"),
+            @Mapping(source = "workspaceId", target = "projectId"),
             @Mapping(target = "link", source = "story", qualifiedByName = {"TraceFiledTranslator", "toStoryLink"}),
     })
     Trace toTrace(Story story);
@@ -47,7 +48,7 @@ class TraceFiledTranslator {
 
     @Named("toStoryLink")
     public String mapLink(Story story) {
-        return TapdUrlBuilder.buildStoryUrl(String.valueOf(story.getProjectId()), story.getId());
+        return TapdUrlBuilder.buildStoryUrl(String.valueOf(story.getWorkspaceId()), story.getId());
     }
 
     @Named("toTaskLink")
