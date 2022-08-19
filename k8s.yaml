@@ -7,6 +7,9 @@ metadata:
 data:
   nacos.server.host: "${NACOS_SERVER_HOST}"
   nacos.server.port: "${NACOS_SERVER_PORT}"
+  database.url: "${DATABASE_URL}"
+  database.username: "${DATABASE_USERNAME}"
+  database.password: "${DATABASE_PASSWORD}"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -50,7 +53,21 @@ spec:
                 configMapKeyRef:
                   name: roadmap-cm
                   key: nacos.server.port
-                  #      dnsPolicy: ClusterFirst
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: roadmap-cm
+                  key: database.url
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: roadmap-cm
+                  key: database.username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: roadmap-cm
+                  key: database.passowrd
       restartPolicy: Always
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
