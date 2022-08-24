@@ -1,4 +1,4 @@
-package com.mantas.tapd.dto;
+package com.mantas.tapd.project;
 
 import lombok.Data;
 

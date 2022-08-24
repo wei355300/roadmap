@@ -1,8 +1,9 @@
-package com.mantas.tapd.service;
+package com.mantas.tapd.iteration;
 
 import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.ParamPair;
-import com.mantas.tapd.dto.Iteration;
+import com.mantas.tapd.TapdClient;
+import com.mantas.tapd.TapdURL;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;

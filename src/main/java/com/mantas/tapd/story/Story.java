@@ -1,7 +1,8 @@
-package com.mantas.tapd.dto;
+package com.mantas.tapd.story;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.mantas.tapd.dto.TapdOwnerConverterOfJsonDeSerialization;
 import lombok.Data;
 
 import java.util.List;

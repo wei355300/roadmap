@@ -1,6 +1,6 @@
 package com.mantas.tapd.config;
 
-import com.mantas.tapd.dto.Project;
+import com.mantas.tapd.project.Project;
 import com.mantas.tapd.dto.TapdAuth;
 import lombok.Data;
 

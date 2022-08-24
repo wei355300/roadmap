@@ -1,7 +1,19 @@
 package com.mantas.tapd.service;
 
+import com.mantas.tapd.bug.Bug;
+import com.mantas.tapd.bug.BugService;
 import com.mantas.tapd.dto.*;
 import com.mantas.tapd.dto.mapper.TraceConvert;
+import com.mantas.tapd.iteration.Iteration;
+import com.mantas.tapd.iteration.IterationService;
+import com.mantas.tapd.project.Project;
+import com.mantas.tapd.project.ProjectService;
+import com.mantas.tapd.story.Story;
+import com.mantas.tapd.story.StoryService;
+import com.mantas.tapd.task.Task;
+import com.mantas.tapd.task.TaskService;
+import com.mantas.tapd.user.Role;
+import com.mantas.tapd.user.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 

@@ -1,7 +1,7 @@
 package com.mantas.tapd.service.test;
 
-import com.mantas.tapd.dto.Project;
-import com.mantas.tapd.service.ProjectService;
+import com.mantas.tapd.project.Project;
+import com.mantas.tapd.project.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

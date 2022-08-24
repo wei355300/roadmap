@@ -1,4 +1,4 @@
-package com.mantas.tapd.service;
+package com.mantas.tapd.project;
 
 import com.alibaba.nacos.api.exception.NacosException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -6,7 +6,6 @@ import com.mantas.nacos.NacosConf;
 import com.mantas.nacos.NacosConfigurator;
 import com.mantas.tapd.config.NacosTapdxConf;
 import com.mantas.tapd.config.TapdConfigProperties;
-import com.mantas.tapd.dto.Project;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

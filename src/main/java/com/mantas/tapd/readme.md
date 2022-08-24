@@ -35,4 +35,4 @@ nacos配置示例
 
 使用 `jsonpath` 解析数据并转化为 `Object` 对象,
 
-具体用法可参考 `com.mantas.tapd.service.TapdClient#body2Obj()`
+具体用法可参考 `com.mantas.tapd.TapdClient#body2Obj()`

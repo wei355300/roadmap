@@ -1,10 +1,11 @@
-package com.mantas.tapd.service;
+package com.mantas.tapd.user;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import com.mantas.okhttp.ParamPair;
-import com.mantas.tapd.dto.Role;
 import com.mantas.tapd.dto.Worker;
+import com.mantas.tapd.TapdClient;
+import com.mantas.tapd.TapdURL;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

@@ -1,9 +1,9 @@
 package com.mantas.tapd.service.test;
 
-import com.mantas.tapd.dto.Role;
+import com.mantas.tapd.user.Role;
 import com.mantas.tapd.dto.Worker;
-import com.mantas.tapd.service.ProjectService;
-import com.mantas.tapd.service.RoleService;
+import com.mantas.tapd.project.ProjectService;
+import com.mantas.tapd.user.RoleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

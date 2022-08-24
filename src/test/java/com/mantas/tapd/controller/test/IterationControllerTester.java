@@ -1,7 +1,7 @@
 package com.mantas.tapd.controller.test;
 
-import com.mantas.tapd.dto.Iteration;
-import com.mantas.tapd.service.IterationService;
+import com.mantas.tapd.iteration.Iteration;
+import com.mantas.tapd.iteration.IterationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;

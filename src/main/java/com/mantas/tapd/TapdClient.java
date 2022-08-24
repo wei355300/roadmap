@@ -1,4 +1,4 @@
-package com.mantas.tapd.service;
+package com.mantas.tapd;
 
 import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.OkHttp;
