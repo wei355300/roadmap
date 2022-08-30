@@ -6,11 +6,14 @@ import com.mantas.security.token.TokenAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.util.Assert;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 public class DingtalkAuthenticationProvider implements AuthenticationProvider {
@@ -36,6 +39,11 @@ public class DingtalkAuthenticationProvider implements AuthenticationProvider {
             if (account == null) {
                 this.logger.debug("Failed to find account by dingtalk authCode: '" + authCode + "'");
                 throw new BadCredentialsException("Bad credentials");
+            }
+            //账号如果token过期, 重置token
+            if (account.getExpiration().isBefore(LocalDateTime.now())) {
+                log.debug("account {} was expired, update token and reset expiration", account.getId());
+                account = dingtalkDetailServices.update(account);
             }
             this.preAuthenticationChecks.check(account);
             additionalAuthenticationChecks(account, dingtalkAuthenticationToken);
