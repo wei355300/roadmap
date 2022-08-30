@@ -40,6 +40,10 @@ public class DingtalkDetailServices {
         return account;
     }
 
+    public Account update(Account accoutn) {
+        return accountService.updateToken(accoutn);
+    }
+
     /**
      * 获取钉钉登录(扫码登录)所需的原始信息
      * 用于构造出发到钉钉服务器的请求参数

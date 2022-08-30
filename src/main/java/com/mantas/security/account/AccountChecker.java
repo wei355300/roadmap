@@ -2,11 +2,8 @@ package com.mantas.security.account;
 
 import com.mantas.security.account.dto.Account;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
-
-import java.time.LocalDateTime;
 
 @Slf4j
 public class AccountChecker {
@@ -19,10 +16,6 @@ public class AccountChecker {
         if (!account.getStatus()) {
             log.debug("user account {} is disabled", account.getToken());
             throw new DisabledException("User is disabled");
-        }
-        if (account.getExpiration().isBefore(LocalDateTime.now())) {
-            log.debug("user account {} is expired", account.getToken());
-            throw new AccountExpiredException("User account has expired");
         }
     }
 }
