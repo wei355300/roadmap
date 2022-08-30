@@ -41,13 +41,21 @@ public class IterationServiceTest {
 
     @Test
     public void testClose() throws TapdException {
-        Integer projectId = 41045808;//getProject().getId();
+        Integer projectId = getProject().getId();
         String iterationId = getUnCloseIteration(projectId).getId();
         String optUser = "韦峰";
         projectId = null;
         Boolean ret = iterationService.close(projectId, iterationId, optUser);
 
         assertThat(ret).isTrue();
+    }
+
+    @Test
+    public void testCloseMore() throws TapdException {
+        Integer projectId = 22259671;
+        Integer daysBefore = 7;
+        String optUser = "韦峰";
+        iterationService.close(projectId, daysBefore, optUser);
     }
 
     private Project getProject() {

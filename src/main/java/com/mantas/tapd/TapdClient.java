@@ -3,6 +3,7 @@ package com.mantas.tapd;
 import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.OkHttp;
 import com.mantas.okhttp.ParamPair;
+import com.mantas.tapd.exception.TapdException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -38,25 +39,32 @@ public class TapdClient {
         return JsonPathUtils.to(body, pattern, ref);
     }
 
-    public Boolean post(String url, List<ParamPair> params) {
-        Boolean result = Boolean.FALSE;
+    public Boolean post(String url, List<ParamPair> params) throws TapdException {
         try {
             String resBody = okHttp.post(url, params);
-            result = isSuccessful(resBody);
+            if (!isSuccessful(resBody)) {
+                throw new TapdException(errInfo(resBody));
+            }
+            return Boolean.TRUE;
         } catch (IOException e) {
             log.warn("发送post请求失败, url: " + url, e);
+            throw new TapdException("Tapd服务处理失败");
         }
-        return result;
     }
 
-    public <T> T post(String url, List<ParamPair> params, Class<T> ret) {
+    public <T> T post(String url, List<ParamPair> params, Class<T> ret) throws TapdException {
         T result = null;
         try {
             result = okHttp.get(url, params, ret);
         } catch (IOException e) {
             log.warn("发送post请求失败, url: " + url, e);
+            throw new TapdException("Tapd服务处理失败");
         }
         return result;
+    }
+
+    private String errInfo(String body) {
+        return JsonPathUtils.to(body, "$.info", String.class);
     }
 
     private Boolean isSuccessful(String body) {

@@ -6,6 +6,7 @@ import com.mantas.okhttp.BasicInterceptor;
 import com.mantas.okhttp.OkHttp;
 import com.mantas.tapd.TapdClient;
 import com.mantas.tapd.bug.BugService;
+import com.mantas.tapd.TapdScheduleTask;
 import com.mantas.tapd.iteration.IterationService;
 import com.mantas.tapd.project.ProjectService;
 import com.mantas.tapd.service.*;
@@ -67,10 +68,12 @@ public class TapdConfiguration {
         return new TaskService(tapdClient);
     }
 
-//    @Bean
-//    public WorkspaceService workspaceService(@Autowired TapdClient tapdClient) {
-//        return new WorkspaceService(tapdClient.get);
-//    }
+    @Bean
+    public TapdScheduleTask tapdScheduleTask(@Autowired ProjectService projectService,
+                                             @Autowired IterationService iterationService,
+                                             @Autowired RoleService roleService) {
+        return new TapdScheduleTask(projectService, iterationService, roleService);
+    }
 
     @Bean
     public WorkerBoardService workerBoardService(@Autowired RoleService roleService,
