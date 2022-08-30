@@ -1,9 +1,9 @@
 package com.mantas.tapd.controller;
 
 import com.mantas.controller.R;
-import com.mantas.tapd.dto.Role;
+import com.mantas.tapd.user.Role;
 import com.mantas.tapd.dto.Worker;
-import com.mantas.tapd.service.RoleService;
+import com.mantas.tapd.user.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -34,5 +34,6 @@ nacos配置示例
 基于 tapd 开放平台返回的数据格式的特殊性, 
 
 使用 `jsonpath` 解析数据并转化为 `Object` 对象,
+[Json-Path](https://github.com/json-path/JsonPath)
 
-具体用法可参考 `com.mantas.tapd.service.TapdClient#body2Obj()`
+具体用法可参考 `com.mantas.tapd.TapdClient#body2Obj()`

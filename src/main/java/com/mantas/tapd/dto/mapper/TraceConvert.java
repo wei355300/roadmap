@@ -1,9 +1,9 @@
 package com.mantas.tapd.dto.mapper;
 
-import com.mantas.tapd.service.TapdUrlBuilder;
-import com.mantas.tapd.dto.Bug;
-import com.mantas.tapd.dto.Story;
-import com.mantas.tapd.dto.Task;
+import com.mantas.tapd.TapdUrlBuilder;
+import com.mantas.tapd.bug.Bug;
+import com.mantas.tapd.story.Story;
+import com.mantas.tapd.task.Task;
 import com.mantas.tapd.dto.Trace;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

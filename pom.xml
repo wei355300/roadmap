@@ -24,7 +24,7 @@
         <okhttp.version>4.10.0</okhttp.version>
         <aliyun-log.version>0.6.70</aliyun-log.version>
         <gitlab-4j.version>5.0.1</gitlab-4j.version>
-        <hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
+        <hibernate-validator.version>6.2.4.Final</hibernate-validator.version>
     </properties>
 
     <build>
@@ -146,6 +146,11 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate.validator</groupId>-->
+<!--            <artifactId>hibernate-validator-annotation-processor</artifactId>-->
+<!--            <version>${hibernate-validator.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>

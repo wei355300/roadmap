@@ -7,13 +7,11 @@ import com.alibaba.nacos.api.exception.NacosException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mantas.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.concurrent.Executor;
 
 /**
  * nacos配置操作类
@@ -30,57 +28,40 @@ import java.util.concurrent.Executor;
 @Slf4j
 public class NacosConfigurator {
 
-    /**
-     * fixme : 使用@Bean注入的方式
-     * json解析可利用spring的ObjectMapper处理
-     * @Bean
-     * public NacosConfigurator nacosConfigurator(ObjectMapper objectMapper) {}
-     */
-
-    public class Listener implements com.alibaba.nacos.api.config.listener.Listener {
-        @Override
-        public Executor getExecutor() {
-            return null;
-        }
-
-        @Override
-        public void receiveConfigInfo(String configInfo) {
-
-        }
-    }
-
     private final static Map<String, ConfigService> services = new HashMap<>();
 
-    public static <T> T getConfig(NacosConf nacosConf, Class<T> type) throws NacosException, JsonProcessingException {
+    public static <T> T getConfig(NacosProperties nacosConf, Class<T> type) throws NacosException, JsonProcessingException {
         ConfigService configService = getConfigService(nacosConf);
-
-        // 可以增加配置修改后的listener
-//        String content = configService.getConfigAndSignListener(nacosConf.getDataId(), nacosConf.getGroupId(), 5000, null);
         String content = configService.getConfig(nacosConf.getDataId(), nacosConf.getGroupId(), 5000);
-
-        log.info("get content {} from nacos server by conf {}", content, nacosConf);
-
         T result = JsonUtils.toObj(content, type);
         return result;
     }
 
-    public static <T> T getConfig(NacosConf nacosConf, Class<T> type, Listener listener) throws NacosException, JsonProcessingException {
-        ConfigService configService = getConfigService(nacosConf);
-        String content = configService.getConfigAndSignListener(nacosConf.getDataId(), nacosConf.getGroupId(), 5000, listener);
-
-        log.info("get content {} from nacos server by conf {}", content, nacosConf);
-        T result = JsonUtils.toObj(content, type);
-        return result;
+    public static <T> T getConfig(NacosProperties nacosProperties, NacosConfigurationParser<T> parser) throws Exception {
+        ConfigService configService = getConfigService(nacosProperties);
+        String content = configService.getConfig(nacosProperties.getDataId(), nacosProperties.getGroupId(), 5000);
+        return parser.parse(content);
     }
 
-    private static ConfigService getConfigService(NacosConf nacosConf) throws NacosException {
-        ConfigService configService = services.get(nacosConf.getModule());
+//    public static <T> T getConfig(NacosProperties nacosProperties, NacosConfigurationParser parser, NacosConfigurationListener listener) throws Exception {
+//        ConfigService configService = getConfigService(nacosProperties);
+//        String content = configService.getConfigAndSignListener(nacosProperties.getDataId(), nacosProperties.getGroupId(), 5000, listener);
+//        return parser.parse(content);
+//    }
+
+    public static void removeListener(NacosProperties nacosProperties, NacosConfigurationListener listener) throws NacosException {
+        ConfigService configService = getConfigService(nacosProperties);
+        configService.removeListener(nacosProperties.getDataId(), nacosProperties.getGroupId(), listener);
+    }
+
+    private static ConfigService getConfigService(NacosProperties nacosProperties) throws NacosException {
+        ConfigService configService = services.get(nacosProperties.getModule());
         if (Objects.isNull(configService)) {
             Properties props = new Properties();
-            props.put(PropertyKeyConst.SERVER_ADDR, nacosConf.getServerAddr());
-            props.put(PropertyKeyConst.NAMESPACE, nacosConf.getNamespace());
+            props.put(PropertyKeyConst.SERVER_ADDR, nacosProperties.getServerAddr());
+            props.put(PropertyKeyConst.NAMESPACE, nacosProperties.getNamespace());
             configService = NacosFactory.createConfigService(props);
-            services.put(nacosConf.getModule(), configService);
+            services.put(nacosProperties.getModule(), configService);
         }
         return configService;
     }

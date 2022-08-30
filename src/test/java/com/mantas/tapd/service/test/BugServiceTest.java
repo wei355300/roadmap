@@ -1,11 +1,12 @@
 package com.mantas.tapd.service.test;
 
-import com.mantas.tapd.dto.Bug;
-import com.mantas.tapd.dto.Iteration;
-import com.mantas.tapd.dto.Project;
-import com.mantas.tapd.service.BugService;
-import com.mantas.tapd.service.IterationService;
-import com.mantas.tapd.service.ProjectService;
+import com.mantas.tapd.bug.Bug;
+import com.mantas.tapd.exception.TapdException;
+import com.mantas.tapd.iteration.Iteration;
+import com.mantas.tapd.project.Project;
+import com.mantas.tapd.bug.BugService;
+import com.mantas.tapd.iteration.IterationService;
+import com.mantas.tapd.project.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,13 +31,13 @@ public class BugServiceTest {
     private BugService bugService;
 
     @Test
-    public void testGetBugs() throws IOException {
+    public void testGetBugs() throws IOException, TapdException {
 
         List<Project> projects = projectService.getProjects();
 
         Integer projectId = projects.get(0).getId();
 
-        List<Iteration> iterations = iterationService.getIterationsByProject(projectId);
+        List<Iteration> iterations = iterationService.getIterations(projectId);
 
         Iteration iteration = iterations.get(0);
 

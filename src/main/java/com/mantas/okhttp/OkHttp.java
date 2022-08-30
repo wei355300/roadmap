@@ -33,11 +33,14 @@ public class OkHttp {
     }
 
     static class Post {
-        static Request build(String url, String body) {
+        static Request build(String url, List<ParamPair> params) {
             Request.Builder reqBuilder = new Request.Builder();
             reqBuilder.url(url);
-            //fixme buildPostReq()
-            RequestBody reqBody = null;
+            FormBody.Builder formBuilder = new FormBody.Builder();
+            params.forEach( p ->
+                formBuilder.add(p.getName(), p.getValue())
+            );
+            RequestBody reqBody = formBuilder.build();
             reqBuilder.post(reqBody);
             return reqBuilder.build();
         }
@@ -63,8 +66,13 @@ public class OkHttp {
         return request(request, classOfT);
     }
 
-    public <T> T post(String url, String body, Class<T> classOfT) throws IOException {
-        Request request = Post.build(url, body);
+    public String post(String url, List<ParamPair> params) throws IOException {
+        Request request = Post.build(url, params);
+        return request(request);
+    }
+
+    public <T> T post(String url, List<ParamPair> params, Class<T> classOfT) throws IOException {
+        Request request = Post.build(url, params);
         return request(request, classOfT);
     }
 

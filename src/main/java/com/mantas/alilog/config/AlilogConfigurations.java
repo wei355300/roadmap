@@ -6,12 +6,9 @@ import com.mantas.alilog.dto.LogEntity;
 import com.mantas.alilog.service.AlilogService;
 import com.mantas.alilog.service.impl.AlilogClients;
 import com.mantas.alilog.service.impl.AlilogServiceImpl;
-import com.mantas.gitlab.service.GitFileService;
 import com.mantas.nacos.NacosConfigurator;
-import org.gitlab4j.api.GitLabApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
@@ -19,7 +16,7 @@ import java.util.List;
 public class AlilogConfigurations {
 
     @Bean
-    public AlilogConfigProperties alilogConfigProperties(@Autowired NacosAlilogConf nacosAlilogConf) throws NacosException, JsonProcessingException {
+    public AlilogConfigProperties alilogConfigProperties(@Autowired NacosAlilogProperties nacosAlilogConf) throws NacosException, JsonProcessingException {
         return NacosConfigurator.getConfig(nacosAlilogConf, AlilogConfigProperties.class);
     }
 
