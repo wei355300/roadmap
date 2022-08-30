@@ -36,7 +36,7 @@ public class TapdScheduleTask {
                     continue;
                 }
                 log.info("关闭项目 {} 的迭代.", p.getName());
-                iterationService.close(p.getId(), 7, pickUserOfProject(p.getId()));
+                iterationService.close(p.getId(), 14, pickUserOfProject(p.getId()));
             }
         } catch (TapdException e) {
             throw new RuntimeException(e);
