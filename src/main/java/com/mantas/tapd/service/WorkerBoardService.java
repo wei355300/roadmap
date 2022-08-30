@@ -90,8 +90,7 @@ public class WorkerBoardService {
         log.info("跑完了");
 
         Comparator<Worker> traceComparator = Comparator.comparingInt(w -> w.getTraces().size());
-
-        return workerTraces.values().stream().sorted(traceComparator.reversed()).collect(Collectors.toList());
+        return workerTraces.values().stream().filter(w -> w.getTraces().size() > 0).sorted(traceComparator.reversed()).collect(Collectors.toList());
     }
 
     private void mergeTrace(Map<String, Worker> workerTraces, Collection<Worker> traces) {
