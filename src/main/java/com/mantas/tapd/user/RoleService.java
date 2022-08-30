@@ -68,7 +68,7 @@ public class RoleService {
 
 
     private List<Worker> requestUsers(Integer projectId) {
-        List<ParamPair> pairs = tapdClient.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
+        List<ParamPair> pairs = tapdClient.buildParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
         tapdClient.appendParams(pairs, TapdURL.PARAM.FIELDS, "user,role_id,name,email");
 
         try {
@@ -81,7 +81,7 @@ public class RoleService {
     }
 
     private List<Role> requestRoles(Integer projectId) {
-        List<ParamPair> pairs = tapdClient.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
+        List<ParamPair> pairs = tapdClient.buildParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
         try {
             String body = tapdClient.get(TapdURL.URL.ROLES, pairs);
             return body2Role(body);

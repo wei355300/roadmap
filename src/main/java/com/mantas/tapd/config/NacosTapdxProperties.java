@@ -1,6 +1,6 @@
-package com.mantas.gitlab.config;
+package com.mantas.tapd.config;
 
-import com.mantas.nacos.NacosConf;
+import com.mantas.nacos.NacosProperties;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
 @Data
 @ToString
 @Component
-@ConfigurationProperties(prefix = "nacos.config.roadmap", ignoreUnknownFields = true)
-public class NacosGitlabConf extends NacosConf {
+@ConfigurationProperties(prefix = "nacos.config.tapdx", ignoreUnknownFields = true)
+public class NacosTapdxProperties extends NacosProperties {
 
+        private String module = "TapdX";
 }

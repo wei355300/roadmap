@@ -1,7 +1,6 @@
 package com.mantas.tapd.config;
 
-import com.alibaba.nacos.api.exception.NacosException;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mantas.nacos.NacosConfigurationJsonParser;
 import com.mantas.nacos.NacosConfigurator;
 import com.mantas.okhttp.BasicInterceptor;
 import com.mantas.okhttp.OkHttp;
@@ -13,6 +12,7 @@ import com.mantas.tapd.service.*;
 import com.mantas.tapd.story.StoryService;
 import com.mantas.tapd.task.TaskService;
 import com.mantas.tapd.user.RoleService;
+import com.mantas.tapd.workspace.WorkspaceService;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,8 @@ import java.util.Set;
 public class TapdConfiguration {
 
     @Bean
-    public TapdClient tapdClient(@Autowired NacosTapdxConf nacosTapdxConf) throws JsonProcessingException, NacosException {
-        TapdConfigProperties tapdConfigProperties = NacosConfigurator.getConfig(nacosTapdxConf, TapdConfigProperties.class);
-        log.info("nacos server config content: {}, {}", tapdConfigProperties.getAuth().getBasicAuthId(), tapdConfigProperties);
+    public TapdClient tapdClient(@Autowired NacosTapdxProperties nacosTapdxConf) throws Exception {
+        TapdConfigProperties tapdConfigProperties = NacosConfigurator.getConfig(nacosTapdxConf, new NacosConfigurationJsonParser<>(TapdConfigProperties.class));
         BasicInterceptor basicInterceptor = new BasicInterceptor(tapdConfigProperties.getAuth().getBasicAuthId(), tapdConfigProperties.getAuth().getBasicAuthPwd());
         Set<Interceptor> interceptors = new HashSet<>(1);
         interceptors.add(basicInterceptor);
@@ -49,7 +48,7 @@ public class TapdConfiguration {
     }
 
     @Bean
-    public ProjectService projectService(@Autowired NacosTapdxConf nacosTapdxConf) {
+    public ProjectService projectService(@Autowired NacosTapdxProperties nacosTapdxConf) {
         return new ProjectService(nacosTapdxConf);
     }
 
@@ -67,6 +66,11 @@ public class TapdConfiguration {
     public TaskService taskService(@Autowired TapdClient tapdClient) {
         return new TaskService(tapdClient);
     }
+
+//    @Bean
+//    public WorkspaceService workspaceService(@Autowired TapdClient tapdClient) {
+//        return new WorkspaceService(tapdClient.get);
+//    }
 
     @Bean
     public WorkerBoardService workerBoardService(@Autowired RoleService roleService,

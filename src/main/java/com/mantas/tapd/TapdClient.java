@@ -3,7 +3,6 @@ package com.mantas.tapd;
 import com.jayway.jsonpath.TypeRef;
 import com.mantas.okhttp.OkHttp;
 import com.mantas.okhttp.ParamPair;
-import com.mantas.utils.JsonPathUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class TapdClient {
         this.okHttp = okHttp;
     }
 
-    public List<ParamPair> setParam(String key, String value) {
+    public List<ParamPair> buildParam(String key, String value) {
         List<ParamPair> params = new ArrayList<>();
         params.add(new ParamPair(key, value));
         return params;
@@ -39,20 +38,29 @@ public class TapdClient {
         return JsonPathUtils.to(body, pattern, ref);
     }
 
-    public <T> T post(String url, List<ParamPair> params, Class<T> ret) {
-
-        T result = null;
-
+    public Boolean post(String url, List<ParamPair> params) {
+        Boolean result = Boolean.FALSE;
         try {
-            result = okHttp.get(url, params, ret);
+            String resBody = okHttp.post(url, params);
+            result = isSuccessful(resBody);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn("发送post请求失败, url: " + url, e);
         }
         return result;
     }
-//
-//    private <T> T body2Obj(String body, TypeRef<T> ref, String pattern) {
-//        T obj = JsonPathUtils.to(body, pattern, ref);
-//        return obj;
-//    }
+
+    public <T> T post(String url, List<ParamPair> params, Class<T> ret) {
+        T result = null;
+        try {
+            result = okHttp.get(url, params, ret);
+        } catch (IOException e) {
+            log.warn("发送post请求失败, url: " + url, e);
+        }
+        return result;
+    }
+
+    private Boolean isSuccessful(String body) {
+        Integer status = JsonPathUtils.to(body, "$.status", Integer.class);
+        return 1 == status.intValue();
+    }
 }

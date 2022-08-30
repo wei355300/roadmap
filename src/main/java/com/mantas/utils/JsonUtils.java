@@ -41,6 +41,10 @@ public class JsonUtils {
         return objectMapper.writeValueAsString(obj);
     }
 
+    public static <T> String toPrettyJson(T obj) throws JsonProcessingException {
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+    }
+
     public static <T> Optional<String> toJsonOptional(T obj) {
         try {
             String ret = objectMapper.writeValueAsString(obj);

@@ -4,6 +4,7 @@ import com.mantas.tapd.bug.Bug;
 import com.mantas.tapd.bug.BugService;
 import com.mantas.tapd.dto.*;
 import com.mantas.tapd.dto.mapper.TraceConvert;
+import com.mantas.tapd.exception.TapdException;
 import com.mantas.tapd.iteration.Iteration;
 import com.mantas.tapd.iteration.IterationService;
 import com.mantas.tapd.project.Project;
@@ -187,13 +188,18 @@ public class WorkerBoardService {
      * 获取项目中开启状态的迭代及所有的角色
      */
     private ProjectComp getProjectComps(Project project) {
-        Integer projectId = project.getId();
-        List<Role> roles = roleService.getRolesByProject(projectId);
-        List<Iteration> iterations = iterationService.getIterationsByProject(projectId);
-
         ProjectComp projectComp = new ProjectComp(project);
-        projectComp.setIterations(iterations);
-        projectComp.setRoles(roles);
+
+        Integer projectId = project.getId();
+        try {
+            List<Role> roles = roleService.getRolesByProject(projectId);
+            List<Iteration> iterations = iterationService.getIterations(projectId);
+
+            projectComp.setIterations(iterations);
+            projectComp.setRoles(roles);
+        } catch (TapdException e) {
+            log.warn("", e);
+        }
         return projectComp;
     }
 }

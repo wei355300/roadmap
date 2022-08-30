@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public abstract class NacosConf {
+public abstract class NacosProperties {
     private String module;
     private String namespace;
     private String serverAddr;

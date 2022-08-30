@@ -1,4 +1,4 @@
-package com.mantas.utils;
+package com.mantas.tapd;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -13,7 +13,7 @@ import com.jayway.jsonpath.spi.mapper.MappingProvider;
 
 public class JsonPathUtils {
 
-    public static final Configuration SnakeCaseConfiguration = defaultSnakeCaseConfiguration();
+    private static final Configuration SnakeCaseConfiguration = defaultSnakeCaseConfiguration();
 
     private static Configuration defaultSnakeCaseConfiguration() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -28,5 +28,9 @@ public class JsonPathUtils {
 
     public static <T> T to(String json, String pattern, TypeRef<T> type) {
         return JsonPath.using(SnakeCaseConfiguration).parse(json).read(pattern, type);
+    }
+
+    public static <T> T to(String json, String pattern, Class<T> clazz) {
+        return JsonPath.using(SnakeCaseConfiguration).parse(json).read(pattern, clazz);
     }
 }

@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class Iteration {
+public class Iteration implements Serializable {
 
     private String id;
     private String name;

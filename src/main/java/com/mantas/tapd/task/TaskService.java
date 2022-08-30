@@ -37,7 +37,7 @@ public class TaskService {
     }
 
     private List<Task> request(Integer projectId, String iterationId) {
-        List<ParamPair> pairs = tapdClient.setParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
+        List<ParamPair> pairs = tapdClient.buildParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
         tapdClient.appendParams(pairs, TapdURL.PARAM.ITERATION_ID, iterationId);
         tapdClient.appendParams(pairs, TapdURL.PARAM.LIMIT, "200");
 

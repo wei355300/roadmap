@@ -7,8 +7,6 @@ import com.mantas.nacos.NacosConfigurator;
 import com.mantas.security.account.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 public class DingtalkSecurityConfiguration {
 
     @Bean
-    public DingtalkProperties dingtalkProperties(@Autowired NacosDingtalkConf dingtalkConf) throws NacosException, JsonProcessingException {
+    public DingtalkProperties dingtalkProperties(@Autowired NacosDingtalkProperties dingtalkConf) throws NacosException, JsonProcessingException {
 
         return NacosConfigurator.getConfig(dingtalkConf, DingtalkProperties.class);
     }

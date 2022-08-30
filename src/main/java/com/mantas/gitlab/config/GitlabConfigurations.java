@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class GitlabConfigurations {
 
     @Bean
-    public GitlabConfigProperties gitlabConfigProperties(@Autowired NacosGitlabConf nacosGitlabConf) throws NacosException, JsonProcessingException {
+    public GitlabConfigProperties gitlabConfigProperties(@Autowired NacosGitlabProperties nacosGitlabConf) throws NacosException, JsonProcessingException {
         return NacosConfigurator.getConfig(nacosGitlabConf, GitlabConfigProperties.class);
     }
 

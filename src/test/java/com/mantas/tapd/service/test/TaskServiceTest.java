@@ -1,5 +1,6 @@
 package com.mantas.tapd.service.test;
 
+import com.mantas.tapd.exception.TapdException;
 import com.mantas.tapd.iteration.Iteration;
 import com.mantas.tapd.project.Project;
 import com.mantas.tapd.task.Task;
@@ -30,13 +31,13 @@ public class TaskServiceTest {
     private TaskService taskService;
 
     @Test
-    public void testGetTasks() throws IOException {
+    public void testGetTasks() throws IOException, TapdException {
 
         List<Project> projects = projectService.getProjects();
 
         Integer projectId = projects.get(0).getId();
 
-        List<Iteration> iterations = iterationService.getIterationsByProject(projectId);
+        List<Iteration> iterations = iterationService.getIterations(projectId);
 
         Iteration iteration = iterations.get(0);
 

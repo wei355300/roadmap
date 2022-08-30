@@ -1,6 +1,6 @@
-package com.mantas.tapd.config;
+package com.mantas.alilog.config;
 
-import com.mantas.nacos.NacosConf;
+import com.mantas.nacos.NacosProperties;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 @Data
 @ToString
 @Component
-@ConfigurationProperties(prefix = "nacos.config.tapdx", ignoreUnknownFields = true)
-public class NacosTapdxConf extends NacosConf {
+@ConfigurationProperties(prefix = "nacos.config.alilog", ignoreUnknownFields = true)
+public class NacosAlilogProperties extends NacosProperties {
 
-        private String module = "TapdX";
 }
