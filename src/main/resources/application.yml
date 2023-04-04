@@ -4,11 +4,6 @@ spring:
   cache:
     cache-names: "tapd-roles, tapd-users"
     type: simple
-# jackson的配置查看: GlobalConfiguration::jsonCustomizer()
-#  jackson:
-#    deserialization:
-#      fail-on-unknown-properties: false
-#    date-format: yyyy-MM-dd HH:mm:ss
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
