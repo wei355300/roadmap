@@ -1,22 +1,4 @@
 
-
-spring:
-  cache:
-    cache-names: "tapd-roles, tapd-users"
-    type: simple
-  datasource:
-    url: "jdbc:mysql://food-dev.mysql.polardb.rds.aliyuncs.com:3306/roadmap"
-    username: "roadmap"
-    password: "roadmap_123"
-    driver-class-name=: com.mysql.cj.jdbc.Driver
-    druid:
-      initial-size: 1
-      max-active: 5
-      min-idle: 1
-      filter:
-        slf4j:
-          enabled: true
-
 nacos:
   config:
     tapdx:
