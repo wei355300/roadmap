@@ -43,7 +43,7 @@ nacos:
 
 
 server:
-  port: 8080
+  port: 9080
 
 logging:
   level:

@@ -80,10 +80,8 @@ public class WorkerBoardService {
         ExecutorService executorService = Executors.newFixedThreadPool(projects.size());
         CompletableFuture[] futures = projects.stream()
                 .map(project -> CompletableFuture.supplyAsync(() -> {
-                    log.info("开始跑异步: " + project.getName());
                     return getTracesByProject(workerTraces, project);
                 }, executorService).whenComplete((result, t) -> {
-                    log.info("完成: " + project.getName());
                     mergeTrace(workerTraces, result);
                 })).toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
@@ -108,30 +106,52 @@ public class WorkerBoardService {
     }
 
     private Collection<Worker> getTracesByProject(Map<String, Worker> workerTraces, ProjectComp project) {
+
         //获取所有项目中的员工
         //获取角色中的员工
         List<Worker> workers = roleService.getUsersByProject(project.getId(), project.getRoles());
         putWorkers(workers, workerTraces);
+
+        if (Objects.nonNull(project.getStartDate())) {
+            return getTracesByDateOfProject(workerTraces, project);
+        }
+        return getTracesByIterationOfProject(workerTraces, project);
+    }
+
+    private Collection<Worker> getTracesByIterationOfProject(Map<String, Worker> workerTraces, ProjectComp project) {
         //获取项目迭代中的需求, 任务, 缺陷
         //需求按处理人分配
         List<List<Story>> stories = storyService.getByIterations(project.getId(), project.getIterations());
-        assignStory(stories, workerTraces);
+        assignStoryMul(stories, workerTraces);
         //任务按开发人员分配
         List<List<Task>> tasks = taskService.getByIterations(project.getId(), project.getIterations());
         assignTask(tasks, workerTraces);
         //缺陷按开发人员/测试人员分配
         List<List<Bug>> bugs = bugService.getByIterations(project.getId(), project.getIterations());
-        assignBug(bugs, workerTraces);
+        assignBug(project, bugs, workerTraces);
         //按处理人, 开发人都关系, 将任务集合到员工列表中
         return workerTraces.values();
     }
 
-    private void assignStory(List<List<Story>> stories, Map<String, Worker> traces) {
+    private Collection<Worker> getTracesByDateOfProject(Map<String, Worker> workerTraces, ProjectComp project) {
+        List<Story> stories = storyService.getByDate(project.getId(), project.getStartDate(), project.getEndDate(), project.getStatus());
+        assignStory(stories, workerTraces);
+        return workerTraces.values();
+    }
+
+    private void assignStoryMul(List<List<Story>> stories, Map<String, Worker> traces) {
         stories.forEach(sl -> {
             sl.forEach(s -> {
                 Trace trace = TraceConvert.INSTANCE.toTrace(s);
                 assignToWorker(traces, s.getOwner(), trace);
             });
+        });
+    }
+
+    private void assignStory(List<Story> stories, Map<String, Worker> traces) {
+        stories.forEach(s -> {
+            Trace trace = TraceConvert.INSTANCE.toTrace(s);
+            assignToWorker(traces, s.getOwner(), trace);
         });
     }
 
@@ -144,9 +164,10 @@ public class WorkerBoardService {
         });
     }
 
-    private void assignBug(List<List<Bug>> bugs, Map<String, Worker> traces) {
+    private void assignBug(Project project, List<List<Bug>> bugs, Map<String, Worker> traces) {
         bugs.forEach(bl -> {
             bl.forEach(b -> {
+                b.setProjectId(project.getId());
                 //按 测试人员/开发人员 分配
                 Trace trace = TraceConvert.INSTANCE.toTrace(b);
                 //测试人员

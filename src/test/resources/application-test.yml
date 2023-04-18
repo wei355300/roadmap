@@ -1,11 +1,12 @@
+
 spring:
   cache:
     cache-names: "tapd-roles, tapd-users"
     type: simple
   datasource:
-    url: ""
-    username: ""
-    password: ""
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name=: com.mysql.cj.jdbc.Driver
     druid:
       initial-size: 1
@@ -41,7 +42,7 @@ nacos:
 
 
 server:
-  port: 8080
+  port: 9080
 
 logging:
   level:

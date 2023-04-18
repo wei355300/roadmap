@@ -25,7 +25,7 @@ public class TapdScheduleTask {
         this.roleService = roleService;
     }
 
-    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.DAYS)
+//    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.DAYS)
     public void closeIteration() {
         log.info("---执行关闭迭代任务");
         try {

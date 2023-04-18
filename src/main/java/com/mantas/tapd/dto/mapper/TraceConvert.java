@@ -23,6 +23,8 @@ public interface TraceConvert {
             @Mapping(constant = "story", target = "type"),
             @Mapping(source = "workspaceId", target = "projectId"),
             @Mapping(target = "link", source = "story", qualifiedByName = {"TraceFiledTranslator", "toStoryLink"}),
+            @Mapping(source = "begin", target = "start"),
+            @Mapping(source = "due", target = "end"),
     })
     Trace toTrace(Story story);
 
@@ -31,6 +33,8 @@ public interface TraceConvert {
             @Mapping(source = "name", target = "name"),
             @Mapping(constant = "task", target = "type"),
             @Mapping(target = "link", source = "task", qualifiedByName = {"TraceFiledTranslator", "toTaskLink"}),
+            @Mapping(source = "begin", target = "start"),
+            @Mapping(source = "due", target = "end"),
     })
     Trace toTrace(Task task);
 
@@ -39,6 +43,8 @@ public interface TraceConvert {
             @Mapping(source = "title", target = "name"),
             @Mapping(constant = "bug", target = "type"),
             @Mapping(target = "link", source = "bug", qualifiedByName = {"TraceFiledTranslator", "toBugLink"}),
+            @Mapping(source = "begin", target = "start"),
+            @Mapping(source = "due", target = "end"),
     })
     Trace toTrace(Bug bug);
 }

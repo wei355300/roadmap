@@ -15,7 +15,8 @@ public class Trace {
     private String link;
     private int weight;
     private boolean done;
-
     private Integer projectId;
     private String iterationId;
+    private String start;
+    private String end;
 }

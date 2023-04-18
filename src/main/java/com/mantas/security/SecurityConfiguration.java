@@ -46,7 +46,7 @@ public class SecurityConfiguration {
                                            AuthorityUrlCheckerAuthorizationManager authorityUriPermissionCheckerAuthorizationManage) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http
-//                .cors().disable()
+                .cors().disable()
                 .csrf().disable()
                 .httpBasic().disable()
                 .formLogin().disable()

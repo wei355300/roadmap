@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -47,6 +48,10 @@ public class RoleService {
 
     public List<Worker> getUsersByProject(Integer projectId, Collection<Role> roles) {
         List<Worker> allWorkers = getUsersByProject(projectId);
+        if (CollectionUtils.isEmpty(roles)) {
+            return allWorkers;
+        }
+
         return allWorkers.stream().filter(w -> {
             for (Role r : roles) {
                 if (w.getRoles().contains(r.getId())) {

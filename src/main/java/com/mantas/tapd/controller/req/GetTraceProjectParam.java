@@ -12,4 +12,7 @@ public class GetTraceProjectParam {
     private String name;
     private List<GetTraceRoleParam> roles;
     private List<GetTraceIterationParam> iterations;
+    private String startDate;
+    private String endDate;
+    private String[] status;
 }

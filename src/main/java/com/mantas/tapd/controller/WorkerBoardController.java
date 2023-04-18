@@ -48,12 +48,6 @@ public class WorkerBoardController {
      */
     @PostMapping("/traces")
     public R getTraces(@RequestBody @Validated List<GetTraceProjectParam> params) {
-        //fixme 使用get请求, 上报json格式的参数
-        // json参数转化为java对象, 可参考: AlilogQueryController.java的做法
-
-        // restful 风格决定获取数据应当使用 get 请求,
-        // 但get 请求不支持直接传递 json 格式的参数, 所以采用 post 请求上传 body 传递, 以便于参数解析
-        // (方案考虑: 前端使用 stringify 将参数当作  get 请求的参数上传, 后端再通过 json 解析?)
         Collection<Worker> traces = workerBoardService.getTraces(ParamHelper.toProjects(params));
         return R.success(traces);
     }

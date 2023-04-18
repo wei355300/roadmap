@@ -21,6 +21,15 @@ public interface TapdURL {
         String STATUS = "status";
         String FIELDS = "fields";
         String LIMIT = "limit";
+        String START = "start";
+        String DUE = "due";
+
+
+        interface STORY {
+            String BEGIN = "begin"; //预计开始时间
+            String DUE = "due"; //预计结束时间
+            String STATUS = "status";
+        }
     }
 
     interface ITERATION {

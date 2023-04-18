@@ -16,6 +16,9 @@ public class ProjectComp extends Project {
 
     private Collection<Iteration> iterations;
     private Collection<Role> roles;
+    private String startDate;
+    private String endDate;
+    private String[] status;
 
     public ProjectComp(Project project) {
         setId(project.getId());
