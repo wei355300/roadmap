@@ -27,19 +27,19 @@ import java.util.stream.Collectors;
 @Slf4j
 public class WorkerBoardService {
 
-    private RoleService roleService;
+    private RoleService      roleService;
     private IterationService iterationService;
-    private ProjectService projectService;
-    private StoryService storyService;
-    private TaskService taskService;
-    private BugService bugService;
+    private ProjectService   projectService;
+    private StoryService     storyService;
+    private TaskService      taskService;
+    private BugService       bugService;
 
     public WorkerBoardService(RoleService roleService,
-                                  IterationService iterationService,
-                                  ProjectService projectService,
-                                  StoryService storyService,
-                                  TaskService taskService,
-                                  BugService bugService) {
+                              IterationService iterationService,
+                              ProjectService projectService,
+                              StoryService storyService,
+                              TaskService taskService,
+                              BugService bugService) {
         this.roleService = roleService;
         this.iterationService = iterationService;
         this.projectService = projectService;
@@ -62,30 +62,30 @@ public class WorkerBoardService {
         //通过多线程异步的形式, 缩短获取多项目的时间消耗
         ExecutorService executorService = Executors.newFixedThreadPool(projects.size());
         CompletableFuture[] futures = projects.stream()
-                .map(project -> CompletableFuture.supplyAsync(() -> {
-                    log.info("开始跑异步: " + project.getName());
-                    return getProjectComps(project);
-                }, executorService).whenComplete((result, t) -> {
-                    log.info("完成: " + project.getName());
-                    comps.add(result);
-                })).toArray(CompletableFuture[]::new);
+                .map(project -> CompletableFuture.supplyAsync(() -> getProjectComps(project), executorService)
+                        .whenComplete((result, t) -> comps.add(result)))
+                .toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
-        log.info("跑完了");
         return comps;
     }
 
+    /**
+     * 获取指定的项目的参数的数据, 包括:
+     *  - 需求
+     *  - 任务
+     *  - 缺陷
+     *
+     * 并按人员的纬度进行数据分组
+     */
     public Collection<Worker> getTraces(List<ProjectComp> projects) {
         Map<String, Worker> workerTraces = new HashMap<>();
         //通过多线程异步的形式, 缩短获取多项目的时间消耗
         ExecutorService executorService = Executors.newFixedThreadPool(projects.size());
         CompletableFuture[] futures = projects.stream()
-                .map(project -> CompletableFuture.supplyAsync(() -> {
-                    return getTracesByProject(workerTraces, project);
-                }, executorService).whenComplete((result, t) -> {
-                    mergeTrace(workerTraces, result);
-                })).toArray(CompletableFuture[]::new);
+                .map(project -> CompletableFuture.supplyAsync(() -> getTracesByProject(workerTraces, project), executorService)
+                        .whenComplete((result, t) -> mergeTrace(workerTraces, result)))
+                .toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(futures).join();
-        log.info("跑完了");
 
         Comparator<Worker> traceComparator = Comparator.comparingInt(w -> w.getTraces().size());
         return workerTraces.values().stream().filter(w -> w.getTraces().size() > 0).sorted(traceComparator.reversed()).collect(Collectors.toList());
@@ -99,7 +99,8 @@ public class WorkerBoardService {
             Worker workerTrace = workerTraces.get(t.getUser());
             if (Objects.isNull(workerTrace)) {
                 workerTraces.put(t.getUser(), t);
-            } else {
+            }
+            else {
                 workerTrace.getTraces().addAll(t.getTraces());
             }
         });
@@ -112,13 +113,15 @@ public class WorkerBoardService {
         List<Worker> workers = roleService.getUsersByProject(project.getId(), project.getRoles());
         putWorkers(workers, workerTraces);
 
-        if (Objects.nonNull(project.getStartDate())) {
-            return getTracesByDateOfProject(workerTraces, project);
+        //时间与状态为一组过滤条件
+        if (Objects.nonNull(project.getStartDate()) || Objects.nonNull(project.getStatus())) {
+            return getTracesByDateAndStatus(workerTraces, project);
         }
-        return getTracesByIterationOfProject(workerTraces, project);
+        //迭代为一组过滤条件
+        return getTracesByIteration(workerTraces, project);
     }
 
-    private Collection<Worker> getTracesByIterationOfProject(Map<String, Worker> workerTraces, ProjectComp project) {
+    private Collection<Worker> getTracesByIteration(Map<String, Worker> workerTraces, ProjectComp project) {
         //获取项目迭代中的需求, 任务, 缺陷
         //需求按处理人分配
         List<List<Story>> stories = storyService.getByIterations(project.getId(), project.getIterations());
@@ -133,7 +136,7 @@ public class WorkerBoardService {
         return workerTraces.values();
     }
 
-    private Collection<Worker> getTracesByDateOfProject(Map<String, Worker> workerTraces, ProjectComp project) {
+    private Collection<Worker> getTracesByDateAndStatus(Map<String, Worker> workerTraces, ProjectComp project) {
         List<Story> stories = storyService.getByDate(project.getId(), project.getStartDate(), project.getEndDate(), project.getStatus());
         assignStory(stories, workerTraces);
         return workerTraces.values();
@@ -217,7 +220,8 @@ public class WorkerBoardService {
 
             projectComp.setIterations(iterations);
             projectComp.setRoles(roles);
-        } catch (TapdException e) {
+        }
+        catch (TapdException e) {
             log.warn("", e);
         }
         return projectComp;

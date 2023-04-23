@@ -47,7 +47,7 @@ public class StoryService {
 
     private List<Story> request(Integer projectId, String start, String due, String[] status) {
         List<ParamPair> pairs = tapdClient.buildParam(TapdURL.PARAM.WORKSPACE_ID, projectId.toString());
-        if (Objects.nonNull(status)) {
+        if (Objects.nonNull(start)) {
             tapdClient.appendParams(pairs, TapdURL.PARAM.STORY.BEGIN, ">"+start);
         }
         if (Objects.nonNull(due)) {
