@@ -61,7 +61,7 @@ class TraceFiledTranslator {
 
     @Named("toStoryStatus")
     public Boolean mapStatus(Story story) {
-        return "resolved".equals(story.getStatus()) || "closed".equals(story.getStatus());
+        return "resolved".equals(story.getStatus()) || "closed".equals(story.getStatus()) || "audited".equals(story.getStatus());
     }
 
     @Named("toBugStatus")
