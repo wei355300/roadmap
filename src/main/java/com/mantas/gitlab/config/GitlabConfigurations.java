@@ -19,7 +19,7 @@ public class GitlabConfigurations {
     }
 
     @Bean
-    public GitlabUtils gitlabUtils(@Autowired GitlabConfigProperties gitlabConfigProperties) {
+    public GitlabUtils gitlabUtils(@Autowired GitlabConfigProperties gitlabConfigProperties) throws JsonProcessingException {
         return new GitlabUtils(gitlabConfigProperties);
     }
 

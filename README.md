@@ -1,6 +1,20 @@
 
 工具大杂烩
 
+# 启动程序
+
+- Java
+
+```shell
+# 
+# 启动 Java 程序时, 需要传递环境变量, 配置数据库连接信息
+# 可查看 `application.yml` 文件中的限制 
+# 注意: 
+#   不要使用 引号(" or ') 将 value 包起来
+DATABASE_URL=${DB_URL};DATABASE_USERNAME=${DB_USER};DATABASE_PASSWORD=${DB_PWD}
+```
+
+
 # 功能
 
 ## 鉴权与授权
