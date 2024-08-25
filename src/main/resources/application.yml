@@ -43,6 +43,12 @@ nacos:
       namespace: ${NACOS_DINGTALK_NAMESPACE:17013706-c074-4416-af54-b002b34157a2}
       data_id: ${NACOS_DINGTALK_DATA_ID:dingtalk}
       group_id: ${NACOS_DINGTALK_GROUP_ID:roadmap}
+    zentao:
+      module: "zentao"
+      server_addr: ${NACOS_SERVER_HOST:127.0.0.1}:${NACOS_SERVER_PORT:8848}
+      namespace: ${NACOS_DINGTALK_NAMESPACE:17013706-c074-4416-af54-b002b34157a2}
+      data_id: ${NACOS_DINGTALK_DATA_ID:zentao}
+      group_id: ${NACOS_DINGTALK_GROUP_ID:roadmap}
 
 
 server:

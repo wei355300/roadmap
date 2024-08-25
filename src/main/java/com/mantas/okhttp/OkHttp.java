@@ -1,5 +1,6 @@
 package com.mantas.okhttp;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mantas.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -44,6 +45,15 @@ public class OkHttp {
             reqBuilder.post(reqBody);
             return reqBuilder.build();
         }
+
+        static <T> Request buildJson(String url, T params) throws JsonProcessingException {
+            String jsonBody = JsonUtils.toJson(params);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonBody);
+            return new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+        }
     }
 
     private OkHttpClient client;
@@ -51,7 +61,7 @@ public class OkHttp {
     public OkHttp(Set<Interceptor> interceptors) {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         if (Objects.nonNull(interceptors)) {
-            interceptors.forEach(interceptor -> clientBuilder.addInterceptor(interceptor));
+            interceptors.forEach(clientBuilder::addInterceptor);
         }
         client = clientBuilder.build();
     }
@@ -73,6 +83,11 @@ public class OkHttp {
 
     public <T> T post(String url, List<ParamPair> params, Class<T> classOfT) throws IOException {
         Request request = Post.build(url, params);
+        return request(request, classOfT);
+    }
+
+    public <T, R> R postJson(String url, T params, Class<R> classOfT) throws IOException {
+        Request request = Post.buildJson(url, params);
         return request(request, classOfT);
     }
 

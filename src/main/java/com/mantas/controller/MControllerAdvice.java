@@ -11,7 +11,7 @@ public class MControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public R exceptionHandler(Exception exception) {
+    public R<?> exceptionHandler(Exception exception) {
         log.error("", exception);
         return R.result(-1, exception.getMessage());
     }

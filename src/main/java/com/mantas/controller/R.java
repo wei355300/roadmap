@@ -26,19 +26,19 @@ public class R<T> {
         this.data = data;
     }
 
-    public static final R success() {
-        return new R();
+    public static R<?> success() {
+        return new R<>();
     }
 
-    public static final <T> R success(T data) {
-        return new R(data);
+    public static <T> R<T> success(T data) {
+        return new R<>(data);
     }
 
-    public static final <T> R result(int code, String msg) {
-        return new R(code, msg);
+    public static <T> R<T> result(int code, String msg) {
+        return new R<>(code, msg);
     }
 
-    public static final <T> R result(int code, String msg, T data) {
-        return new R(code, msg, data);
+    public static <T> R<T> result(int code, String msg, T data) {
+        return new R<>(code, msg, data);
     }
 }
